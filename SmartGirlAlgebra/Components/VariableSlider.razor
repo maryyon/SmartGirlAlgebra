@@ -1,0 +1,188 @@
+﻿@* Variable Slider Playground - See expressions change in real-time *@
+
+<div class="slider-playground">
+    <h3 class="slider-title">🎚️ Variable Playground</h3>
+    <p class="slider-instruction">@Instruction</p>
+
+    <div class="playground-content">
+        <!-- Variable Sliders -->
+        <div class="sliders-section">
+            @foreach (var variable in Variables)
+            {
+                <div class="variable-slider-group">
+                    <div class="variable-header">
+                        <span class="variable-name">@variable.Name</span>
+                        <span class="variable-value">= @variable.Value</span>
+                    </div>
+                    <input type="range" 
+                           class="variable-slider"
+                           min="@variable.Min" 
+                           max="@variable.Max" 
+                           step="1"
+                           value="@variable.Value"
+                           @oninput="@(e => UpdateVariable(variable.Name, int.Parse(e.Value?.ToString() ?? "0")))" />
+                    <div class="slider-labels">
+                        <span>@variable.Min</span>
+                        <span>@variable.Max</span>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Expression Display -->
+        <div class="expression-display">
+            <div class="expression-card">
+                <h4>📐 Expression</h4>
+                <div class="expression-text">@Expression</div>
+            </div>
+
+            <div class="equals-sign">=</div>
+
+            <div class="result-card">
+                <h4>✨ Result</h4>
+                <div class="result-value @GetResultClass()">@CalculatedResult</div>
+            </div>
+        </div>
+
+        <!-- Visual Representation -->
+        @if (ShowVisual)
+        {
+            <div class="visual-representation">
+                <h4>👁️ Visual Model</h4>
+                <div class="visual-blocks">
+                    @for (int i = 0; i < Math.Abs(CalculatedResult); i++)
+                    {
+                        <div class="block @(CalculatedResult >= 0 ? "positive" : "negative")"></div>
+                    }
+                </div>
+            </div>
+        }
+
+        <!-- Step-by-Step Breakdown -->
+        <div class="breakdown-section">
+            <h4>🔍 Step-by-Step</h4>
+            <div class="breakdown-steps">
+                @foreach (var step in CalculationSteps)
+                {
+                    <div class="step">@step</div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Challenge Section -->
+    @if (!string.IsNullOrEmpty(Challenge))
+    {
+        <div class="challenge-box">
+            <h4>🎯 Challenge</h4>
+            <p>@Challenge</p>
+            @if (TargetValue.HasValue)
+            {
+                <div class="target-indicator">
+                    Target: <strong>@TargetValue</strong>
+                    @if (CalculatedResult == TargetValue)
+                    {
+                        <span class="success-badge">✓ You got it!</span>
+                    }
+                </div>
+            }
+        </div>
+    }
+
+    <div class="playground-controls">
+        <button class="btn-secondary" @onclick="Reset">🔄 Reset</button>
+        <button class="btn-primary" @onclick="NewChallenge">🎲 New Challenge</button>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string Expression { get; set; } = "2x + 5";
+    [Parameter] public string Instruction { get; set; } = "Move the slider to see how the expression changes!";
+    [Parameter] public bool ShowVisual { get; set; } = true;
+    [Parameter] public string Challenge { get; set; } = "";
+    [Parameter] public int? TargetValue { get; set; }
+    [Parameter] public EventCallback<bool> OnChallengeComplete { get; set; }
+
+    private List<SliderVariable> Variables { get; set; } = new();
+    private int CalculatedResult { get; set; }
+    private List<string> CalculationSteps { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        // Initialize with default variable
+        Variables.Add(new SliderVariable { Name = "x", Value = 0, Min = -10, Max = 10 });
+        Calculate();
+    }
+
+    private void UpdateVariable(string name, int value)
+    {
+        var variable = Variables.FirstOrDefault(v => v.Name == name);
+        if (variable != null)
+        {
+            variable.Value = value;
+            Calculate();
+            
+            if (TargetValue.HasValue && CalculatedResult == TargetValue)
+            {
+                OnChallengeComplete.InvokeAsync(true);
+            }
+        }
+    }
+
+    private void Calculate()
+    {
+        // Simple expression evaluator (can be expanded)
+        CalculationSteps.Clear();
+        
+        // For now, handle simple expressions like "2x + 5"
+        var x = Variables.FirstOrDefault(v => v.Name == "x")?.Value ?? 0;
+        
+        // Parse and calculate (simplified)
+        CalculatedResult = EvaluateExpression(Expression, x);
+        GenerateSteps(Expression, x);
+    }
+
+    private int EvaluateExpression(string expr, int x)
+    {
+        // Simplified evaluator - replace with proper parser for production
+        expr = expr.Replace("x", x.ToString());
+        // This is a placeholder - use a proper expression evaluator
+        return x * 2 + 5; // Hardcoded for demo
+    }
+
+    private void GenerateSteps(string expr, int x)
+    {
+        CalculationSteps.Add($"Substitute x = {x}");
+        CalculationSteps.Add($"2({x}) + 5");
+        CalculationSteps.Add($"{2 * x} + 5");
+        CalculationSteps.Add($"= {CalculatedResult}");
+    }
+
+    private string GetResultClass()
+    {
+        return CalculatedResult >= 0 ? "positive-result" : "negative-result";
+    }
+
+    private void Reset()
+    {
+        foreach (var variable in Variables)
+        {
+            variable.Value = 0;
+        }
+        Calculate();
+    }
+
+    private void NewChallenge()
+    {
+        // Generate new challenge
+    }
+
+    public class SliderVariable
+    {
+        public string Name { get; set; } = "";
+        public int Value { get; set; }
+        public int Min { get; set; }
+        public int Max { get; set; }
+    }
+}
+

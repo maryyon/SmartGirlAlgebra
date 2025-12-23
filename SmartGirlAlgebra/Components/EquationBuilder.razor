@@ -1,0 +1,209 @@
+﻿@* Drag-and-Drop Equation Builder - Build equations from word problems *@
+
+<div class="equation-builder">
+    <h3 class="builder-title">🧩 Equation Builder</h3>
+    
+    <!-- Word Problem -->
+    <div class="word-problem">
+        <h4>📖 Word Problem</h4>
+        <p>@WordProblem</p>
+    </div>
+
+    <!-- Building Area -->
+    <div class="building-area">
+        <h4>🔨 Build Your Equation</h4>
+        <div class="equation-workspace"
+             @ondrop="HandleDrop"
+             @ondragover:preventDefault="true">
+            
+            @if (!builtEquation.Any())
+            {
+                <div class="empty-workspace">
+                    Drag tiles here to build your equation
+                </div>
+            }
+            else
+            {
+                <div class="built-equation">
+                    @foreach (var (tile, index) in builtEquation.Select((t, i) => (t, i)))
+                    {
+                        <div class="placed-tile @tile.Type"
+                             @onclick="@(() => RemoveTile(index))">
+                            @tile.Display
+                            <span class="remove-icon">×</span>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Available Tiles -->
+    <div class="tiles-panel">
+        <h4>🎯 Available Tiles</h4>
+        <div class="tiles-grid">
+            @foreach (var tile in AvailableTiles)
+            {
+                <div class="tile @tile.Type @(tile.Used ? "used" : "")"
+                     draggable="@(!tile.Used)"
+                     @ondragstart="@(() => StartDrag(tile))"
+                     @onclick="@(() => AddTile(tile))">
+                    <div class="tile-content">@tile.Display</div>
+                    @if (!string.IsNullOrEmpty(tile.Hint))
+                    {
+                        <div class="tile-hint">@tile.Hint</div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Feedback -->
+    @if (!string.IsNullOrEmpty(feedbackMessage))
+    {
+        <div class="feedback @feedbackClass">
+            @feedbackMessage
+        </div>
+    }
+
+    <!-- Controls -->
+    <div class="builder-controls">
+        <button class="btn-secondary" @onclick="Clear">🗑️ Clear</button>
+        <button class="btn-hint" @onclick="ShowHint">💡 Hint</button>
+        <button class="btn-primary" @onclick="CheckEquation">✓ Check Equation</button>
+    </div>
+
+    @if (!string.IsNullOrEmpty(currentHint))
+    {
+        <div class="hint-box">
+            💡 @currentHint
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public string WordProblem { get; set; } = "";
+    [Parameter] public string CorrectEquation { get; set; } = "";
+    [Parameter] public List<EquationTile> AvailableTiles { get; set; } = new();
+    [Parameter] public EventCallback<bool> OnCorrect { get; set; }
+
+    private List<EquationTile> builtEquation = new();
+    private EquationTile? draggedTile;
+    private string feedbackMessage = "";
+    private string feedbackClass = "";
+    private string currentHint = "";
+    private int hintIndex = 0;
+
+    protected override void OnInitialized()
+    {
+        if (!AvailableTiles.Any())
+        {
+            // Default tiles for demo
+            AvailableTiles = new List<EquationTile>
+            {
+                new EquationTile { Display = "x", Type = "variable", Hint = "The unknown" },
+                new EquationTile { Display = "5", Type = "number" },
+                new EquationTile { Display = "3", Type = "number" },
+                new EquationTile { Display = "2", Type = "number" },
+                new EquationTile { Display = "+", Type = "operator" },
+                new EquationTile { Display = "-", Type = "operator" },
+                new EquationTile { Display = "×", Type = "operator" },
+                new EquationTile { Display = "÷", Type = "operator" },
+                new EquationTile { Display = "=", Type = "equals" },
+            };
+        }
+    }
+
+    private void StartDrag(EquationTile tile)
+    {
+        if (!tile.Used)
+        {
+            draggedTile = tile;
+        }
+    }
+
+    private void HandleDrop()
+    {
+        if (draggedTile != null)
+        {
+            AddTile(draggedTile);
+            draggedTile = null;
+        }
+    }
+
+    private void AddTile(EquationTile tile)
+    {
+        if (!tile.Used)
+        {
+            builtEquation.Add(tile);
+            tile.Used = true;
+            feedbackMessage = "";
+        }
+    }
+
+    private void RemoveTile(int index)
+    {
+        var tile = builtEquation[index];
+        tile.Used = false;
+        builtEquation.RemoveAt(index);
+    }
+
+    private void Clear()
+    {
+        foreach (var tile in builtEquation)
+        {
+            tile.Used = false;
+        }
+        builtEquation.Clear();
+        feedbackMessage = "";
+        currentHint = "";
+    }
+
+    private void CheckEquation()
+    {
+        var built = string.Join("", builtEquation.Select(t => t.Display));
+        var correct = CorrectEquation.Replace(" ", "");
+
+        if (built == correct)
+        {
+            feedbackMessage = "🎉 Perfect! You built the correct equation!";
+            feedbackClass = "success";
+            OnCorrect.InvokeAsync(true);
+        }
+        else if (builtEquation.Count == 0)
+        {
+            feedbackMessage = "Build an equation first!";
+            feedbackClass = "warning";
+        }
+        else
+        {
+            feedbackMessage = "Not quite right. Try again or use a hint!";
+            feedbackClass = "error";
+        }
+    }
+
+    private void ShowHint()
+    {
+        var hints = new List<string>
+        {
+            "Start by identifying what the unknown variable represents",
+            "Look for keywords: 'more than' means +, 'less than' means -",
+            $"The correct equation is: {CorrectEquation}"
+        };
+
+        if (hintIndex < hints.Count)
+        {
+            currentHint = hints[hintIndex];
+            hintIndex++;
+        }
+    }
+
+    public class EquationTile
+    {
+        public string Display { get; set; } = "";
+        public string Type { get; set; } = ""; // "number", "variable", "operator", "equals"
+        public string Hint { get; set; } = "";
+        public bool Used { get; set; } = false;
+    }
+}
+

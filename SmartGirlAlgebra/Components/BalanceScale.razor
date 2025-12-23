@@ -1,0 +1,178 @@
+﻿@* Visual Balance Scale Component - Drag terms to solve equations *@
+
+<div class="balance-scale-container">
+    <h3 class="balance-title">⚖️ Balance the Equation</h3>
+    <p class="balance-instruction">@Instruction</p>
+    
+    <div class="balance-visual">
+        <!-- Left Side -->
+        <div class="balance-side balance-left @GetTiltClass("left")">
+            <div class="balance-pan" 
+                 @ondrop="@(() => HandleDrop("left"))" 
+                 @ondragover:preventDefault="true"
+                 @ondragover="@(() => dragOverSide = "left")">
+                
+                <div class="balance-weight">@LeftWeight</div>
+                
+                <div class="balance-terms">
+                    @foreach (var term in LeftTerms)
+                    {
+                        <div class="term-chip @term.Type" 
+                             draggable="true"
+                             @ondragstart="@(() => StartDrag(term))">
+                            @term.Display
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Fulcrum -->
+        <div class="balance-fulcrum">
+            <div class="fulcrum-base"></div>
+            <div class="fulcrum-triangle"></div>
+        </div>
+
+        <!-- Right Side -->
+        <div class="balance-side balance-right @GetTiltClass("right")">
+            <div class="balance-pan"
+                 @ondrop="@(() => HandleDrop("right"))"
+                 @ondragover:preventDefault="true"
+                 @ondragover="@(() => dragOverSide = "right")">
+                
+                <div class="balance-weight">@RightWeight</div>
+                
+                <div class="balance-terms">
+                    @foreach (var term in RightTerms)
+                    {
+                        <div class="term-chip @term.Type"
+                             draggable="true"
+                             @ondragstart="@(() => StartDrag(term))">
+                            @term.Display
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Available Operations -->
+    <div class="operations-panel">
+        <h4>🔧 Operations (drag to both sides to keep balance)</h4>
+        <div class="operation-buttons">
+            <button class="operation-btn" @onclick="@(() => ApplyOperation("subtract", selectedTerm))">
+                ➖ Subtract @(selectedTerm?.Display ?? "?")
+            </button>
+            <button class="operation-btn" @onclick="@(() => ApplyOperation("add", selectedTerm))">
+                ➕ Add @(selectedTerm?.Display ?? "?")
+            </button>
+            <button class="operation-btn" @onclick="@(() => ApplyOperation("divide", selectedTerm))">
+                ➗ Divide by @(selectedTerm?.Display ?? "?")
+            </button>
+            <button class="operation-btn" @onclick="@(() => ApplyOperation("multiply", selectedTerm))">
+                ✖️ Multiply by @(selectedTerm?.Display ?? "?")
+            </button>
+        </div>
+    </div>
+
+    @if (IsBalanced && IsSolved)
+    {
+        <div class="success-message">
+            🎉 Perfect! You solved it! x = @Solution
+        </div>
+    }
+    else if (IsBalanced && !IsSolved)
+    {
+        <div class="balanced-message">
+            ✓ Balanced! Keep simplifying to find x...
+        </div>
+    }
+
+    <div class="balance-controls">
+        <button class="btn-secondary" @onclick="Reset">🔄 Reset</button>
+        <button class="btn-primary" @onclick="CheckSolution">✓ Check Solution</button>
+        @if (!string.IsNullOrEmpty(HintText))
+        {
+            <button class="btn-hint" @onclick="ShowNextHint">💡 Hint</button>
+        }
+    </div>
+
+    @if (!string.IsNullOrEmpty(currentHint))
+    {
+        <div class="hint-box">
+            💡 @currentHint
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public string Instruction { get; set; } = "Solve for x";
+    [Parameter] public List<BalanceTerm> LeftTerms { get; set; } = new();
+    [Parameter] public List<BalanceTerm> RightTerms { get; set; } = new();
+    [Parameter] public int Solution { get; set; }
+    [Parameter] public string HintText { get; set; } = "";
+    [Parameter] public EventCallback<bool> OnSolved { get; set; }
+
+    private BalanceTerm? selectedTerm;
+    private BalanceTerm? draggedTerm;
+    private string dragOverSide = "";
+    private string currentHint = "";
+    private int hintIndex = 0;
+
+    private int LeftWeight => LeftTerms.Sum(t => t.Weight);
+    private int RightWeight => RightTerms.Sum(t => t.Weight);
+    private bool IsBalanced => LeftWeight == RightWeight;
+    private bool IsSolved => LeftTerms.Count == 1 && LeftTerms[0].Type == "variable" && 
+                             RightTerms.Count == 1 && RightTerms[0].Type == "number" &&
+                             RightTerms[0].Value == Solution;
+
+    private string GetTiltClass(string side)
+    {
+        if (LeftWeight > RightWeight) return side == "left" ? "tilt-down" : "tilt-up";
+        if (RightWeight > LeftWeight) return side == "right" ? "tilt-down" : "tilt-up";
+        return "balanced";
+    }
+
+    private void StartDrag(BalanceTerm term)
+    {
+        draggedTerm = term;
+        selectedTerm = term;
+    }
+
+    private void HandleDrop(string side)
+    {
+        // Implement drag-drop logic
+    }
+
+    private void ApplyOperation(string operation, BalanceTerm? term)
+    {
+        // Apply operation to both sides
+    }
+
+    private void Reset()
+    {
+        // Reset to initial state
+    }
+
+    private void CheckSolution()
+    {
+        if (IsSolved)
+        {
+            OnSolved.InvokeAsync(true);
+        }
+    }
+
+    private void ShowNextHint()
+    {
+        // Show progressive hints
+    }
+
+    public class BalanceTerm
+    {
+        public string Display { get; set; } = "";
+        public string Type { get; set; } = ""; // "number", "variable", "expression"
+        public int Value { get; set; }
+        public int Weight { get; set; }
+    }
+}
+
