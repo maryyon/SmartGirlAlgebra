@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Girl Algebra</title>
+
+  <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/5.2.3/css/bootstrap.min.css">
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #ffe8d6, #ffc2a6);
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* 🎀 Animated top-left button */
+    .origin-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 14px 28px;
+      background: linear-gradient(135deg, #ff3fa4, #ff77c8);
+      color: white;
+      font-weight: 700;
+      border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      animation: wiggle 2.2s infinite;
+      z-index: 1000;
+    }
+
+    .origin-button:hover {
+      transform: scale(1.05);
+      color: white;
+      text-decoration: none;
+    }
+
+    @keyframes wiggle {
+      0%   { transform: rotate(0deg); }
+      5%   { transform: rotate(2deg); }
+      10%  { transform: rotate(-2deg); }
+      15%  { transform: rotate(1deg); }
+      20%  { transform: rotate(0deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    /* 🌟 Hero section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .cheer-jump {
+      max-width: 240px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-18px); }
+    }
+
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-top: 30px;
+    }
+
+    .logo-row img {
+      width: 80px;
+      animation: spin 6s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    h1 {
+      font-size: 3.2rem;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, #ff3fa4, #7a5cff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+    }
+
+    .tagline {
+      margin-top: 24px;
+      font-size: 1.4rem;
+      color: #222;
+    }
+
+    .tagline span {
+      display: block;
+      margin-top: 10px;
+    }
+
+    .love {
+      margin-top: 30px;
+      max-width: 200px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 🎀 Animated Origin Story Button -->
+  <a class="origin-button" href="https://smartgirlalgebra.fun">
+    🏆 THE SECRET ORIGIN STORY!
+  </a>
+
+  <!-- 🌟 Hero -->
+  <div class="hero">
+
+    <!-- Jumping cheerleader -->
+    <img src="images/gogirl.png" alt="Cheerleader jumping" class="cheer-jump">
+
+    <!-- Logo + pom -->
+    <div class="logo-row">
+      <img src="images/pompoms.png" alt="Pom pom">
+      <h1>SMART GIRL ALGEBRA</h1>
+    </div>
+
+    <!-- Tagline -->
+    <div class="tagline">
+      Master algebra through cheerleading! 🎀
+      <span>Every problem is a cheer-themed adventure!</span>
+    </div>
+
+    <!-- Accent images -->
+    <img src="images/lovecheer.png" alt="Cheer love" class="love">
+
+  </div>
+
+</body>
+</html>
+
