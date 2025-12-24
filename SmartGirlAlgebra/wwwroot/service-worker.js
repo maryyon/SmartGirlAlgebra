@@ -1,7 +1,7 @@
 ﻿// Smart Girl Algebra - Service Worker
 // This enables offline functionality and faster loading
 
-const CACHE_NAME = 'smart-girl-algebra-v20251223';
+const CACHE_NAME = 'smart-girl-algebra-v20251224';
 const urlsToCache = [
     '/',
     '/index.html',
@@ -11,7 +11,8 @@ const urlsToCache = [
     '/images/blucheer.png',
     '/images/cheery.png',
     '/images/pompoms.png',
-    '/manifest.json'
+    '/manifest.json',
+    '/appsettings.json'
 ];
 
 // Install event - cache resources
@@ -25,10 +26,20 @@ self.addEventListener('install', event => {
     );
 });
 
-// Fetch event - serve from cache when offline, but ALWAYS fetch fresh images
+// Fetch event - serve from cache when offline, but ALWAYS fetch fresh images and API calls
 self.addEventListener('fetch', event => {
     // NEVER cache images - always fetch fresh!
     if (event.request.url.includes('/images/')) {
+        event.respondWith(
+            fetch(event.request, { cache: 'no-store' })
+        );
+        return;
+    }
+
+    // NEVER cache API calls - always fetch fresh!
+    if (event.request.url.includes('azurewebsites.net') ||
+        event.request.url.includes('/api/') ||
+        event.request.url.includes('localhost:7217')) {
         event.respondWith(
             fetch(event.request, { cache: 'no-store' })
         );
