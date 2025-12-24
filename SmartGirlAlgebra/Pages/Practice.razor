@@ -1,0 +1,436 @@
+﻿@page "/practice"
+@using SmartGirlAlgebra.Models
+@using SmartGirlAlgebra.Services
+@inject ProblemGenerator ProblemGenerator
+
+<PageTitle>🎀 Practice - Smart Girl Algebra</PageTitle>
+
+<link href="css/cheer-theme.css" rel="stylesheet" />
+
+<div class="cheer-container">
+    @if (currentScreen == "menu")
+    {
+        <!-- MAIN MENU -->
+        <div class="slide-in" style="text-align: center;">
+            <div style="margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 30px; flex-wrap: wrap;">
+                <img src="/images/pompoms.png?v=20251223" alt="Pom-poms" style="max-width: 100px; height: auto; animation: shake 1.5s ease-in-out infinite;" />
+                <img src="/images/blucheer.png?v=20251223" alt="Cheerleader" style="max-width: 180px; height: auto; animation: bounce 2s ease-in-out infinite;" />
+                <img src="/images/pompoms.png?v=20251223" alt="Pom-poms" style="max-width: 100px; height: auto; animation: shake 1.5s ease-in-out infinite; animation-delay: 0.5s;" />
+            </div>
+
+            <h1 class="rainbow-text" style="font-size: 3.5em; margin: 30px 0;">
+                <span class="blinking-pompom" style="width: 1.5em; height: 1.5em;"></span>
+                SMART GIRL ALGEBRA
+                <span class="pom-pom">📣</span>
+            </h1>
+
+            <p style="font-size: 1.5em; color: var(--text-dark); margin: 20px 0;">
+                Learn algebra through cheerleading! 🎀
+            </p>
+
+            <div style="margin: 40px 0;">
+                <h2 class="rainbow-text" style="font-size: 2.5em; margin: 30px 0;">
+                    <span class="pom-pom">📣</span> Choose Your Challenge! <span class="blinking-pompom" style="width: 1.25em; height: 1.25em;"></span>
+                </h2>
+
+                <button class="btn difficulty-easy" @onclick='() => StartPractice(DifficultyLevel.Easy)'
+                        style="animation: pulse 2s ease-in-out infinite; font-size: 1.3em; padding: 20px 40px;">
+                    <span class="blinking-pompom" style="width: 0.75em; height: 0.75em;"></span>
+                    EASY - Perfect for beginners!
+                </button>
+                <br/>
+
+                <button class="btn difficulty-medium" @onclick='() => StartPractice(DifficultyLevel.Medium)'
+                        style="animation: pulse 2s ease-in-out infinite; animation-delay: 0.3s; font-size: 1.3em; padding: 20px 40px;">
+                    <span class="pom-pom" style="font-size: 0.75em;">📣</span>
+                    MEDIUM - Ready for more?
+                </button>
+                <br/>
+
+                <button class="btn difficulty-hard" @onclick='() => StartPractice(DifficultyLevel.Hard)'
+                        style="animation: pulse 2s ease-in-out infinite; animation-delay: 0.6s; font-size: 1.3em; padding: 20px 40px;">
+                    <span class="blinking-pompom" style="width: 0.75em; height: 0.75em;"></span>
+                    HARD - Championship level!
+                </button>
+            </div>
+
+            <div style="margin-top: 50px; padding: 30px; background: rgba(255,255,255,0.8); border-radius: 20px; max-width: 800px; margin-left: auto; margin-right: auto;">
+                <h3 class="rainbow-text" style="font-size: 2em;">
+                    <span class="pom-pom">📣</span> Your Stats <span class="blinking-pompom" style="width: 1em; height: 1em;"></span>
+                </h3>
+                <div style="font-size: 1.3em; margin: 20px 0;">
+                    <p>✅ Problems Solved: <strong>@problemsSolved</strong></p>
+                    <p>🎯 Current Streak: <strong>@currentStreak</strong></p>
+                    <p>🏆 Best Streak: <strong>@bestStreak</strong></p>
+                    <p>⭐ Total Score: <strong>@totalScore</strong></p>
+                </div>
+            </div>
+        </div>
+    }
+    else if (currentScreen == "practice")
+    {
+        <!-- PRACTICE SCREEN -->
+        <div class="problem-card">
+            <div style="text-align: right; margin-bottom: 20px;">
+                <span class="difficulty-badge difficulty-@currentDifficulty.ToString().ToLower()">
+                    @currentDifficulty.ToString().ToUpper()
+                </span>
+                <span style="font-size: 1.2em; margin-left: 20px;">
+                    Score: <strong class="neon-glow">@totalScore</strong>
+                </span>
+            </div>
+
+            <h2 class="problem-title rainbow-text">
+                @currentProblem?.Emoji @currentProblem?.Title
+            </h2>
+
+            <div class="problem-story">
+                @currentProblem?.Story
+            </div>
+
+            <div style="text-align: center; margin: 30px 0;">
+                <p style="font-size: 1.3em; color: var(--secondary-purple); font-weight: bold;">
+                    💭 Let @currentProblem?.Variable = @currentProblem?.VariableDescription
+                </p>
+            </div>
+
+            <div class="problem-equation">
+                @currentProblem?.Equation
+            </div>
+
+            @if (!showAnswer)
+            {
+                <div style="text-align: center;">
+                    @if (!string.IsNullOrEmpty(feedbackMessage))
+                    {
+                        <div style="background: linear-gradient(135deg, #FFE5F1, #E1BEE7); padding: 25px; border-radius: 20px; margin: 20px 0; border: 3px solid var(--primary-pink); animation: bounce 0.5s;">
+                            <div style="font-size: 1.3em; white-space: pre-line; color: var(--text-dark); font-weight: bold;">
+                                @feedbackMessage
+                            </div>
+                        </div>
+                    }
+
+                    <input type="number"
+                           class="answer-input"
+                           @bind="userAnswer"
+                           @bind:event="oninput"
+                           @onkeypress="HandleKeyPress"
+                           placeholder="Enter your answer..."
+                           step="0.01" />
+
+                    <div style="margin: 20px 0;">
+                        <button class="btn btn-success" @onclick="CheckAnswer" style="font-size: 1.2em; padding: 15px 40px;">
+                            ✓ Check Answer (Attempt @(attemptCount + 1))
+                        </button>
+                        <button class="btn" @onclick="ShowHint" style="font-size: 1.2em; padding: 15px 40px;">
+                            💡 Show Hint (@currentHintIndex/@(currentProblem?.Hints.Count ?? 0))
+                        </button>
+
+                        @if (showAnswerOption)
+                        {
+                            <br/>
+                            <button class="btn" @onclick="RevealAnswer" style="font-size: 1.2em; padding: 15px 40px; margin-top: 15px; background: var(--accent-gold); color: white;">
+                                👀 Show Me The Answer
+                            </button>
+                        }
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(hintMessage))
+                    {
+                        <div style="background: #FFF9C4; padding: 20px; border-radius: 15px; margin: 20px 0; border-left: 5px solid var(--accent-gold);">
+                            <div style="font-size: 1.2em;">@hintMessage</div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                @if (isCorrect)
+                {
+                    <div class="feedback-correct" style="animation: bounce 0.6s;">
+                        <div style="font-size: 1.5em; white-space: pre-line; margin-bottom: 20px;">
+                            @feedbackMessage
+                        </div>
+                        <p style="font-size: 1.8em; margin: 10px 0;">
+                            <span class="blinking-pompom" style="width: 1em; height: 1em;"></span>
+                            @currentProblem?.Variable = @currentProblem?.Answer
+                            <span class="pom-pom">📣</span>
+                        </p>
+                        <p style="font-size: 1.3em;">
+                            +@pointsEarned points! Current streak: @currentStreak 🔥
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <div class="feedback-incorrect">
+                        <h3 style="font-size: 2em; margin: 0;">
+                            📚 Let's Learn Together! 💪
+                        </h3>
+                        <p style="font-size: 1.5em; margin: 10px 0;">
+                            The correct answer is: @currentProblem?.Variable = @currentProblem?.Answer
+                        </p>
+                        <p style="font-size: 1.2em; color: var(--text-dark); margin-top: 15px;">
+                            Don't worry! Every mistake helps you learn! 💖
+                        </p>
+                    </div>
+                }
+
+                <div class="steps-container">
+                    <h3 style="color: var(--primary-pink); margin-bottom: 20px;">
+                        📋 Solution Steps:
+                    </h3>
+                    @foreach (var step in currentProblem?.Steps ?? new List<string>())
+                    {
+                        <div class="step-item">
+                            @step
+                        </div>
+                    }
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn btn-success" @onclick="NextProblem" style="font-size: 1.3em; padding: 20px 50px; animation: pulse 1.5s ease-in-out infinite;">
+                        <span class="blinking-pompom" style="width: 0.75em; height: 0.75em;"></span>
+                        Next Problem
+                        <span class="pom-pom" style="font-size: 0.75em;">📣</span>
+                    </button>
+                </div>
+            }
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn" @onclick="BackToMenu">
+                    🏠 Back to Menu
+                </button>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    private string currentScreen = "menu";
+    private CheerProblem? currentProblem;
+    private DifficultyLevel currentDifficulty = DifficultyLevel.Easy;
+
+    private decimal? userAnswer;
+    private bool showAnswer = false;
+    private bool isCorrect = false;
+    private string hintMessage = "";
+    private string feedbackMessage = "";
+    private int pointsEarned = 0;
+
+    // Attempt tracking
+    private int attemptCount = 0;
+    private int currentHintIndex = 0;
+    private bool showAnswerOption = false;
+
+    // Stats
+    private int problemsSolved = 0;
+    private int currentStreak = 0;
+    private int bestStreak = 0;
+    private int totalScore = 0;
+
+    private void StartPractice(DifficultyLevel difficulty)
+    {
+        currentDifficulty = difficulty;
+        currentScreen = "practice";
+        GenerateNewProblem();
+    }
+
+    private void GenerateNewProblem()
+    {
+        currentProblem = ProblemGenerator.GenerateLinearEquation(currentDifficulty);
+        userAnswer = null;
+        showAnswer = false;
+        isCorrect = false;
+        hintMessage = "";
+        feedbackMessage = "";
+        pointsEarned = 0;
+        attemptCount = 0;
+        currentHintIndex = 0;
+        showAnswerOption = false;
+    }
+
+    private void CheckAnswer()
+    {
+        if (userAnswer == null || currentProblem == null)
+            return;
+
+        attemptCount++;
+
+        // Check if answer is correct (allow small rounding difference)
+        decimal difference = Math.Abs(userAnswer.Value - currentProblem.Answer);
+        isCorrect = difference < 0.01m;
+
+        if (isCorrect)
+        {
+            // 🎉 CORRECT ANSWER - CELEBRATION!
+            showAnswer = true;
+            feedbackMessage = GetCelebrationMessage();
+
+            // Calculate points based on difficulty
+            pointsEarned = currentDifficulty switch
+            {
+                DifficultyLevel.Easy => 10,
+                DifficultyLevel.Medium => 20,
+                DifficultyLevel.Hard => 30,
+                _ => 10
+            };
+
+            // Add streak bonus
+            if (currentStreak > 0)
+            {
+                pointsEarned += currentStreak * 5;
+            }
+
+            totalScore += pointsEarned;
+            problemsSolved++;
+            currentStreak++;
+
+            if (currentStreak > bestStreak)
+            {
+                bestStreak = currentStreak;
+            }
+        }
+        else
+        {
+            // ❌ INCORRECT ANSWER - ENCOURAGEMENT!
+            feedbackMessage = GetEncouragementMessage(userAnswer.Value, currentProblem.Answer, attemptCount);
+
+            if (attemptCount >= 3)
+            {
+                // After 3 attempts, offer to show answer
+                showAnswerOption = true;
+                feedbackMessage += "\n\n" + GetWittyThirdAttemptMessage();
+            }
+
+            currentStreak = 0;
+        }
+    }
+
+    private void ShowHint()
+    {
+        if (currentProblem == null || currentProblem.Hints.Count == 0)
+            return;
+
+        // Show hints one at a time
+        if (currentHintIndex < currentProblem.Hints.Count)
+        {
+            hintMessage = currentProblem.Hints[currentHintIndex];
+            currentHintIndex++;
+        }
+        else
+        {
+            hintMessage = "You've seen all the hints! Give it your best try! 💪";
+        }
+    }
+
+    private void NextProblem()
+    {
+        GenerateNewProblem();
+    }
+
+    private void BackToMenu()
+    {
+        currentScreen = "menu";
+    }
+
+    private void HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" && !showAnswer)
+        {
+            CheckAnswer();
+        }
+    }
+
+    private void RevealAnswer()
+    {
+        showAnswer = true;
+    }
+
+    private string GetCelebrationMessage()
+    {
+        var messages = new[]
+        {
+            "🎉 YAAASSS QUEEN! YOU NAILED IT! 🎉\n✨ That's some championship-level math right there! ✨",
+            "💖 OMG YOU'RE AMAZING! 💖\n🎀 You just crushed that problem like a boss! 🎀",
+            "🌟 SPECTACULAR! OUTSTANDING! PHENOMENAL! 🌟\n📣 Give me a Y-E-S! That's the right answer! 📣",
+            "🎊 BOOM! PERFECT! 🎊\n💪 You're on FIRE! Keep that streak going! 💪",
+            "✨ WOW! INCREDIBLE! ✨\n🏆 That's how champions do math! 🏆"
+        };
+        return messages[new Random().Next(messages.Length)];
+    }
+
+    private string GetEncouragementMessage(decimal userAns, decimal correctAns, int attempt)
+    {
+        string baseMessage = "";
+
+        // Detect common errors
+        if (Math.Abs(userAns - (correctAns * 2)) < 0.01m)
+        {
+            baseMessage = "💭 Hmm, I see what happened! It looks like you might have multiplied when you should have divided. Let's think about it differently!";
+        }
+        else if (Math.Abs(userAns - (correctAns / 2)) < 0.01m)
+        {
+            baseMessage = "💭 Ooh, I think I see the mix-up! It looks like you divided when you might need to multiply. Try again!";
+        }
+        else if (Math.Abs(userAns - (correctAns + 10)) < 5m || Math.Abs(userAns - (correctAns - 10)) < 5m)
+        {
+            baseMessage = "💭 You're in the ballpark! Check your addition or subtraction - you might have missed a step!";
+        }
+        else if (userAns > correctAns * 2)
+        {
+            baseMessage = "💭 Whoa, that's a bit too high! Remember to check if you need to subtract or divide somewhere!";
+        }
+        else if (userAns < correctAns / 2 && userAns > 0)
+        {
+            baseMessage = "💭 That's a bit too low! Double-check your calculations - you might be missing something!";
+        }
+        else
+        {
+            baseMessage = "💭 Not quite, but don't give up! Every mistake is a chance to learn!";
+        }
+
+        // Add encouraging message based on attempt
+        string encouragement = attempt switch
+        {
+            1 => "\n\n💪 No worries! First tries are for learning! Try again, superstar!",
+            2 => "\n\n🎀 You're getting closer! Maybe try using a hint? You've got this!",
+            _ => ""
+        };
+
+        return baseMessage + encouragement;
+    }
+
+    private string GetWittyThirdAttemptMessage()
+    {
+        var messages = new[]
+        {
+            "😊 Okay bestie, this one's being a little tricky, huh? No stress! Want to see the answer and learn how it works? Or ready to give it another shot? Either way, you're doing GREAT! 💕",
+            "🎀 Alright, this problem is being stubborn! But guess what? So are you! Want me to show you the answer so we can learn together? Or feeling brave enough for another try? 💪",
+            "✨ Three tries means you're really thinking hard - that's awesome! Sometimes the best way to learn is to see how it's done. Want to peek at the answer? Or one more go? 🌟",
+            "💖 Hey, math is tough sometimes - even for cheerleaders! No shame in learning from the answer. Want to see it? Or are you ready to show this problem who's boss? 📣",
+            "🌈 You know what? Three attempts means you're PERSISTENT, and that's a superpower! Ready to see the solution and understand it? Or feeling lucky for round 4? 🍀"
+        };
+        return messages[new Random().Next(messages.Length)];
+    }
+}
+
+<script>
+    // SPARKLY MOUSE TRAIL!
+    document.addEventListener('mousemove', function(e) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+
+        const tx = (Math.random() - 0.5) * 100;
+        const ty = (Math.random() - 0.5) * 100;
+        sparkle.style.setProperty('--tx', tx + 'px');
+        sparkle.style.setProperty('--ty', ty + 'px');
+
+        sparkle.style.left = e.pageX + 'px';
+        sparkle.style.top = e.pageY + 'px';
+
+        document.body.appendChild(sparkle);
+
+        setTimeout(() => sparkle.remove(), 1200);
+    });
+</script>

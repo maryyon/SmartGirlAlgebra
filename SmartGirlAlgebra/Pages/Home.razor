@@ -1,0 +1,105 @@
+﻿@page "/"
+
+<PageTitle>🎀 Smart Girl Algebra</PageTitle>
+
+<link href="css/cheer-theme.css" rel="stylesheet" />
+
+<div class="cheer-container" style="text-align: center;">
+    <div style="margin: 30px 0;">
+        <img src="/images/gogirl.png?v=20251223" alt="Cheerleader" style="max-width: 200px; height: auto; animation: bounce 2s ease-in-out infinite;" />
+    </div>
+
+    <h1 class="rainbow-text" style="font-size: 4em; margin: 30px 0;">
+        <span class="blinking-pompom" style="width: 1.5em; height: 1.5em;"></span>
+        SMART GIRL ALGEBRA
+        <span class="pom-pom">📣</span>
+    </h1>
+
+    <p style="font-size: 1.8em; color: var(--text-dark); margin: 30px 0; line-height: 1.6;">
+        Master algebra through cheerleading! 🎀<br/>
+        Every problem is a cheer-themed adventure!
+    </p>
+
+    <div style="margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 30px; flex-wrap: wrap;">
+        <img src="/images/pompoms.png?v=20251223" alt="Pom-poms" style="max-width: 120px; height: auto; animation: shake 1.5s ease-in-out infinite;" />
+        <img src="/images/cheery.png?v=20251223" alt="Cheerleader" style="max-width: 180px; height: auto; animation: twirl 3s ease-in-out infinite;" />
+        <img src="/images/pompoms.png?v=20251223" alt="Pom-poms" style="max-width: 120px; height: auto; animation: shake 1.5s ease-in-out infinite; animation-delay: 0.5s;" />
+    </div>
+
+    <div style="margin: 60px 0;">
+        <a href="/practice" style="text-decoration: none;">
+            <button class="btn" style="font-size: 1.8em; padding: 30px 60px; animation: pulse 2s ease-in-out infinite;">
+                <span class="blinking-pompom" style="width: 1em; height: 1em;"></span>
+                START PRACTICING
+                <span class="pom-pom" style="font-size: 1em;">📣</span>
+            </button>
+        </a>
+    </div>
+
+    <div style="max-width: 900px; margin: 60px auto; padding: 40px; background: rgba(255,255,255,0.9); border-radius: 25px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <h2 class="rainbow-text" style="font-size: 2.5em; margin-bottom: 30px;">
+            ✨ What You'll Learn ✨
+        </h2>
+
+        <div style="text-align: left; font-size: 1.3em; line-height: 2; font-weight: 500;">
+            <p style="text-shadow: none;">📝 <strong>Linear Equations</strong> - Solve for x with step-by-step guidance</p>
+            <p style="text-shadow: none;">🎯 <strong>Real-World Problems</strong> - Fundraisers, competitions, and squad planning</p>
+            <p style="text-shadow: none;">🏆 <strong>Three Difficulty Levels</strong> - From beginner to championship!</p>
+            <p style="text-shadow: none;">💡 <strong>Hints & Solutions</strong> - Learn from every problem</p>
+            <p style="text-shadow: none;">⭐ <strong>Track Your Progress</strong> - Build streaks and earn points!</p>
+        </div>
+    </div>
+
+    <div style="margin: 60px 0;">
+        <a href="/practice" style="text-decoration: none;">
+            <p style="font-size: 2.2em; font-weight: bold; color: var(--primary-pink); cursor: pointer; text-shadow: 0 2px 4px rgba(255, 20, 147, 0.3); transition: all 0.3s ease;"
+               onmouseover="this.style.transform='scale(1.05)'; this.style.textShadow='0 4px 8px rgba(255, 20, 147, 0.5)';"
+               onmouseout="this.style.transform='scale(1)'; this.style.textShadow='0 2px 4px rgba(255, 20, 147, 0.3)';">
+                Ready to become an algebra champion? 🏆
+            </p>
+        </a>
+    </div>
+</div>
+
+<script>
+    // SPARKLY MOUSE TRAIL!
+    document.addEventListener('mousemove', function(e) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+
+        // Random direction for sparkle
+        const tx = (Math.random() - 0.5) * 100;
+        const ty = (Math.random() - 0.5) * 100;
+        sparkle.style.setProperty('--tx', tx + 'px');
+        sparkle.style.setProperty('--ty', ty + 'px');
+
+        sparkle.style.left = e.pageX + 'px';
+        sparkle.style.top = e.pageY + 'px';
+
+        document.body.appendChild(sparkle);
+
+        setTimeout(() => sparkle.remove(), 1200);
+    });
+
+    // Add random floating emojis
+    function createFloatingEmoji() {
+        const emojis = ['✨', '💖', '🎀', '⭐', '💫', '🌟', '💕'];
+        const emoji = document.createElement('div');
+        emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        emoji.style.cssText = 'position:fixed; font-size:2em; pointer-events:none; z-index:1; transition: all 5s ease-out; opacity:1;';
+        emoji.style.left = Math.random() * window.innerWidth + 'px';
+        emoji.style.top = window.innerHeight + 'px';
+
+        document.body.appendChild(emoji);
+
+        setTimeout(() => {
+            emoji.style.transform = 'translateY(-' + (window.innerHeight + 200) + 'px) rotate(360deg)';
+            emoji.style.opacity = '0';
+        }, 10);
+
+        setTimeout(() => emoji.remove(), 5000);
+    }
+
+    // Create floating emojis periodically
+    setInterval(createFloatingEmoji, 2000);
+</script>
