@@ -16,7 +16,7 @@
       overflow-x: hidden;
     }
 
-    /* 🎀 Animated top-left button */
+    /* 🎀 Animated buttons */
     .origin-button {
       position: fixed;
       top: 20px;
@@ -38,6 +38,27 @@
       text-decoration: none;
     }
 
+    .app-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 14px 28px;
+      background: linear-gradient(135deg, #7a5cff, #9d7fff);
+      color: white;
+      font-weight: 700;
+      border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      animation: bounce 2s infinite;
+      z-index: 1000;
+    }
+
+    .app-button:hover {
+      transform: scale(1.05);
+      color: white;
+      text-decoration: none;
+    }
+
     @keyframes wiggle {
       0%   { transform: rotate(0deg); }
       5%   { transform: rotate(2deg); }
@@ -45,6 +66,11 @@
       15%  { transform: rotate(1deg); }
       20%  { transform: rotate(0deg); }
       100% { transform: rotate(0deg); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
     }
 
     /* 🌟 Hero section */
@@ -120,9 +146,13 @@
 
 <body>
 
-  <!-- 🎀 Animated Origin Story Button -->
-  <a class="origin-button" href="https://smartgirlalgebra.fun">
+  <!-- 🎀 Animated buttons -->
+  <a class="origin-button" href="https://smartgirlalgebra.fun/about">
     🏆 THE SECRET ORIGIN STORY!
+  </a>
+
+  <a class="app-button" href="https://smartgirlalgebra.fun">
+    ✨ LET'S GO GIRL! ✨
   </a>
 
   <!-- 🌟 Hero -->

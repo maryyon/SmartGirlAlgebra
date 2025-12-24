@@ -1,0 +1,23 @@
+{
+  "routes": [
+    {
+      "route": "/*",
+      "allowedRoles": ["anonymous"],
+      "headers": {
+        "X-Requested-Host": "{host}"
+      },
+      "rewrite": "/landing.html",
+      "conditions": {
+        "host": ["smartgirlalgebra.com", "www.smartgirlalgebra.com"]
+      }
+    }
+  ],
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/images/*.{png,jpg,gif,svg}", "/css/*", "/*.{css,js,json}"]
+  },
+  "globalHeaders": {
+    "content-security-policy": "default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:;"
+  }
+}
+
