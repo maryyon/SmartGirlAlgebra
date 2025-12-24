@@ -27,7 +27,7 @@ jobs:
           dotnet-version: '8.0.x'
           
       - name: Build and publish
-        run: dotnet publish SmartGirlAlgebra/SmartGirlAlgebra.csproj -c Release -o publish
+        run: dotnet publish SmartGirlAlgebra/SmartGirlAlgebra.csproj -c Release -o ./output
 
       - name: Deploy to Azure Static Web Apps
         id: builddeploy
@@ -36,9 +36,7 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          app_location: "publish/wwwroot"
-          api_location: ""
-          output_location: ""
+          app_location: "output/wwwroot"
           skip_app_build: true
 
   close_pull_request_job:
