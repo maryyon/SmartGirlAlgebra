@@ -72,6 +72,28 @@
       text-decoration: none;
     }
 
+    /* 📱 Mobile responsive buttons */
+    @media (max-width: 768px) {
+      .origin-button,
+      .app-button {
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        display: block;
+        margin: 10px auto;
+        width: 90%;
+        max-width: 300px;
+        text-align: center;
+        font-size: 14px;
+        padding: 12px 20px;
+      }
+
+      .origin-button {
+        margin-top: 20px;
+      }
+    }
+
     @keyframes wiggle {
       0%   { transform: rotate(0deg); }
       5%   { transform: rotate(2deg); }
@@ -172,11 +194,11 @@
   <div class="hero">
 
     <!-- Jumping cheerleader -->
-    <img src="/images/gogirl.png" alt="Cheerleader jumping" class="cheer-jump">
+    <img src="/images/gogirl.png?v=20251224" alt="Cheerleader jumping" class="cheer-jump">
 
     <!-- Logo + pom -->
     <div class="logo-row">
-      <img src="/images/pompoms.png" alt="Pom pom">
+      <img src="/images/pompoms.png?v=20251224" alt="Pom pom">
       <h1>SMART GIRL ALGEBRA</h1>
     </div>
 
@@ -187,9 +209,21 @@
     </div>
 
     <!-- Accent images -->
-    <img src="/images/lovecheer.png" alt="Cheer love" class="love">
+    <img src="/images/lovecheer.png?v=20251224" alt="Cheer love" class="love">
 
   </div>
+
+  <!-- Force cache refresh for images -->
+  <script>
+    // Clear cache and force reload images
+    if ('caches' in window) {
+      caches.keys().then(function(names) {
+        for (let name of names) {
+          caches.delete(name);
+        }
+      });
+    }
+  </script>
 
 </body>
 </html>
