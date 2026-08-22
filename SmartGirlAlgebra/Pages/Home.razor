@@ -5,12 +5,16 @@
 
 <div class="sga">
 
-    <div class="sga-body" style="padding:2.5rem 1.5rem 1.5rem;">
+    @* Spacing comes from each block's own margin, matching the v0 design;
+       the shared body gap would add to it and spread the screen out. *@
+    <div class="sga-body sga-body--home">
 
         <div style="text-align:center;">
-            <span class="sga-wiggle" style="font-size:3.75rem;" aria-hidden="true">🎀</span>
+            @* The emoji bow renders magenta on every platform, which is off-brand.
+               pomstuff is the school's own blue-and-silver bow, poms and megaphone. *@
+            <img class="sga-crest sga-wiggle" src="images/pomstuff.png" alt="Cheer bow, pom-poms and megaphone" />
             <h1 class="sga-hero">Smart Girl Algebra</h1>
-            <p class="sga-hero__sub">Math, but make it a cheer competition. Pick your level, superstar. 💅</p>
+            <p class="sga-hero__sub">Math, but make it a cheer competition. Pick your level, superstar. 🦅</p>
         </div>
 
         <div class="sga-howto">
@@ -47,7 +51,7 @@
 
         <p style="text-align:center; margin-top:.5rem;">
             <a href="about" style="color:var(--sga-primary); font-weight:700; font-size:.875rem;">
-                🎀 The secret origin story 📣
+                📣 The secret origin story 📣
             </a>
         </p>
 

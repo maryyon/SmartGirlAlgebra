@@ -9,7 +9,11 @@ public class Level
     public string Tagline { get; init; } = "";
     public string Difficulty { get; init; } = "";
 
-    /// <summary>Brightest red at level 1, deepest at level 5.</summary>
+    /// <summary>
+    /// Centennial navy for every level, with school red reserved for the final
+    /// boss. The original design ramped through five reds; a school palette is
+    /// navy, red and white, so a ramp of tints is off-brand by definition.
+    /// </summary>
     public string Color { get; init; } = "";
 
     public string Cheer { get; init; } = "";
@@ -38,7 +42,7 @@ public static class Levels
             Name = "Baby-Step Bootcamp",
             Tagline = "One move and you're out. Easy peasy pom-pom squeezy.",
             Difficulty = "Warm-up",
-            Color = "#ff2740",
+            Color = "#16284b",
             Cheer = "You dug around in your glittery cheer bag, found some cash, then Coach handed you $4 more. Now you're clutching $10. 💰",
             Question = "How much money was hiding in the bag?",
             Equation = "x + 4 = 10",
@@ -48,9 +52,9 @@ public static class Levels
             Chips = ["x", "=", "+", "−"],
             Hints =
             [
-                "The x wants to be ALONE. That + 4 is a clingy friend — time to say bye. 🎀",
+                "The x wants to be ALONE. That + 4 is a clingy friend — time to say bye. 📣",
                 "Subtract 4 from BOTH sides. Fair is fair!",
-                "10 − 4 = 6. Boom. x = 6. 💅"
+                "10 − 4 = 6. Boom. x = 6. 🦅"
             ],
             Walkthrough =
             [
@@ -65,8 +69,8 @@ public static class Levels
             Name = "Two-Step Toe Touch",
             Tagline = "Multiply AND add? Double trouble, you got this.",
             Difficulty = "Getting spicy",
-            Color = "#df1a30",
-            Cheer = "Our squad sold spirit ribbons! Each ribbon is $2, and a sponsor tossed $5 in the jar to start us off. We raised $23 total. 🎀",
+            Color = "#16284b",
+            Cheer = "Our squad sold spirit ribbons! Each ribbon is $2, and a sponsor tossed $5 in the jar to start us off. We raised $23 total. 📣",
             Question = "How many ribbons did the squad sell?",
             Equation = "2x + 5 = 23",
             VariableMeaning = "x = ribbons sold",
@@ -82,7 +86,7 @@ public static class Levels
             Walkthrough =
             [
                 new WalkStep("Read the play 📣", "x is squished by a “times 2” and a “plus 5.” Peel them off one at a time.", "2x + 5 = 23"),
-                new WalkStep("Clear the + 5 🎀", "Subtract 5 from BOTH sides. 23 − 5 = 18.", "2x = 18"),
+                new WalkStep("Clear the + 5 📣", "Subtract 5 from BOTH sides. 23 − 5 = 18.", "2x = 18"),
                 new WalkStep("Split it evenly ✨", "x is times 2, so divide BOTH sides by 2. 18 ÷ 2 = 9.", "x = 9")
             ]
         },
@@ -93,7 +97,7 @@ public static class Levels
             Name = "Both-Sides Beyoncé",
             Tagline = "x is on the left AND the right. The drama.",
             Difficulty = "Certified tricky",
-            Color = "#b31226",
+            Color = "#16284b",
             Cheer = "Our mascot eats 3 tacos every quarter but dropped 4 in the mud. That somehow equals 1 taco a quarter PLUS the 8 it swiped from the band. 🌮",
             Question = "How many quarters (x) are we even talking about?",
             Equation = "3x − 4 = x + 8",
@@ -105,12 +109,12 @@ public static class Levels
             [
                 "Get all the x's on ONE side. Herd those cats. 🐈",
                 "Subtract x from both sides → 2x − 4 = 8.",
-                "Add 4 to both sides → 2x = 12, then divide by 2. x = 6! 💃"
+                "Add 4 to both sides → 2x = 12, then divide by 2. x = 6! 🏆"
             ],
             Walkthrough =
             [
                 new WalkStep("Round up the x's 🐈", "Subtract x from BOTH sides so every x lives on the left.", "2x − 4 = 8"),
-                new WalkStep("Free the number 🎀", "Add 4 to BOTH sides. 8 + 4 = 12.", "2x = 12"),
+                new WalkStep("Free the number 📣", "Add 4 to BOTH sides. 8 + 4 = 12.", "2x = 12"),
                 new WalkStep("Divide and conquer ✨", "Divide BOTH sides by 2. 12 ÷ 2 = 6.", "x = 6")
             ]
         },
@@ -121,7 +125,7 @@ public static class Levels
             Name = "Parenthesis Pyramid",
             Tagline = "Distribute like you're handing out snacks.",
             Difficulty = "Big brain",
-            Color = "#7d0c1a",
+            Color = "#16284b",
             Cheer = "Coach yells: “Triple every (x minus 1) flyer!” That has to match one x plus the 7 backup cheerleaders on the bench. 📣",
             Question = "How many flyers (x) does each stunt group need?",
             Equation = "3(x − 1) = x + 7",
@@ -139,7 +143,7 @@ public static class Levels
             [
                 new WalkStep("Distribute the 3 🍿", "Multiply the 3 by each thing inside: 3·x and 3·(−1).", "3x − 3 = x + 7"),
                 new WalkStep("Round up the x's 🐈", "Subtract x from BOTH sides.", "2x − 3 = 7"),
-                new WalkStep("Free the number, then split 🎀", "Add 3 to both sides → 2x = 10, then divide by 2.", "x = 5")
+                new WalkStep("Free the number, then split 📣", "Add 3 to both sides → 2x = 10, then divide by 2.", "x = 5")
             ]
         },
 
@@ -149,7 +153,7 @@ public static class Levels
             Name = "Pythagoras Goes to Prom",
             Tagline = "Squares, triangles, and one legendary theorem. 🏆",
             Difficulty = "Final boss",
-            Color = "#490810",
+            Color = "#ce2233",
             Cheer = "We're hanging a giant triangular banner. Its two straight sides (the legs) are 6 ft and 8 ft. We need the slanty side — the hypotenuse — for the glitter fringe. ✨ Pythagoras says: leg² + leg² = hypotenuse².",
             Question = "How long is the slanty side, x?",
             Equation = "x² = 6² + 8²",

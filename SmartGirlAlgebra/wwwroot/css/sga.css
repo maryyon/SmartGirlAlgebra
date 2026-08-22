@@ -4,31 +4,81 @@
    varsity team colours rather than the original hot pink.
    ============================================================ */
 
+/* St. Lucie West Centennial High School — the Eagles.
+   Navy, red and white. Three colours, nothing else: no royal blue, no pink,
+   and no gradient ramps, because a school palette does not have those. */
 :root {
   color-scheme: light;
 
-  --sga-background: #eef1f6;
-  --sga-foreground: #16233f;
-  --sga-card: #ffffff;
-  --sga-primary: #1e4fd1;
-  --sga-primary-hi: #3f6fe0;
-  --sga-primary-fg: #ffffff;
-  --sga-secondary: #dde4ef;
-  --sga-secondary-fg: #1a3a8f;
-  --sga-muted: #e6ebf3;
-  --sga-muted-fg: #5a6b86;
-  --sga-accent: #d81f33;
-  --sga-accent-fg: #ffffff;
-  --sga-border: #ccd6e6;
+  --sga-navy: #16284b;
+  --sga-navy-hi: #233a68;
+  --sga-red: #ce2233;
+  --sga-red-hi: #e03040;
 
-  --sga-correct: #16b981;
-  --sga-correct-bg: #e2fbf0;
-  --sga-wrong: #d81f33;
-  --sga-wrong-bg: #fdeaec;
+  --sga-background: #f1f3f7;
+  --sga-foreground: #16284b;
+  --sga-card: #ffffff;
+  --sga-primary: var(--sga-navy);
+  --sga-primary-hi: var(--sga-navy-hi);
+  --sga-primary-fg: #ffffff;
+  --sga-secondary: #d9dee7;
+  --sga-secondary-fg: #16284b;
+  --sga-muted: #e7ebf1;
+  --sga-muted-fg: #5c6880;
+  --sga-accent: var(--sga-red);
+  --sga-accent-fg: #ffffff;
+  --sga-border: #c3cbd8;
+
+  /* Right/wrong must stay legible as feedback, so green survives — but the
+     "wrong" red is the school red, not a separate one. */
+  --sga-correct: #12885f;
+  --sga-correct-bg: #e4f6ee;
+  --sga-wrong: var(--sga-red);
+  --sga-wrong-bg: #fbe9eb;
 
   --sga-radius: 1.25rem;
   --sga-font-display: "Baloo 2", ui-rounded, "Segoe UI", system-ui, sans-serif;
   --sga-font-sans: "Nunito", ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+/* ---------- stage + phone frame ----------
+   Layla's design is an app on a phone, not a web page. On anything wider than a
+   phone it sits in a 420x860 device frame floating on the stage; below that it
+   goes full-bleed, because there it IS the phone. */
+
+html, body {
+  margin: 0;
+  background: var(--sga-secondary);
+}
+
+.sga-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  background: var(--sga-secondary);
+  padding: 0;
+}
+
+.sga-frame {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--sga-background);
+}
+
+@media (min-width: 640px) {
+  .sga-stage { padding: 1.5rem; }
+
+  .sga-frame {
+    height: 860px;
+    max-height: calc(100dvh - 3rem);
+    max-width: 420px;
+    border-radius: 2.75rem;
+    border: 8px solid rgba(22, 35, 63, .85);
+    box-shadow: 0 25px 50px -12px rgba(22, 35, 63, .45);
+  }
 }
 
 /* ---------- shell ---------- */
@@ -37,9 +87,10 @@
   font-family: var(--sga-font-sans);
   background: var(--sga-background);
   color: var(--sga-foreground);
-  min-height: 100dvh;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .sga *,
@@ -257,7 +308,7 @@
   gap: .5rem;
   border: 2px dashed var(--sga-accent);
   border-radius: 1.75rem;
-  background: rgba(216, 31, 51, .08);
+  background: var(--sga-muted);
   padding: 1rem;
 }
 
@@ -468,6 +519,28 @@
 .sga-action--undo { background: var(--sga-muted); color: var(--sga-secondary-fg); }
 .sga-action:disabled { opacity: .45; }
 
+/* ---------- level navigation ---------- */
+
+.sga-nav {
+  margin-top: .5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: .5rem;
+}
+
+.sga-nav__btn {
+  height: 2.5rem;
+  border: 1px solid var(--sga-border);
+  border-radius: .75rem;
+  background: var(--sga-card);
+  color: var(--sga-secondary-fg);
+  font-weight: 700;
+  font-size: .875rem;
+}
+
+.sga-nav__btn--skip { color: var(--sga-muted-fg); }
+.sga-nav__btn:disabled { opacity: .4; }
+
 /* ---------- sheets and overlays ---------- */
 
 .sga-overlay {
@@ -673,6 +746,13 @@
 
 /* ---------- home ---------- */
 
+/* Home spaces itself with per-block margins, exactly as the v0 design does.
+   The shared body gap would stack on top of those and stretch the screen. */
+.sga-body--home {
+  gap: 0;
+  padding: 2.5rem 1.5rem 1.5rem;
+}
+
 .sga-hero {
   margin: 1rem 0 0;
   font-family: var(--sga-font-display);
@@ -692,11 +772,20 @@
   color: var(--sga-muted-fg);
 }
 
+.sga-crest {
+  width: 6.5rem;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* A red wash over white reads as pink, which is the one thing this palette
+   must not do. The fill stays silver; red carries the border and the label. */
 .sga-howto {
   margin-top: 1.5rem;
   border: 2px dashed var(--sga-accent);
   border-radius: 1.75rem;
-  background: rgba(216, 31, 51, .08);
+  background: var(--sga-muted);
   padding: 1rem;
 }
 
@@ -740,6 +829,8 @@
   box-shadow: 0 10px 15px -3px rgba(22, 35, 63, .2);
 }
 
+/* Red numeral on a navy tile puts all three school colours in one mark.
+   The final boss inverts, so its numeral stays legible on red. */
 .sga-levelbtn__num {
   width: 2.75rem;
   height: 2.75rem;
@@ -747,10 +838,15 @@
   display: grid;
   place-items: center;
   border-radius: 1rem;
-  background: rgba(255, 255, 255, .2);
+  background: var(--sga-red);
+  color: #fff;
   font-family: var(--sga-font-display);
   font-size: 1.5rem;
   font-weight: 800;
+}
+
+.sga-levels > .sga-levelbtn:last-child .sga-levelbtn__num {
+  background: var(--sga-navy);
 }
 
 .sga-levelbtn__body { min-width: 0; flex: 1; }
@@ -802,6 +898,60 @@
 }
 
 .sga-footnote a { color: var(--sga-primary); font-weight: 800; margin-left: .5rem; }
+
+/* ---------- about ---------- */
+
+.sga-story p {
+  margin: 0 0 .75rem;
+  font-size: .9375rem;
+  font-weight: 600;
+  line-height: 1.7;
+}
+
+.sga-story p:last-child { margin-bottom: 0; }
+.sga-story strong { font-weight: 800; }
+
+.sga-signature {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .75rem;
+  border-radius: 1.75rem;
+  background: var(--sga-card);
+  border: 1px solid var(--sga-border);
+  padding: 1rem;
+}
+
+.sga-signature img { width: 3rem; height: auto; }
+
+.sga-signature p {
+  margin: 0;
+  font-family: var(--sga-font-display);
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--sga-primary);
+}
+
+.sga-mission {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.7;
+}
+
+.sga-mission li { margin-bottom: .35rem; }
+.sga-mission strong { color: var(--sga-primary); font-weight: 800; }
+
+.sga-crestrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: .5rem 0 1rem;
+}
+
+.sga-crestrow img { width: 4rem; height: auto; }
 
 /* ---------- stats ---------- */
 

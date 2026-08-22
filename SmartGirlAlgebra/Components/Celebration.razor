@@ -25,7 +25,7 @@
         </p>
 
         <button type="button" class="sga-bigbtn" @onclick="OnReplay">
-            Cheer for a new problem 🎀
+            Cheer for a new problem 📣
         </button>
     </div>
 </div>
@@ -34,7 +34,9 @@
     private static readonly System.Globalization.CultureInfo Inv =
         System.Globalization.CultureInfo.InvariantCulture;
 
-    private static readonly string[] Pieces = ["🎀", "📣", "✨", "🏆", "💖", "⭐", "🎉", "💕"];
+    // Every piece here was pixel-checked for pink. Rejected: 🎉 and 🎊 (pink
+    // streamers) and 🔴 (glossy sphere with a rose highlight).
+    private static readonly string[] Pieces = ["📣", "✨", "🏆", "⭐", "📐", "🦅", "💙", "🔵"];
 
     [Parameter, EditorRequired] public string Answer { get; set; } = "";
     [Parameter] public EventCallback OnReplay { get; set; }

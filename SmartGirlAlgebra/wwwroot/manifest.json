@@ -1,11 +1,11 @@
-﻿{
+{
   "name": "Smart Girl Algebra",
   "short_name": "SGA",
-  "description": "Learn algebra through cheerleading! Master linear equations with fun, themed problems.",
+  "description": "Solve algebra one line at a time, and get told exactly where you went wrong.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#FFB6C1",
-  "theme_color": "#FF69B4",
+  "background_color": "#f1f3f7",
+  "theme_color": "#16284b",
   "orientation": "portrait-primary",
   "icons": [
     {
@@ -21,13 +21,5 @@
       "purpose": "any maskable"
     }
   ],
-  "categories": ["education", "games"],
-  "screenshots": [
-    {
-      "src": "/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    }
-  ]
+  "categories": ["education"]
 }
-

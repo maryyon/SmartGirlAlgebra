@@ -28,7 +28,7 @@ else
                     <p class="sga-subtitle">Level @_level.Id · @_level.Difficulty</p>
                 </div>
             </div>
-            <span class="sga-wiggle" style="font-size:1.5rem;" aria-hidden="true">🎀</span>
+            <span class="sga-wiggle" style="font-size:1.5rem;" aria-hidden="true">📣</span>
         </header>
 
         <div class="sga-body">
@@ -128,6 +128,23 @@ else
                     ↩️ Erase last
                 </button>
             </div>
+
+            <nav class="sga-nav" aria-label="Move between levels">
+                <button type="button" class="sga-nav__btn"
+                        disabled="@(_level.Id <= 1)"
+                        @onclick="@(() => GoToLevel(_level.Id - 1))">
+                    ‹ Back
+                </button>
+                <button type="button" class="sga-nav__btn sga-nav__btn--skip"
+                        @onclick="Skip">
+                    Skip
+                </button>
+                <button type="button" class="sga-nav__btn"
+                        disabled="@(_level.Id >= Levels.All.Count)"
+                        @onclick="@(() => GoToLevel(_level.Id + 1))">
+                    Next ›
+                </button>
+            </nav>
         </div>
 
         @if (_showHow)
@@ -270,6 +287,22 @@ else
     {
         if (_level is null) return;
         _hintIndex = Math.Min(_hintIndex + 1, _level.Hints.Length - 1);
+    }
+
+    private void GoToLevel(int id)
+    {
+        if (Levels.ById(id) is null) return;
+        Nav.NavigateTo($"solve/{id}");
+    }
+
+    // Bail out of a problem she's stuck on. Goes forward if there's anywhere to
+    // go, otherwise back to the level list rather than trapping her here.
+    private void Skip()
+    {
+        if (_level is null) return;
+
+        if (Levels.ById(_level.Id + 1) is not null) Nav.NavigateTo($"solve/{_level.Id + 1}");
+        else Nav.NavigateTo("");
     }
 
     private void InsertChip(string chip)

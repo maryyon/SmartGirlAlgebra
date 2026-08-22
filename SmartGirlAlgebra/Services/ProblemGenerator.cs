@@ -92,7 +92,7 @@ public class ProblemGenerator
         // Add 5th-grader friendly hints (4 hints - NO ANSWER!)
         problem.Hints.Add($"💡 HINT 1: First, let's figure out what we know! You have ${totalMoney} total to spend.");
         problem.Hints.Add($"💰 HINT 2: The team bag costs ${bagCost}. That's money you HAVE to spend no matter what, so subtract it first: ${totalMoney} - ${bagCost} = ${totalMoney - bagCost}");
-        problem.Hints.Add($"🎀 HINT 3: Now you have ${totalMoney - bagCost} left over just for pom-poms!");
+        problem.Hints.Add($"📣 HINT 3: Now you have ${totalMoney - bagCost} left over just for pom-poms!");
         problem.Hints.Add($"➗ HINT 4: Each pair of pom-poms costs ${pricePerPair}. To find how many pairs you can buy, divide the leftover money by the price. What is ${totalMoney - bagCost} ÷ ${pricePerPair}?");
 
         return problem;

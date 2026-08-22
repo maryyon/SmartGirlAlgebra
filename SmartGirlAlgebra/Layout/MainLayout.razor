@@ -1,5 +1,10 @@
 @inherits LayoutComponentBase
 
-@* Every screen brings its own header and back button, so the shell stays out
-   of the way. No sidebar, no banner — the app should feel like an app. *@
-@Body
+@* The app lives inside a phone frame, the way Layla designed it: a 420x860
+   device floating on the stage on anything desktop-sized, and full-bleed on a
+   real phone. Every screen brings its own header, so there is no shared chrome. *@
+<div class="sga-stage">
+    <div class="sga-frame">
+        @Body
+    </div>
+</div>

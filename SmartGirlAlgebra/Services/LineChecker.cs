@@ -39,7 +39,7 @@ public static class LineChecker
         if (equalsCount == 0)
         {
             return new CheckResult(CheckStatus.Wrong,
-                "Every line needs an equals sign (=)! Keep both sides balanced, squad. 🎀");
+                "Every line needs an equals sign (=)! Keep both sides balanced, squad. 📣");
         }
 
         if (equalsCount > 1)
@@ -103,7 +103,7 @@ public static class LineChecker
         }
 
         return new CheckResult(CheckStatus.Wrong,
-            $"{Encourage()}, superstar! The two sides stopped balancing — peek at your last move. 💕");
+            $"{Encourage()}, superstar! The two sides stopped balancing — peek at your last move. 🦅");
     }
 
     private static bool SafeNearZero(Func<double, double> f, double x)
