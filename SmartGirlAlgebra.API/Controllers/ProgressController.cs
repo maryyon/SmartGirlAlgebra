@@ -1,17 +1,17 @@
-﻿using SmartGirlAlgebra.API.Data;
-using SmartGirlAlgebra.API.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
+using SmartGirlAlgebra.API.Data;
+using SmartGirlAlgebra.API.Models;
+using SmartGirlAlgebra.API.Services;
 
 namespace SmartGirlAlgebra.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
 public class ProgressController : ControllerBase
 {
+    private const string CodeHeader = "X-Player-Code";
+
     private readonly ApplicationDbContext _context;
 
     public ProgressController(ApplicationDbContext context)
@@ -20,58 +20,47 @@ public class ProgressController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<UserProgress>> GetProgress()
+    public async Task<ActionResult<PlayerResponse>> GetProgress()
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (userId == null)
-        {
-            return Unauthorized();
-        }
+        var player = await ResolvePlayerAsync();
+        if (player == null) return Unauthorized(new { message = "Unknown or missing player code." });
 
-        var progress = await _context.UserProgress
-            .FirstOrDefaultAsync(p => p.UserId == userId);
-
-        if (progress == null)
-        {
-            // Create if doesn't exist
-            progress = new UserProgress { UserId = userId };
-            _context.UserProgress.Add(progress);
-            await _context.SaveChangesAsync();
-        }
-
-        return Ok(progress);
+        return Ok(PlayerResponse.From(player));
     }
 
-    [HttpPost("update")]
-    public async Task<ActionResult<UserProgress>> UpdateProgress([FromBody] UserProgress updatedProgress)
+    /// <summary>
+    /// Stores the player's running totals. The client owns the arithmetic; the server
+    /// keeps whichever totals are higher so a stale device can never erase real progress.
+    /// </summary>
+    [HttpPost]
+    public async Task<ActionResult<PlayerResponse>> UpdateProgress([FromBody] ProgressUpdate update)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (userId == null)
-        {
-            return Unauthorized();
-        }
+        var player = await ResolvePlayerAsync();
+        if (player == null) return Unauthorized(new { message = "Unknown or missing player code." });
 
-        var progress = await _context.UserProgress
-            .FirstOrDefaultAsync(p => p.UserId == userId);
+        player.TotalProblemsAttempted = Math.Max(player.TotalProblemsAttempted, update.TotalProblemsAttempted);
+        player.TotalCorrect = Math.Max(player.TotalCorrect, update.TotalCorrect);
+        player.TotalScore = Math.Max(player.TotalScore, update.TotalScore);
+        player.BestStreak = Math.Max(player.BestStreak, update.BestStreak);
 
-        if (progress == null)
-        {
-            progress = new UserProgress { UserId = userId };
-            _context.UserProgress.Add(progress);
-        }
+        // The current streak is genuinely current, so it takes the client's value.
+        player.CurrentStreak = update.CurrentStreak;
 
-        // Update fields
-        progress.TotalProblemsAttempted = updatedProgress.TotalProblemsAttempted;
-        progress.TotalCorrect = updatedProgress.TotalCorrect;
-        progress.CurrentStreak = updatedProgress.CurrentStreak;
-        progress.BestStreak = updatedProgress.BestStreak;
-        progress.TotalScore = updatedProgress.TotalScore;
-        progress.LastPlayedDate = DateTime.UtcNow;
-        progress.UpdatedAt = DateTime.UtcNow;
+        player.LastPlayedDate = DateTime.UtcNow;
+        player.LastSeenAt = DateTime.UtcNow;
 
         await _context.SaveChangesAsync();
 
-        return Ok(progress);
+        return Ok(PlayerResponse.From(player));
+    }
+
+    private async Task<Player?> ResolvePlayerAsync()
+    {
+        if (!Request.Headers.TryGetValue(CodeHeader, out var raw)) return null;
+
+        var code = SyncCodeGenerator.Normalize(raw.ToString());
+        if (code == null) return null;
+
+        return await _context.Players.FirstOrDefaultAsync(p => p.Code == code);
     }
 }
-

@@ -1,0 +1,75 @@
+@namespace SmartGirlAlgebra.Components
+@inject IJSRuntime JS
+
+<div class="sga-scratch">
+    <div class="sga-scratch__eyebrow">✏️ Think it out</div>
+
+    <canvas @ref="_canvas"
+            class="sga-scratch__canvas"
+            aria-label="Scratch pad: draw your thinking here with your finger"></canvas>
+
+    <span class="sga-scratch__label">scribble zone</span>
+
+    <div class="sga-scratch__tools">
+        <button type="button"
+                class="sga-pill"
+                aria-label="Choose marker color"
+                aria-expanded="@_pickerOpen"
+                @onclick="TogglePicker">
+            🎨 <span @ref="_swatch" class="sga-swatch"></span>
+        </button>
+        <button type="button" class="sga-pill" @onclick="Clear">
+            🧽 Clear
+        </button>
+    </div>
+
+    @if (_pickerOpen)
+    {
+        <div class="sga-picker" role="dialog" aria-label="Marker color picker">
+            <div class="sga-picker__wheelwrap">
+                <canvas @ref="_wheel" class="sga-picker__wheel"></canvas>
+                <span @ref="_dot" class="sga-picker__dot"></span>
+            </div>
+            <label class="sga-picker__bright">
+                <span aria-hidden="true">Dark</span>
+                <input @ref="_slider" type="range" min="0.2" max="1" step="0.01"
+                       aria-label="Marker brightness" />
+                <span aria-hidden="true">Bright</span>
+            </label>
+        </div>
+    }
+</div>
+
+@code {
+    private ElementReference _canvas;
+    private ElementReference _wheel;
+    private ElementReference _dot;
+    private ElementReference _swatch;
+    private ElementReference _slider;
+
+    private bool _pickerOpen;
+    private bool _wheelPending;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("sgaScratch.initPad", _canvas);
+        }
+
+        // The wheel canvas only exists once the picker has rendered.
+        if (_wheelPending)
+        {
+            _wheelPending = false;
+            await JS.InvokeVoidAsync("sgaScratch.initWheel", _canvas, _wheel, _dot, _swatch, _slider);
+        }
+    }
+
+    private void TogglePicker()
+    {
+        _pickerOpen = !_pickerOpen;
+        if (_pickerOpen) _wheelPending = true;
+    }
+
+    private async Task Clear() => await JS.InvokeVoidAsync("sgaScratch.clearPad", _canvas);
+}

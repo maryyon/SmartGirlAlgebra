@@ -1,5 +1,4 @@
-﻿@inject AuthService AuthService
-@inject NavigationManager Navigation
+@inject PlayerService Player
 @implements IDisposable
 
 <div class="top-row ps-3 navbar navbar-dark">
@@ -23,31 +22,18 @@
                 <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> 📝 Practice
             </NavLink>
         </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="mycode">
+                <span class="bi bi-link-45deg" aria-hidden="true"></span> 🔗 My code
+            </NavLink>
+        </div>
 
-        @if (isAuthenticated)
+        @if (Player.HasIdentity)
         {
             <div class="nav-item px-3" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2);">
-                <div style="color: white; padding: 10px;">
-                    👋 Hi, @displayName!
+                <div style="color: white; padding: 10px; font-size: .8rem; letter-spacing: .04em;">
+                    @Player.Code
                 </div>
-            </div>
-            <div class="nav-item px-3">
-                <button class="nav-link" @onclick="HandleLogout" style="background: none; border: none; width: 100%; text-align: left; cursor: pointer;">
-                    <span class="bi bi-box-arrow-right" aria-hidden="true"></span> 🚪 Logout
-                </button>
-            </div>
-        }
-        else
-        {
-            <div class="nav-item px-3" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2);">
-                <NavLink class="nav-link" href="login">
-                    <span class="bi bi-box-arrow-in-right" aria-hidden="true"></span> 🔑 Login
-                </NavLink>
-            </div>
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="register">
-                    <span class="bi bi-person-plus-fill" aria-hidden="true"></span> ✨ Register
-                </NavLink>
             </div>
         }
     </nav>
@@ -55,45 +41,14 @@
 
 @code {
     private bool collapseNavMenu = true;
-    private bool isAuthenticated = false;
-    private string displayName = "";
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-    protected override async Task OnInitializedAsync()
-    {
-        AuthService.OnAuthStateChanged += OnAuthStateChanged;
-        await UpdateAuthState();
-    }
+    protected override void OnInitialized() => Player.Changed += OnChanged;
 
-    private async Task UpdateAuthState()
-    {
-        isAuthenticated = await AuthService.IsAuthenticatedAsync();
-        if (isAuthenticated)
-        {
-            displayName = await AuthService.GetUserDisplayNameAsync() ?? "User";
-        }
-        StateHasChanged();
-    }
+    private void ToggleNavMenu() => collapseNavMenu = !collapseNavMenu;
 
-    private void OnAuthStateChanged()
-    {
-        InvokeAsync(UpdateAuthState);
-    }
+    private void OnChanged() => InvokeAsync(StateHasChanged);
 
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-
-    private async Task HandleLogout()
-    {
-        await AuthService.LogoutAsync();
-        Navigation.NavigateTo("/");
-    }
-
-    public void Dispose()
-    {
-        AuthService.OnAuthStateChanged -= OnAuthStateChanged;
-    }
+    public void Dispose() => Player.Changed -= OnChanged;
 }

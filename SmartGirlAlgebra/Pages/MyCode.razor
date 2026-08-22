@@ -1,0 +1,137 @@
+@page "/mycode"
+@inject NavigationManager Nav
+@inject PlayerService Player
+@implements IDisposable
+
+<PageTitle>My code · Smart Girl Algebra</PageTitle>
+
+<div class="sga">
+
+    <header class="sga-header">
+        <div class="sga-header__left">
+            <button type="button" class="sga-iconbtn" aria-label="Back"
+                    @onclick="@(() => Nav.NavigateTo(""))">🏠</button>
+            <div>
+                <h1 class="sga-title">Your squad code</h1>
+                <p class="sga-subtitle">Takes your progress anywhere</p>
+            </div>
+        </div>
+        <span class="sga-wiggle" style="font-size:1.5rem;" aria-hidden="true">🔗</span>
+    </header>
+
+    <div class="sga-body">
+
+        <section class="sga-problem" aria-label="Your code">
+            <div class="sga-problem__eyebrow">✨ This is yours</div>
+
+            @if (Player.HasIdentity)
+            {
+                <div class="sga-equation" style="justify-content:center;">
+                    <span class="sga-code">@Player.Code</span>
+                </div>
+                <p class="sga-problem__cheer" style="margin-top:.75rem;">
+                    Type this on any other phone, tablet or laptop and your streak comes with you.
+                    Write it somewhere safe — it's the only way back to your score. 🎀
+                </p>
+            }
+            else
+            {
+                <p class="sga-problem__cheer">
+                    You'll get a code the moment you answer your first line. Nothing to sign up for. 📣
+                </p>
+            }
+        </section>
+
+        <section class="sga-problem" aria-label="Your stats"
+                 style="background:linear-gradient(to bottom right, #16233f, #2b3f6b);">
+            <div class="sga-problem__eyebrow">🏆 Your stats</div>
+            <div class="sga-stats">
+                <div class="sga-stat">
+                    <div class="sga-stat__label">Lines solved</div>
+                    <div class="sga-stat__value">@Player.Stats.TotalCorrect</div>
+                </div>
+                <div class="sga-stat">
+                    <div class="sga-stat__label">Current streak</div>
+                    <div class="sga-stat__value">@Player.Stats.CurrentStreak</div>
+                </div>
+                <div class="sga-stat">
+                    <div class="sga-stat__label">Best streak</div>
+                    <div class="sga-stat__value">@Player.Stats.BestStreak</div>
+                </div>
+                <div class="sga-stat">
+                    <div class="sga-stat__label">Total score</div>
+                    <div class="sga-stat__value">@Player.Stats.TotalScore</div>
+                </div>
+            </div>
+        </section>
+
+        <section aria-label="Enter a code">
+            <div class="sga-hints" style="border-style:solid;">
+                <div class="sga-hints__eyebrow">🔑 Got a code from another device?</div>
+                <p>Type it here and this device joins that progress.</p>
+
+                <div class="sga-entry" style="margin-top:.5rem;">
+                    <input class="sga-input"
+                           @bind="_entry"
+                           @bind:event="oninput"
+                           @onkeydown="OnKeyDown"
+                           placeholder="SGA-7K4M2P"
+                           autocapitalize="characters"
+                           autocomplete="off"
+                           spellcheck="false"
+                           aria-label="Enter a sync code" />
+                    <button type="button" class="sga-check"
+                            disabled="@(string.IsNullOrWhiteSpace(_entry) || _busy)"
+                            @onclick="Claim">@(_busy ? "…" : "Join")</button>
+                </div>
+
+                @if (!string.IsNullOrEmpty(_message))
+                {
+                    <p style="color:@(_ok ? "var(--sga-correct)" : "var(--sga-wrong)"); font-weight:700;">
+                        @_message
+                    </p>
+                }
+            </div>
+        </section>
+
+        <p style="font-size:.8125rem; color:var(--sga-muted-fg); text-align:center;">
+            No email, no password, no name. The app doesn't know who you are —
+            just this code and your score.
+        </p>
+
+    </div>
+</div>
+
+@code {
+    private string _entry = "";
+    private string? _message;
+    private bool _ok;
+    private bool _busy;
+
+    protected override void OnInitialized() => Player.Changed += OnChanged;
+
+    private async Task Claim()
+    {
+        if (string.IsNullOrWhiteSpace(_entry) || _busy) return;
+
+        _busy = true;
+        _message = null;
+
+        var (ok, error) = await Player.ClaimAsync(_entry.Trim());
+
+        _busy = false;
+        _ok = ok;
+        _message = ok ? "You're in! Your progress just moved over. 🏆" : error;
+
+        if (ok) _entry = "";
+    }
+
+    private async Task OnKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter") await Claim();
+    }
+
+    private void OnChanged() => InvokeAsync(StateHasChanged);
+
+    public void Dispose() => Player.Changed -= OnChanged;
+}

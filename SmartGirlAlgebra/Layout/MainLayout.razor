@@ -1,20 +1,5 @@
-﻿@inherits LayoutComponentBase
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+@inherits LayoutComponentBase
 
-    <main>
-        <div class="top-row px-4">
-            <a href="/about" class="about-link-animated">
-                <span class="pompom-spin">🎀</span>
-                THE SECRET ORIGIN STORY!
-                <span class="pompom-spin">📣</span>
-            </a>
-        </div>
-
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+@* Every screen brings its own header and back button, so the shell stays out
+   of the way. No sidebar, no banner — the app should feel like an app. *@
+@Body

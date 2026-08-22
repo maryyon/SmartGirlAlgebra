@@ -7,15 +7,12 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-// Configure API HttpClient
-var apiBaseAddress = builder.Configuration["ApiBaseAddress"] ?? "https://localhost:7217/";
+var apiBaseAddress = builder.Configuration["ApiBaseAddress"] ?? builder.HostEnvironment.BaseAddress;
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(apiBaseAddress) });
 
-// Register API services
-builder.Services.AddScoped<AuthService>();
-builder.Services.AddScoped<ProgressService>();
+builder.Services.AddScoped<PlayerService>();
 
-// Register algebra services
+// Algebra engine
 builder.Services.AddSingleton<ExpressionParser>();
 builder.Services.AddSingleton<ExpressionEvaluator>();
 builder.Services.AddSingleton<ExpressionSimplifier>();
@@ -25,8 +22,9 @@ builder.Services.AddSingleton<ProblemGenerator>();
 
 var host = builder.Build();
 
-// Initialize auth service
-var authService = host.Services.GetRequiredService<AuthService>();
-await authService.InitializeAsync();
+// Picks up an existing sync code if this device already has one. Never blocks
+// play — a failure here just means she starts fresh on this device.
+var player = host.Services.GetRequiredService<PlayerService>();
+await player.InitializeAsync();
 
 await host.RunAsync();

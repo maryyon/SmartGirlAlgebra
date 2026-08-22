@@ -1,0 +1,59 @@
+@namespace SmartGirlAlgebra.Components
+
+<div class="sga-overlay sga-overlay--center" role="dialog" aria-modal="true" aria-label="You solved it">
+    @foreach (var piece in _confetti)
+    {
+        <span class="sga-confetti"
+              aria-hidden="true"
+              style="left:@(piece.Left.ToString(Inv))%; font-size:@(piece.Size.ToString(Inv))px; animation-duration:@(piece.Duration.ToString(Inv))s; animation-delay:@(piece.Delay.ToString(Inv))s;">
+            @piece.Emoji
+        </span>
+    }
+
+    <div class="sga-win sga-bounce-in">
+        <div class="sga-win__trophy sga-wiggle">🏆</div>
+        <h2>SQUAD GOALS!</h2>
+        <p style="margin:.25rem 0 0; font-weight:600;">You solved it, superstar! 📣</p>
+
+        <div class="sga-win__answer">
+            <p>Your winning answer</p>
+            <p>@Answer</p>
+        </div>
+
+        <p style="margin:.75rem 0 0; font-size:.875rem; color:var(--sga-muted-fg);">
+            That's a perfect routine — every single line stuck the landing. ✨
+        </p>
+
+        <button type="button" class="sga-bigbtn" @onclick="OnReplay">
+            Cheer for a new problem 🎀
+        </button>
+    </div>
+</div>
+
+@code {
+    private static readonly System.Globalization.CultureInfo Inv =
+        System.Globalization.CultureInfo.InvariantCulture;
+
+    private static readonly string[] Pieces = ["🎀", "📣", "✨", "🏆", "💖", "⭐", "🎉", "💕"];
+
+    [Parameter, EditorRequired] public string Answer { get; set; } = "";
+    [Parameter] public EventCallback OnReplay { get; set; }
+
+    private record Piece(double Left, double Delay, double Duration, double Size, string Emoji);
+
+    private readonly List<Piece> _confetti = [];
+
+    protected override void OnInitialized()
+    {
+        var rng = Random.Shared;
+        for (var i = 0; i < 28; i++)
+        {
+            _confetti.Add(new Piece(
+                Left: Math.Round(rng.NextDouble() * 100, 2),
+                Delay: Math.Round(rng.NextDouble() * 0.6, 2),
+                Duration: Math.Round(2 + rng.NextDouble() * 1.8, 2),
+                Size: Math.Round(18 + rng.NextDouble() * 20, 1),
+                Emoji: Pieces[i % Pieces.Length]));
+        }
+    }
+}
