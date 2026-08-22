@@ -56,44 +56,15 @@
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="js/scratchpad.js"></script>
 
-    <!-- FORCE CACHE CLEAR ON LOAD -->
-    <script>
-        // Clear all caches on page load to ensure fresh content
-        if ('caches' in window) {
-            caches.keys().then(function(names) {
-                for (let name of names) {
-                    caches.delete(name);
-                }
-            });
-        }
+    <!--
+      No service worker is registered here, on purpose.
 
-        // Force reload images with cache busting
-        window.addEventListener('load', function() {
-            const images = document.querySelectorAll('img');
-            images.forEach(img => {
-                if (img.src.includes('/images/')) {
-                    const url = new URL(img.src);
-                    url.searchParams.set('t', Date.now());
-                    img.src = url.toString();
-                }
-            });
-        });
-    </script>
-
-    <!-- Service Worker Registration -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/service-worker.js')
-                .then(registration => {
-                    console.log('Service Worker registered:', registration);
-                    // Check for updates every 5 seconds
-                    setInterval(() => {
-                        registration.update();
-                    }, 5000);
-                })
-                .catch(error => console.log('Service Worker registration failed:', error));
-        }
-    </script>
+      service-worker.js still exists on the server, but only to undo the old one:
+      browsers that cached December's build re-fetch it, and it wipes their caches
+      and unregisters itself. Registering it again from this page would restart
+      that cycle on every load — the worker removes itself, the page puts it back.
+      Do not re-add a registration without a cache name derived from the build.
+    -->
 </body>
 
 </html>
