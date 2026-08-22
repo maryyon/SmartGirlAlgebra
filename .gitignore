@@ -89,3 +89,14 @@ node_modules/
 *.bak
 *_OLD/
 
+
+# JetBrains IDE state. This directory leaked a live SQL connection string
+# into public history once (an AI-assistant transcript stored under
+# .idea/.idea.SmartGirlAlgebra/) — it must never be committed again.
+.idea/
+.vs/
+
+# Local secrets. Real connection strings and keys belong in App Service
+# configuration, never in the repository.
+appsettings.*.local.json
+secrets.json
