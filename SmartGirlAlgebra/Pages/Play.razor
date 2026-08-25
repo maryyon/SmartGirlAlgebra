@@ -8,7 +8,11 @@
 
 <PageTitle>@(_level?.Name ?? "Play")</PageTitle>
 
-@if (_profile is null || _level is null)
+@if (_unknown)
+{
+    <UnknownVersion Requested="@ProfileId" Available="_index!.Available" Suggestion="_suggestion" />
+}
+else if (_profile is null || _level is null)
 {
     <div class="sga">
         <div class="sga-body">
@@ -38,9 +42,24 @@ else
 
     private Profile? _profile;
     private Level? _level;
+    private ProfileIndex? _index;
+    private ProfileEntry? _suggestion;
+    private bool _unknown;
 
     protected override async Task OnParametersSetAsync()
     {
+        _index = await Profiles.GetIndexAsync();
+
+        _unknown = !_index.Knows(ProfileId);
+        if (_unknown)
+        {
+            _suggestion = _index.NearestTo(ProfileId);
+            _profile = null;
+            _level = null;
+            return;
+        }
+
+        _suggestion = null;
         _profile = await Profiles.LoadAsync(ProfileId);
         if (_profile is null) return;
 

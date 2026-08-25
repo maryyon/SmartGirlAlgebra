@@ -1,34 +1,36 @@
 {
   "_note": "SL · 3rd grade · gymnastics, cheer, dance and singing mixed at random. Third grade multiplies and divides within 144 and meets fractions as numbers (Florida MA.3.AR / MA.3.FR), but has no algebraic notation yet — so tap-the-answer, with genuinely third-grade arithmetic rather than easier numbers.",
-
   "id": "sl",
   "name": "Smart Squad Math",
   "tagline": "Math, but make it a performance. Pick your act! ⭐",
   "howToPlay": "Read the story, then <strong>tap the answer</strong> you think is right. Get it wrong and we'll help you try again. Stuck? Tap <strong>Need a tip?</strong>",
   "codePrefix": "SL",
   "mode": "Choice",
-  "crest": "images/pomstuff.png",
+  "crest": "images/cheer-turquoise.png",
   "levelPickerTitle": "Choose your act",
   "levelPickerSubtitle": "Level 1 = warm-up. Level 5 = the big finish! 🏆",
   "footerNote": "✨ No sign-up, no passwords — just you, the numbers, and the spotlight.",
-
   "theme": {
-    "primary": "#0f4c5c",
-    "primaryHi": "#1b6b7f",
-    "accent": "#e8a33d",
-    "background": "#eef2f3",
-    "foreground": "#0d3d4a",
+    "primary": "#0e8a95",
+    "primaryHi": "#16aeb9",
+    "primaryFg": "#ffffff",
+    "accent": "#f5b942",
+    "accentFg": "#06474d",
+    "background": "#edf6f7",
+    "foreground": "#084a50",
     "card": "#ffffff",
-    "secondary": "#d3e2e5",
-    "secondaryFg": "#0f4c5c",
-    "muted": "#e2eaec",
-    "mutedFg": "#5b7480",
-    "border": "#b9cfd4",
-    "googleFonts": ["Baloo+2:wght@600;700;800", "Nunito:wght@400;600;700;800"],
+    "secondary": "#cfe8ea",
+    "secondaryFg": "#0a6b73",
+    "muted": "#dff0f1",
+    "mutedFg": "#547e83",
+    "border": "#b4d9dd",
+    "googleFonts": [
+      "Baloo+2:wght@600;700;800",
+      "Nunito:wght@400;600;700;800"
+    ],
     "fontDisplay": "\"Baloo 2\", ui-rounded, \"Segoe UI\", system-ui, sans-serif",
     "fontSans": "\"Nunito\", ui-sans-serif, system-ui, -apple-system, sans-serif"
   },
-
   "levels": [
     {
       "id": 1,
@@ -37,7 +39,12 @@
       "difficulty": "Warm-up",
       "cheer": "The gymnastics team lines up in 4 rows. There are 6 gymnasts in every row. 🤸",
       "question": "How many gymnasts altogether?",
-      "choices": ["10", "18", "24", "28"],
+      "choices": [
+        "10",
+        "18",
+        "24",
+        "28"
+      ],
       "correctChoice": "24",
       "hints": [
         "4 rows of 6 means 4 sixes added up.",
@@ -52,7 +59,12 @@
       "difficulty": "Getting warm",
       "cheer": "24 dancers need to split into 4 equal lines for the routine. 💃",
       "question": "How many dancers in each line?",
-      "choices": ["4", "6", "8", "12"],
+      "choices": [
+        "4",
+        "6",
+        "8",
+        "12"
+      ],
       "correctChoice": "6",
       "hints": [
         "Share 24 out fairly between 4 lines.",
@@ -67,7 +79,12 @@
       "difficulty": "Certified tricky",
       "cheer": "The choir practises 7 songs. They sing each one 8 times before the show. 🎤",
       "question": "How many times do they sing altogether?",
-      "choices": ["15", "49", "54", "56"],
+      "choices": [
+        "15",
+        "49",
+        "54",
+        "56"
+      ],
       "correctChoice": "56",
       "hints": [
         "You need 7 × 8.",
@@ -82,7 +99,12 @@
       "difficulty": "Big brain",
       "cheer": "There are 12 spirit ribbons. One quarter of them are gold. 🎀",
       "question": "How many ribbons are gold?",
-      "choices": ["2", "3", "4", "6"],
+      "choices": [
+        "2",
+        "3",
+        "4",
+        "6"
+      ],
       "correctChoice": "3",
       "hints": [
         "One quarter means splitting into 4 equal groups.",
@@ -97,13 +119,63 @@
       "difficulty": "Big finish",
       "cheer": "5 cheer squads arrive with 9 girls each. Then 7 more girls turn up late. 📣",
       "question": "How many girls are there now?",
-      "choices": ["21", "45", "52", "63"],
+      "choices": [
+        "21",
+        "45",
+        "52",
+        "63"
+      ],
       "correctChoice": "52",
       "hints": [
         "Do the squads first: 5 lots of 9.",
         "5 × 9 = 45.",
         "Now add the latecomers: 45 + 7 = 52!"
       ]
+    }
+  ],
+  "icons": [
+    "star",
+    "mic",
+    "slipper",
+    "sparkle",
+    "note"
+  ],
+  "_themeNote": "Turquoise, with gold to lift it.",
+  "encouragement": {
+    "correct": [
+      "Yes! Take a bow.",
+      "Nice one!",
+      "You've got this.",
+      "Right again!"
+    ],
+    "wrong": [
+      "Almost!",
+      "Not quite.",
+      "So close.",
+      "Try once more."
+    ],
+    "solved": [
+      "TAKE A BOW!",
+      "STANDING OVATION!",
+      "YOU DID IT!"
+    ]
+  },
+  "verses": [
+    {
+      "text": "I can do all things through Christ, who strengthens me.",
+      "ref": "Philippians 4:13"
+    },
+    {
+      "text": "Let us not be weary in doing good…",
+      "ref": "Galatians 6:9"
+    },
+    {
+      "text": "…I am fearfully and wonderfully made.",
+      "ref": "Psalm 139:14"
+    },
+    {
+      "text": "For God didn’t give us a spirit of fear, but of power, love, and self-control.",
+      "ref": "2 Timothy 1:7"
     }
   ]
 }

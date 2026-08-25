@@ -6,6 +6,12 @@
 
 <PageTitle>@(_profile?.Name ?? "Smart Girl Algebra")</PageTitle>
 
+@if (_unknown)
+{
+    <UnknownVersion Requested="@(ProfileId ?? "")" Available="_index!.Available" Suggestion="_suggestion" />
+}
+else
+{
 <div class="sga">
 
     @if (_profile is null)
@@ -75,14 +81,32 @@
     }
 
 </div>
+}
 
 @code {
     [Parameter] public string? ProfileId { get; set; }
 
     private Profile? _profile;
+    private ProfileIndex? _index;
+    private ProfileEntry? _suggestion;
+    private bool _unknown;
 
     protected override async Task OnParametersSetAsync()
     {
+        _index = await Profiles.GetIndexAsync();
+
+        // A missing segment is fine — the domain or the default decides. A segment
+        // that names nothing is a mistake, and saying so beats loading someone else's.
+        _unknown = !string.IsNullOrWhiteSpace(ProfileId) && !_index.Knows(ProfileId);
+
+        if (_unknown)
+        {
+            _suggestion = _index.NearestTo(ProfileId);
+            _profile = null;
+            return;
+        }
+
+        _suggestion = null;
         _profile = await Profiles.LoadAsync(ProfileId);
         if (_profile is not null) await Player.UseProfileAsync(_profile);
     }

@@ -1,6 +1,5 @@
 {
   "_note": "VC · 5th grade · singing, ballet and paper dolls. Same grade as RZ, so the same show-your-working board and the same equation types — only the stories and the skin differ. Theatre garnet and antique gold on soft ivory.",
-
   "id": "vc",
   "name": "Smart Stage Algebra",
   "tagline": "Math, but make it a performance. Take your position. 🩰",
@@ -11,24 +10,31 @@
   "levelPickerTitle": "Choose your number",
   "levelPickerSubtitle": "Level 1 = the warm-up barre. Level 5 = opening night. 🌟",
   "footerNote": "✨ No sign-up, no passwords — just you, the numbers, and the curtain call.",
-
   "theme": {
-    "primary": "#5c2233",
-    "primaryHi": "#7d3348",
-    "accent": "#c9962f",
-    "background": "#f3f0ec",
-    "foreground": "#3d1c26",
+    "primary": "#7a1422",
+    "primaryHi": "#a01c2e",
+    "primaryFg": "#ffffff",
+    "accent": "#d8404f",
+    "accentFg": "#ffffff",
+    "background": "#f6f0f0",
+    "foreground": "#3d0d14",
     "card": "#ffffff",
-    "secondary": "#e6ddd6",
-    "secondaryFg": "#5c2233",
-    "muted": "#ece5df",
-    "mutedFg": "#6f6259",
-    "border": "#d5cabf",
-    "googleFonts": ["Prata", "Nunito:wght@400;600;700;800"],
+    "secondary": "#e9dada",
+    "secondaryFg": "#7a1422",
+    "muted": "#f0e5e5",
+    "mutedFg": "#7d5c60",
+    "border": "#ddc5c7",
+    "correct": "#12885f",
+    "correctBg": "#e4f6ee",
+    "wrong": "#a01c2e",
+    "wrongBg": "#f7e2e4",
+    "googleFonts": [
+      "Prata",
+      "Nunito:wght@400;600;700;800"
+    ],
     "fontDisplay": "\"Prata\", Georgia, \"Times New Roman\", serif",
     "fontSans": "\"Nunito\", ui-sans-serif, system-ui, -apple-system, sans-serif"
   },
-
   "levels": [
     {
       "id": 1,
@@ -41,15 +47,28 @@
       "variableMeaning": "x = dancers at the start",
       "answer": "x = 85",
       "answerValue": 85,
-      "chips": ["x", "=", "+", "−"],
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−"
+      ],
       "hints": [
         "The x is stuck with a “+ 47”. Get rid of it.",
         "Subtract 47 from BOTH sides to keep it balanced.",
         "132 − 47 = 85. So x = 85."
       ],
       "walkthrough": [
-        { "title": "Find the goal", "body": "We want x on its own. Right now it has “+ 47” attached.", "math": "x + 47 = 132" },
-        { "title": "Undo the addition", "body": "Subtract 47 from BOTH sides. 132 − 47 = 85.", "math": "x = 85" }
+        {
+          "title": "Find the goal",
+          "body": "We want x on its own. Right now it has “+ 47” attached.",
+          "math": "x + 47 = 132"
+        },
+        {
+          "title": "Undo the addition",
+          "body": "Subtract 47 from BOTH sides. 132 − 47 = 85.",
+          "math": "x = 85"
+        }
       ]
     },
     {
@@ -63,15 +82,30 @@
       "variableMeaning": "x = pages per folder",
       "answer": "x = 14",
       "answerValue": 14,
-      "chips": ["x", "=", "+", "−", "×", "÷"],
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−",
+        "×",
+        "÷"
+      ],
       "hints": [
         "6x means 6 times x. To undo times, you divide.",
         "Divide BOTH sides by 6.",
         "84 ÷ 6 = 14. So x = 14."
       ],
       "walkthrough": [
-        { "title": "Read what's happening", "body": "x has been multiplied by 6.", "math": "6x = 84" },
-        { "title": "Undo the multiplication", "body": "Divide BOTH sides by 6. 84 ÷ 6 = 14.", "math": "x = 14" }
+        {
+          "title": "Read what's happening",
+          "body": "x has been multiplied by 6.",
+          "math": "6x = 84"
+        },
+        {
+          "title": "Undo the multiplication",
+          "body": "Divide BOTH sides by 6. 84 ÷ 6 = 14.",
+          "math": "x = 14"
+        }
       ]
     },
     {
@@ -85,15 +119,30 @@
       "variableMeaning": "x = cost of one costume",
       "answer": "x = 11",
       "answerValue": 11,
-      "chips": ["x", "=", "+", "−", "×", "÷"],
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−",
+        "×",
+        "÷"
+      ],
       "hints": [
         "Deal with the lonely number first. That + 12 goes.",
         "Subtract 12 from both sides → 3x = 33.",
         "Now divide both sides by 3. 33 ÷ 3 = 11."
       ],
       "walkthrough": [
-        { "title": "Clear the extra", "body": "Subtract 12 from BOTH sides. 45 − 12 = 33.", "math": "3x = 33" },
-        { "title": "Split it up", "body": "x is multiplied by 3, so divide BOTH sides by 3.", "math": "x = 11" }
+        {
+          "title": "Clear the extra",
+          "body": "Subtract 12 from BOTH sides. 45 − 12 = 33.",
+          "math": "3x = 33"
+        },
+        {
+          "title": "Split it up",
+          "body": "x is multiplied by 3, so divide BOTH sides by 3.",
+          "math": "x = 11"
+        }
       ]
     },
     {
@@ -107,15 +156,29 @@
       "variableMeaning": "x = dollars saved",
       "answer": "x = 6.75",
       "answerValue": 6.75,
-      "chips": ["x", "=", "+", "−", "."],
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−",
+        "."
+      ],
       "hints": [
         "Same idea as before — undo the addition.",
         "Subtract 2.75 from BOTH sides.",
         "9.50 − 2.75 = 6.75. Line up the decimal points!"
       ],
       "walkthrough": [
-        { "title": "Same move, new numbers", "body": "A decimal changes nothing about the method.", "math": "x + 2.75 = 9.5" },
-        { "title": "Subtract carefully", "body": "9.50 − 2.75 = 6.75. Keep the decimal points lined up.", "math": "x = 6.75" }
+        {
+          "title": "Same move, new numbers",
+          "body": "A decimal changes nothing about the method.",
+          "math": "x + 2.75 = 9.5"
+        },
+        {
+          "title": "Subtract carefully",
+          "body": "9.50 − 2.75 = 6.75. Keep the decimal points lined up.",
+          "math": "x = 6.75"
+        }
       ]
     },
     {
@@ -129,16 +192,82 @@
       "variableMeaning": "x = your dancers per row",
       "answer": "x = 12",
       "answerValue": 12,
-      "chips": ["x", "=", "+", "−", "×", "÷", "(", ")"],
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−",
+        "×",
+        "÷",
+        "(",
+        ")"
+      ],
       "hints": [
         "You can divide both sides by 2 first, or multiply out the bracket. Either works.",
         "Dividing by 2 gives x + 5 = 17.",
         "Then subtract 5. x = 12."
       ],
       "walkthrough": [
-        { "title": "Undo the outside first", "body": "The whole bracket is multiplied by 2, so divide BOTH sides by 2. 34 ÷ 2 = 17.", "math": "x + 5 = 17" },
-        { "title": "Now the inside", "body": "Subtract 5 from BOTH sides. 17 − 5 = 12.", "math": "x = 12" }
+        {
+          "title": "Undo the outside first",
+          "body": "The whole bracket is multiplied by 2, so divide BOTH sides by 2. 34 ÷ 2 = 17.",
+          "math": "x + 5 = 17"
+        },
+        {
+          "title": "Now the inside",
+          "body": "Subtract 5 from BOTH sides. 17 − 5 = 12.",
+          "math": "x = 12"
+        }
       ]
+    }
+  ],
+  "icons": [
+    "mask",
+    "note",
+    "slipper",
+    "star",
+    "sparkle"
+  ],
+  "_themeNote": "Red only — one hue throughout, no second brand colour. Correct/wrong feedback keeps green and a darker red, because those must stay readable as signals rather than decoration.",
+  "encouragement": {
+    "correct": [
+      "Beautifully done.",
+      "Lovely.",
+      "Yes — keep going.",
+      "Perfect timing."
+    ],
+    "wrong": [
+      "Almost.",
+      "Not quite.",
+      "So close.",
+      "One more try."
+    ],
+    "solved": [
+      "CURTAIN CALL!",
+      "BRAVO!",
+      "OPENING NIGHT!"
+    ]
+  },
+  "verses": [
+    {
+      "text": "Whatever you do, work heartily, as for the Lord…",
+      "ref": "Colossians 3:23"
+    },
+    {
+      "text": "I can do all things through Christ, who strengthens me.",
+      "ref": "Philippians 4:13"
+    },
+    {
+      "text": "Let us not be weary in doing good, for we will reap in due season, if we don’t give up.",
+      "ref": "Galatians 6:9"
+    },
+    {
+      "text": "…I am fearfully and wonderfully made.",
+      "ref": "Psalm 139:14"
+    },
+    {
+      "text": "Don’t you be afraid, for I am with you… I will strengthen you.",
+      "ref": "Isaiah 41:10"
     }
   ]
 }

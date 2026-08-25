@@ -56,10 +56,10 @@
                         <span class="visually-hidden">@(wrong ? "Incorrect line" : "Correct line")</span>
                     </div>
 
-                    @if (wrong && !string.IsNullOrEmpty(step.Message))
+                    @if (!string.IsNullOrEmpty(step.Message))
                     {
-                        <div class="sga-step__msg">
-                            <span aria-hidden="true">💬</span>
+                        <div class="sga-step__msg @(wrong ? "" : "sga-step__msg--ok")">
+                            <span aria-hidden="true">@(wrong ? "💬" : "👏")</span>
                             <span>@step.Message</span>
                         </div>
                     }
@@ -163,7 +163,7 @@
 
     @if (_solved)
     {
-        <Celebration Answer="@Level.Answer" OnReplay="Reset" />
+        <Celebration Answer="@Level.Answer" Headline="@_headline" Verse="_verse" OnReplay="Reset" />
     }
 
 </div>
@@ -189,6 +189,13 @@
     private int? _shakeId;
     private int _nextId = 1;
     private int _startedLevel = -1;
+    private string _headline = "YOU DID IT!";
+    private Verse? _verse;
+
+    /// <summary>Chosen once per level rather than per render, so the words don't
+    /// change under her while she is reading them.</summary>
+    private static string Say(string[] options) =>
+        options.Length == 0 ? "" : options[Random.Shared.Next(options.Length)];
 
     protected override void OnParametersSet()
     {
@@ -208,6 +215,13 @@
         _solved = false;
         _shakeId = null;
         _nextId = 1;
+
+        _headline = Profile.Encouragement.Solved.Length > 0
+            ? Say(Profile.Encouragement.Solved)
+            : "YOU DID IT!";
+        _verse = Profile.Verses.Count > 0
+            ? Profile.Verses[Random.Shared.Next(Profile.Verses.Count)]
+            : null;
     }
 
     private async Task Submit()
@@ -220,12 +234,21 @@
         var result = LineChecker.Check(text, Level.AnswerValue);
         var id = _nextId++;
 
+        // The version supplies the voice; the checker supplies only the diagnosis.
+        var voice = result.Status == CheckStatus.Wrong
+            ? Say(Profile.Encouragement.Wrong)
+            : Say(Profile.Encouragement.Correct);
+
+        var message = result.Status == CheckStatus.Wrong
+            ? string.Join(" ", new[] { voice, result.Message }.Where(s => !string.IsNullOrWhiteSpace(s)))
+            : voice;
+
         _steps.Add(new Step
         {
             Id = id,
             Text = text,
             Status = result.Status == CheckStatus.Solved ? CheckStatus.Correct : result.Status,
-            Message = result.Message
+            Message = message
         });
 
         _input = "";

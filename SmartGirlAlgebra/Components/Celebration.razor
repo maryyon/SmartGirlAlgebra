@@ -12,20 +12,23 @@
 
     <div class="sga-win sga-bounce-in">
         <div class="sga-win__trophy sga-wiggle">🏆</div>
-        <h2>SQUAD GOALS!</h2>
-        <p style="margin:.25rem 0 0; font-weight:600;">You solved it, superstar! 📣</p>
+        <h2>@Headline</h2>
 
         <div class="sga-win__answer">
-            <p>Your winning answer</p>
+            <p>Your answer</p>
             <p>@Answer</p>
         </div>
 
-        <p style="margin:.75rem 0 0; font-size:.875rem; color:var(--sga-muted-fg);">
-            That's a perfect routine — every single line stuck the landing. ✨
-        </p>
+        @if (Verse is not null)
+        {
+            <blockquote class="sga-verse">
+                <p class="sga-verse__text">@Verse.Text</p>
+                <cite class="sga-verse__ref">@Verse.Ref</cite>
+            </blockquote>
+        }
 
         <button type="button" class="sga-bigbtn" @onclick="OnReplay">
-            Cheer for a new problem 📣
+            Go again
         </button>
     </div>
 </div>
@@ -39,6 +42,13 @@
     private static readonly string[] Pieces = ["📣", "✨", "🏆", "⭐", "📐", "🦅", "💙", "🔵"];
 
     [Parameter, EditorRequired] public string Answer { get; set; } = "";
+
+    /// <summary>The version's own words for finishing — cheer language does not
+    /// belong on a basketball or aviation version.</summary>
+    [Parameter] public string Headline { get; set; } = "YOU DID IT!";
+
+    [Parameter] public Verse? Verse { get; set; }
+
     [Parameter] public EventCallback OnReplay { get; set; }
 
     private record Piece(double Left, double Delay, double Duration, double Size, string Emoji);

@@ -1,10 +1,25 @@
 @inherits LayoutComponentBase
+@inject ProfileService Profiles
+@implements IDisposable
 
-@* The app lives inside a phone frame, the way Layla designed it: a 420x860
-   device floating on the stage on anything desktop-sized, and full-bleed on a
-   real phone. Every screen brings its own header, so there is no shared chrome. *@
+@* The app lives inside a phone frame: a 420x860 device floating on the stage on
+   anything desktop-sized, and full-bleed on a real phone. Every screen brings its
+   own header, so there is no shared chrome — only the drifting icon layer, which
+   sits behind everything and belongs to the whole frame rather than one page. *@
 <div class="sga-stage">
     <div class="sga-frame">
+        @if (Profiles.Current is { Icons.Length: > 0 } profile)
+        {
+            <ThemeIcons Icons="profile.Icons" />
+        }
         @Body
     </div>
 </div>
+
+@code {
+    protected override void OnInitialized() => Profiles.Changed += OnProfileChanged;
+
+    private void OnProfileChanged() => InvokeAsync(StateHasChanged);
+
+    public void Dispose() => Profiles.Changed -= OnProfileChanged;
+}

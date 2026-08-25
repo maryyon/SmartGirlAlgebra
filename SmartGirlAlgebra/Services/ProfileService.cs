@@ -5,10 +5,68 @@ using SmartGirlAlgebra.Models;
 
 namespace SmartGirlAlgebra.Services;
 
+public class ProfileEntry
+{
+    public string Id { get; set; } = "";
+
+    /// <summary>Repeated from the version's own file so the directory can list
+    /// names without fetching all six. Keep the two in step when renaming.</summary>
+    public string Name { get; set; } = "";
+}
+
 public class ProfileIndex
 {
     public string Default { get; set; } = "layla";
-    public List<string> Available { get; set; } = [];
+    public List<ProfileEntry> Available { get; set; } = [];
+
+    public bool Knows(string? id) =>
+        !string.IsNullOrWhiteSpace(id) &&
+        Available.Any(v => string.Equals(v.Id, id, StringComparison.OrdinalIgnoreCase));
+
+    /// <summary>
+    /// The nearest version id to what was typed, for a "did you mean" prompt.
+    /// One wrong or missing character counts as near; anything further is not
+    /// suggested, because a bad guess is worse than none.
+    /// </summary>
+    public ProfileEntry? NearestTo(string? id)
+    {
+        if (string.IsNullOrWhiteSpace(id)) return null;
+
+        var typed = id.Trim().ToLowerInvariant();
+        ProfileEntry? best = null;
+        var bestDistance = int.MaxValue;
+
+        foreach (var entry in Available)
+        {
+            var d = Distance(typed, entry.Id.ToLowerInvariant());
+            if (d >= bestDistance) continue;
+            bestDistance = d;
+            best = entry;
+        }
+
+        return bestDistance <= 1 ? best : null;
+    }
+
+    private static int Distance(string a, string b)
+    {
+        var prev = new int[b.Length + 1];
+        var cur = new int[b.Length + 1];
+        for (var j = 0; j <= b.Length; j++) prev[j] = j;
+
+        for (var i = 1; i <= a.Length; i++)
+        {
+            cur[0] = i;
+            for (var j = 1; j <= b.Length; j++)
+            {
+                var cost = a[i - 1] == b[j - 1] ? 0 : 1;
+                cur[j] = Math.Min(Math.Min(cur[j - 1] + 1, prev[j] + 1), prev[j - 1] + cost);
+            }
+
+            (prev, cur) = (cur, prev);
+        }
+
+        return prev[b.Length];
+    }
 
     /// <summary>
     /// Which version a bare domain lands on. smartgirlalgebra.com is Layla's own
@@ -57,7 +115,11 @@ public class ProfileService
         }
         catch
         {
-            _index = new ProfileIndex { Default = "layla", Available = ["layla"] };
+            _index = new ProfileIndex
+            {
+                Default = "layla",
+                Available = [new ProfileEntry { Id = "layla", Name = "Smart Girl Algebra" }]
+            };
         }
 
         return _index;
@@ -77,7 +139,7 @@ public class ProfileService
             ? ProfileForHost(index)
             : id.Trim().ToLowerInvariant();
 
-        if (!index.Available.Contains(wanted)) wanted = index.Default;
+        if (!index.Knows(wanted)) wanted = index.Default;
 
         if (Current?.Id == wanted) return Current;
 

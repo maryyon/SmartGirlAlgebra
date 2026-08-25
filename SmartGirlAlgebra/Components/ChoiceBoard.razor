@@ -45,6 +45,14 @@
             }
         </section>
 
+        @if (!string.IsNullOrEmpty(_message))
+        {
+            <div class="sga-step__msg @(_messageGood ? "sga-step__msg--ok" : "")" aria-live="polite">
+                <span aria-hidden="true">@(_messageGood ? "👏" : "💬")</span>
+                <span>@_message</span>
+            </div>
+        }
+
         @if (_hintIndex >= 0)
         {
             <section class="sga-hints" aria-label="Hints">
@@ -77,7 +85,7 @@
 
     @if (_solved)
     {
-        <Celebration Answer="@Level.CorrectChoice" OnReplay="Reset" />
+        <Celebration Answer="@Level.CorrectChoice" Headline="@_headline" Verse="_verse" OnReplay="Reset" />
     }
 
 </div>
@@ -91,6 +99,14 @@
     private int _hintIndex = -1;
     private string? _shaking;
     private int _startedLevel = -1;
+    private string? _message;
+    private bool _messageGood;
+    private string _headline = "YOU DID IT!";
+    private Verse? _verse;
+
+    /// <summary>One of the version's lines, chosen at random.</summary>
+    private static string Say(string[] options) =>
+        options.Length == 0 ? "" : options[Random.Shared.Next(options.Length)];
 
     protected override void OnParametersSet()
     {
@@ -105,6 +121,14 @@
         _solved = false;
         _hintIndex = -1;
         _shaking = null;
+        _message = null;
+
+        _headline = Profile.Encouragement.Solved.Length > 0
+            ? Say(Profile.Encouragement.Solved)
+            : "YOU DID IT!";
+        _verse = Profile.Verses.Count > 0
+            ? Profile.Verses[Random.Shared.Next(Profile.Verses.Count)]
+            : null;
     }
 
     private string StateFor(string choice)
@@ -128,11 +152,15 @@
         if (right)
         {
             _solved = true;
+            _message = Say(Profile.Encouragement.Correct);
+            _messageGood = true;
         }
         else
         {
             _rejected.Add(choice);
             _shaking = choice;
+            _message = Say(Profile.Encouragement.Wrong);
+            _messageGood = false;
         }
 
         StateHasChanged();

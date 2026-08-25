@@ -1,8 +1,6 @@
 {
   "_note": "JQ · 7th grade · basketball and soccer. Functionally identical to the original: the same five equations in the same order, the same show-your-working board, the same hints and walkthrough structure. Only the skin and the stories differ.",
-
   "_nameNote": "Renamed from 'Smart Girl Algebra' because JQ is a boy — the original name on his screen would land badly. Kept the 'Smart _ Algebra' family so it still reads as the same product. Change this line if you want it called something else.",
-
   "id": "jq",
   "name": "Smart Court Algebra",
   "tagline": "Math, but make it game day. Pick your matchup. 🏀",
@@ -13,24 +11,28 @@
   "levelPickerTitle": "Pick your matchup",
   "levelPickerSubtitle": "Level 1 = shootaround. Level 5 = championship. 🏆",
   "footerNote": "No sign-up, no passwords — just you, the numbers, and the win.",
-
+  "_themeNote": "Green and gold. accentFg is deep green rather than white, because white on gold fails contrast.",
   "theme": {
-    "primary": "#1f2a37",
-    "primaryHi": "#33455c",
-    "accent": "#e2701f",
-    "background": "#eef0f3",
-    "foreground": "#1f2a37",
+    "primary": "#0a7a3c",
+    "primaryHi": "#129a52",
+    "primaryFg": "#ffffff",
+    "accent": "#f5a623",
+    "accentFg": "#123524",
+    "background": "#eef2ee",
+    "foreground": "#123524",
     "card": "#ffffff",
-    "secondary": "#d8dde4",
-    "secondaryFg": "#1f2a37",
-    "muted": "#e4e8ed",
-    "mutedFg": "#5d6875",
-    "border": "#c0c8d2",
-    "googleFonts": ["Archivo:wght@600;700;800;900", "Nunito:wght@400;600;700;800"],
+    "secondary": "#d6e5da",
+    "secondaryFg": "#0a5c2e",
+    "muted": "#e4ece6",
+    "mutedFg": "#5c7266",
+    "border": "#bcd2c3",
+    "googleFonts": [
+      "Archivo:wght@600;700;800;900",
+      "Nunito:wght@400;600;700;800"
+    ],
     "fontDisplay": "\"Archivo\", \"Segoe UI\", system-ui, sans-serif",
     "fontSans": "\"Nunito\", ui-sans-serif, system-ui, -apple-system, sans-serif"
   },
-
   "levels": [
     {
       "id": 1,
@@ -43,15 +45,28 @@
       "variableMeaning": "x = balls at the start",
       "answer": "x = 6",
       "answerValue": 6,
-      "chips": ["x", "=", "+", "−"],
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−"
+      ],
       "hints": [
         "The x is stuck with a “+ 4”. That has to go.",
         "Subtract 4 from BOTH sides. Keep it balanced.",
         "10 − 4 = 6. So x = 6."
       ],
       "walkthrough": [
-        { "title": "Find the goal", "body": "We want x on its own. Right now it has “+ 4” attached.", "math": "x + 4 = 10" },
-        { "title": "Undo the addition", "body": "Subtract 4 from BOTH sides. 10 − 4 = 6.", "math": "x = 6" }
+        {
+          "title": "Find the goal",
+          "body": "We want x on its own. Right now it has “+ 4” attached.",
+          "math": "x + 4 = 10"
+        },
+        {
+          "title": "Undo the addition",
+          "body": "Subtract 4 from BOTH sides. 10 − 4 = 6.",
+          "math": "x = 6"
+        }
       ]
     },
     {
@@ -65,16 +80,37 @@
       "variableMeaning": "x = drives to the basket",
       "answer": "x = 9",
       "answerValue": 9,
-      "chips": ["x", "=", "+", "−", "×", "÷", "(", ")"],
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−",
+        "×",
+        "÷",
+        "(",
+        ")"
+      ],
       "hints": [
         "Deal with the lonely number first. That + 5 goes.",
         "Subtract 5 from both sides → 2x = 18.",
         "Now divide both sides by 2. 18 ÷ 2 = 9."
       ],
       "walkthrough": [
-        { "title": "Read the play", "body": "x is squeezed by a “times 2” and a “plus 5.” Peel them off one at a time.", "math": "2x + 5 = 23" },
-        { "title": "Clear the + 5", "body": "Subtract 5 from BOTH sides. 23 − 5 = 18.", "math": "2x = 18" },
-        { "title": "Split it evenly", "body": "x is times 2, so divide BOTH sides by 2. 18 ÷ 2 = 9.", "math": "x = 9" }
+        {
+          "title": "Read the play",
+          "body": "x is squeezed by a “times 2” and a “plus 5.” Peel them off one at a time.",
+          "math": "2x + 5 = 23"
+        },
+        {
+          "title": "Clear the + 5",
+          "body": "Subtract 5 from BOTH sides. 23 − 5 = 18.",
+          "math": "2x = 18"
+        },
+        {
+          "title": "Split it evenly",
+          "body": "x is times 2, so divide BOTH sides by 2. 18 ÷ 2 = 9.",
+          "math": "x = 9"
+        }
       ]
     },
     {
@@ -88,16 +124,37 @@
       "variableMeaning": "x = halves played",
       "answer": "x = 6",
       "answerValue": 6,
-      "chips": ["x", "=", "+", "−", "×", "÷", "(", ")"],
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−",
+        "×",
+        "÷",
+        "(",
+        ")"
+      ],
       "hints": [
         "Get all the x's onto ONE side first.",
         "Subtract x from both sides → 2x − 4 = 8.",
         "Add 4 to both sides → 2x = 12, then divide by 2. x = 6."
       ],
       "walkthrough": [
-        { "title": "Round up the x's", "body": "Subtract x from BOTH sides so every x lives on the left.", "math": "2x − 4 = 8" },
-        { "title": "Free the number", "body": "Add 4 to BOTH sides. 8 + 4 = 12.", "math": "2x = 12" },
-        { "title": "Divide and finish", "body": "Divide BOTH sides by 2. 12 ÷ 2 = 6.", "math": "x = 6" }
+        {
+          "title": "Round up the x's",
+          "body": "Subtract x from BOTH sides so every x lives on the left.",
+          "math": "2x − 4 = 8"
+        },
+        {
+          "title": "Free the number",
+          "body": "Add 4 to BOTH sides. 8 + 4 = 12.",
+          "math": "2x = 12"
+        },
+        {
+          "title": "Divide and finish",
+          "body": "Divide BOTH sides by 2. 12 ÷ 2 = 6.",
+          "math": "x = 6"
+        }
       ]
     },
     {
@@ -111,16 +168,37 @@
       "variableMeaning": "x = starters per group",
       "answer": "x = 5",
       "answerValue": 5,
-      "chips": ["x", "=", "+", "−", "×", "÷", "(", ")"],
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−",
+        "×",
+        "÷",
+        "(",
+        ")"
+      ],
       "hints": [
         "First, share the 3 with EVERYTHING inside the brackets.",
         "3(x − 1) becomes 3x − 3. Now it's 3x − 3 = x + 7.",
         "Get x's together, numbers together → 2x = 10 → x = 5."
       ],
       "walkthrough": [
-        { "title": "Distribute the 3", "body": "Multiply the 3 by each thing inside: 3·x and 3·(−1).", "math": "3x − 3 = x + 7" },
-        { "title": "Round up the x's", "body": "Subtract x from BOTH sides.", "math": "2x − 3 = 7" },
-        { "title": "Free the number, then split", "body": "Add 3 to both sides → 2x = 10, then divide by 2.", "math": "x = 5" }
+        {
+          "title": "Distribute the 3",
+          "body": "Multiply the 3 by each thing inside: 3·x and 3·(−1).",
+          "math": "3x − 3 = x + 7"
+        },
+        {
+          "title": "Round up the x's",
+          "body": "Subtract x from BOTH sides.",
+          "math": "2x − 3 = 7"
+        },
+        {
+          "title": "Free the number, then split",
+          "body": "Add 3 to both sides → 2x = 10, then divide by 2.",
+          "math": "x = 5"
+        }
       ]
     },
     {
@@ -134,17 +212,85 @@
       "variableMeaning": "x = the diagonal (m)",
       "answer": "x = 10",
       "answerValue": 10,
-      "chips": ["x", "²", "=", "+", "^", "(", ")"],
+      "chips": [
+        "x",
+        "²",
+        "=",
+        "+",
+        "^",
+        "(",
+        ")"
+      ],
       "hints": [
         "Square the two sides first: 6² means 6 × 6, and 8² means 8 × 8. 📐",
         "6² = 36 and 8² = 64. Add them → x² = 100.",
         "What number times itself is 100? That's the square root. x = 10."
       ],
       "walkthrough": [
-        { "title": "Meet Pythagoras", "body": "For a right triangle, the two short sides squared and added equal the long side squared.", "math": "x² = 6² + 8²" },
-        { "title": "Square the sides", "body": "6² = 6 × 6 = 36 and 8² = 8 × 8 = 64. Add them up.", "math": "x² = 100" },
-        { "title": "Un-square it", "body": "x² = 100, so x is the number that times itself makes 100. That's 10.", "math": "x = 10" }
+        {
+          "title": "Meet Pythagoras",
+          "body": "For a right triangle, the two short sides squared and added equal the long side squared.",
+          "math": "x² = 6² + 8²"
+        },
+        {
+          "title": "Square the sides",
+          "body": "6² = 6 × 6 = 36 and 8² = 8 × 8 = 64. Add them up.",
+          "math": "x² = 100"
+        },
+        {
+          "title": "Un-square it",
+          "body": "x² = 100, so x is the number that times itself makes 100. That's 10.",
+          "math": "x = 10"
+        }
       ]
+    }
+  ],
+  "icons": [
+    "ball",
+    "soccer",
+    "trophy",
+    "whistle",
+    "star"
+  ],
+  "encouragement": {
+    "correct": [
+      "Bucket.",
+      "That's the play.",
+      "Good look.",
+      "Keep it moving."
+    ],
+    "wrong": [
+      "Off the rim.",
+      "Almost.",
+      "Not quite.",
+      "Reset and go again."
+    ],
+    "solved": [
+      "GAME OVER — YOU WIN!",
+      "CHAMPIONSHIP!",
+      "THAT'S THE GAME!"
+    ]
+  },
+  "verses": [
+    {
+      "text": "Whatever you do, work heartily, as for the Lord…",
+      "ref": "Colossians 3:23"
+    },
+    {
+      "text": "Iron sharpens iron; so a man sharpens his friend’s countenance.",
+      "ref": "Proverbs 27:17"
+    },
+    {
+      "text": "The plans of the diligent surely lead to profit…",
+      "ref": "Proverbs 21:5"
+    },
+    {
+      "text": "I can do all things through Christ, who strengthens me.",
+      "ref": "Philippians 4:13"
+    },
+    {
+      "text": "For God didn’t give us a spirit of fear, but of power, love, and self-control.",
+      "ref": "2 Timothy 1:7"
     }
   ]
 }

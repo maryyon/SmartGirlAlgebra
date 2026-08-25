@@ -9,7 +9,6 @@
   "levelPickerTitle": "Choose your level",
   "levelPickerSubtitle": "Level 1 = comfy couch. Level 5 = final boss. 🔥",
   "footerNote": "✨ No sign-up, no passwords — just you, some triangles, and glory. 💙",
-
   "theme": {
     "primary": "#16284b",
     "primaryHi": "#233a68",
@@ -22,11 +21,13 @@
     "muted": "#e7ebf1",
     "mutedFg": "#5c6880",
     "border": "#c3cbd8",
-    "googleFonts": ["Baloo+2:wght@600;700;800", "Nunito:wght@400;600;700;800"],
+    "googleFonts": [
+      "Baloo+2:wght@600;700;800",
+      "Nunito:wght@400;600;700;800"
+    ],
     "fontDisplay": "\"Baloo 2\", ui-rounded, \"Segoe UI\", system-ui, sans-serif",
     "fontSans": "\"Nunito\", ui-sans-serif, system-ui, -apple-system, sans-serif"
   },
-
   "levels": [
     {
       "id": 1,
@@ -39,15 +40,28 @@
       "variableMeaning": "x = dollars in the bag",
       "answer": "x = 6",
       "answerValue": 6,
-      "chips": ["x", "=", "+", "−"],
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−"
+      ],
       "hints": [
         "The x wants to be ALONE. That + 4 is a clingy friend — time to say bye. 📣",
         "Subtract 4 from BOTH sides. Fair is fair!",
         "10 − 4 = 6. Boom. x = 6. 🦅"
       ],
       "walkthrough": [
-        { "title": "Meet the goal 📣", "body": "We want x by itself. Right now it's stuck with a “+ 4.”", "math": "x + 4 = 10" },
-        { "title": "Ghost the + 4 👻", "body": "Subtract 4 from BOTH sides so it stays balanced. The + 4 vanishes and 10 − 4 = 6.", "math": "x = 6" }
+        {
+          "title": "Meet the goal 📣",
+          "body": "We want x by itself. Right now it's stuck with a “+ 4.”",
+          "math": "x + 4 = 10"
+        },
+        {
+          "title": "Ghost the + 4 👻",
+          "body": "Subtract 4 from BOTH sides so it stays balanced. The + 4 vanishes and 10 − 4 = 6.",
+          "math": "x = 6"
+        }
       ]
     },
     {
@@ -61,16 +75,37 @@
       "variableMeaning": "x = ribbons sold",
       "answer": "x = 9",
       "answerValue": 9,
-      "chips": ["x", "=", "+", "−", "×", "÷", "(", ")"],
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−",
+        "×",
+        "÷",
+        "(",
+        ")"
+      ],
       "hints": [
         "Kick out the lonely number first. That + 5 has GOT to go. 📣",
         "Subtract 5 from both sides → you should get 2x = 18.",
         "Now divide both sides by 2 to set x free! 18 ÷ 2 = 9. ✨"
       ],
       "walkthrough": [
-        { "title": "Read the play 📣", "body": "x is squished by a “times 2” and a “plus 5.” Peel them off one at a time.", "math": "2x + 5 = 23" },
-        { "title": "Clear the + 5 📣", "body": "Subtract 5 from BOTH sides. 23 − 5 = 18.", "math": "2x = 18" },
-        { "title": "Split it evenly ✨", "body": "x is times 2, so divide BOTH sides by 2. 18 ÷ 2 = 9.", "math": "x = 9" }
+        {
+          "title": "Read the play 📣",
+          "body": "x is squished by a “times 2” and a “plus 5.” Peel them off one at a time.",
+          "math": "2x + 5 = 23"
+        },
+        {
+          "title": "Clear the + 5 📣",
+          "body": "Subtract 5 from BOTH sides. 23 − 5 = 18.",
+          "math": "2x = 18"
+        },
+        {
+          "title": "Split it evenly ✨",
+          "body": "x is times 2, so divide BOTH sides by 2. 18 ÷ 2 = 9.",
+          "math": "x = 9"
+        }
       ]
     },
     {
@@ -84,16 +119,37 @@
       "variableMeaning": "x = quarters played",
       "answer": "x = 6",
       "answerValue": 6,
-      "chips": ["x", "=", "+", "−", "×", "÷", "(", ")"],
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−",
+        "×",
+        "÷",
+        "(",
+        ")"
+      ],
       "hints": [
         "Get all the x's on ONE side. Herd those cats. 🐈",
         "Subtract x from both sides → 2x − 4 = 8.",
         "Add 4 to both sides → 2x = 12, then divide by 2. x = 6! 🏆"
       ],
       "walkthrough": [
-        { "title": "Round up the x's 🐈", "body": "Subtract x from BOTH sides so every x lives on the left.", "math": "2x − 4 = 8" },
-        { "title": "Free the number 📣", "body": "Add 4 to BOTH sides. 8 + 4 = 12.", "math": "2x = 12" },
-        { "title": "Divide and conquer ✨", "body": "Divide BOTH sides by 2. 12 ÷ 2 = 6.", "math": "x = 6" }
+        {
+          "title": "Round up the x's 🐈",
+          "body": "Subtract x from BOTH sides so every x lives on the left.",
+          "math": "2x − 4 = 8"
+        },
+        {
+          "title": "Free the number 📣",
+          "body": "Add 4 to BOTH sides. 8 + 4 = 12.",
+          "math": "2x = 12"
+        },
+        {
+          "title": "Divide and conquer ✨",
+          "body": "Divide BOTH sides by 2. 12 ÷ 2 = 6.",
+          "math": "x = 6"
+        }
       ]
     },
     {
@@ -107,16 +163,37 @@
       "variableMeaning": "x = flyers per group",
       "answer": "x = 5",
       "answerValue": 5,
-      "chips": ["x", "=", "+", "−", "×", "÷", "(", ")"],
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−",
+        "×",
+        "÷",
+        "(",
+        ")"
+      ],
       "hints": [
         "First, share the 3 with EVERYONE inside the parentheses. 🍿",
         "3(x − 1) becomes 3x − 3. Now it's 3x − 3 = x + 7.",
         "Get x's together, numbers together → 2x = 10 → x = 5! ✨"
       ],
       "walkthrough": [
-        { "title": "Distribute the 3 🍿", "body": "Multiply the 3 by each thing inside: 3·x and 3·(−1).", "math": "3x − 3 = x + 7" },
-        { "title": "Round up the x's 🐈", "body": "Subtract x from BOTH sides.", "math": "2x − 3 = 7" },
-        { "title": "Free the number, then split 📣", "body": "Add 3 to both sides → 2x = 10, then divide by 2.", "math": "x = 5" }
+        {
+          "title": "Distribute the 3 🍿",
+          "body": "Multiply the 3 by each thing inside: 3·x and 3·(−1).",
+          "math": "3x − 3 = x + 7"
+        },
+        {
+          "title": "Round up the x's 🐈",
+          "body": "Subtract x from BOTH sides.",
+          "math": "2x − 3 = 7"
+        },
+        {
+          "title": "Free the number, then split 📣",
+          "body": "Add 3 to both sides → 2x = 10, then divide by 2.",
+          "math": "x = 5"
+        }
       ]
     },
     {
@@ -130,17 +207,85 @@
       "variableMeaning": "x = hypotenuse (ft)",
       "answer": "x = 10",
       "answerValue": 10,
-      "chips": ["x", "²", "=", "+", "^", "(", ")"],
+      "chips": [
+        "x",
+        "²",
+        "=",
+        "+",
+        "^",
+        "(",
+        ")"
+      ],
       "hints": [
         "Square the legs first: 6² means 6 × 6, and 8² means 8 × 8. 📐",
         "6² = 36 and 8² = 64. Add them → x² = 100.",
         "What number times itself is 100? That's the square root. x = 10! 🏆"
       ],
       "walkthrough": [
-        { "title": "Meet Pythagoras 📐", "body": "For a right triangle, the two legs squared and added equal the hypotenuse squared: leg² + leg² = hyp².", "math": "x² = 6² + 8²" },
-        { "title": "Square the legs ✖️", "body": "6² = 6 × 6 = 36 and 8² = 8 × 8 = 64. Add them up.", "math": "x² = 100" },
-        { "title": "Un-square it (square root) 🏆", "body": "x² = 100, so x is the number that times itself makes 100. That's 10. Glitter fringe secured!", "math": "x = 10" }
+        {
+          "title": "Meet Pythagoras 📐",
+          "body": "For a right triangle, the two legs squared and added equal the hypotenuse squared: leg² + leg² = hyp².",
+          "math": "x² = 6² + 8²"
+        },
+        {
+          "title": "Square the legs ✖️",
+          "body": "6² = 6 × 6 = 36 and 8² = 8 × 8 = 64. Add them up.",
+          "math": "x² = 100"
+        },
+        {
+          "title": "Un-square it (square root) 🏆",
+          "body": "x² = 100, so x is the number that times itself makes 100. That's 10. Glitter fringe secured!",
+          "math": "x = 10"
+        }
       ]
+    }
+  ],
+  "icons": [
+    "megaphone",
+    "pompom",
+    "trophy",
+    "star",
+    "ribbon"
+  ],
+  "encouragement": {
+    "correct": [
+      "Nice one, superstar!",
+      "That's the routine.",
+      "Clean landing.",
+      "Yes — keep going."
+    ],
+    "wrong": [
+      "Almost, superstar.",
+      "So close.",
+      "Not quite.",
+      "Hold up."
+    ],
+    "solved": [
+      "SQUAD GOALS!",
+      "STUCK THE LANDING!",
+      "PERFECT ROUTINE!"
+    ]
+  },
+  "verses": [
+    {
+      "text": "Whatever you do, work heartily, as for the Lord…",
+      "ref": "Colossians 3:23"
+    },
+    {
+      "text": "Wisdom is supreme. Get wisdom.",
+      "ref": "Proverbs 4:7"
+    },
+    {
+      "text": "Let us not be weary in doing good, for we will reap in due season, if we don’t give up.",
+      "ref": "Galatians 6:9"
+    },
+    {
+      "text": "I can do all things through Christ, who strengthens me.",
+      "ref": "Philippians 4:13"
+    },
+    {
+      "text": "The plans of the diligent surely lead to profit…",
+      "ref": "Proverbs 21:5"
     }
   ]
 }

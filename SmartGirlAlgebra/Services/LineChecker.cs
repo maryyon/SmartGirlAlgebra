@@ -12,6 +12,10 @@ public record CheckResult(CheckStatus Status, string? Message = null);
 /// <summary>
 /// Checks a single line of a student's working.
 ///
+/// Messages here describe the MATHS only, with no personality: what went wrong is
+/// the same whether the version is about cheerleading or basketball. Each version
+/// supplies its own encouragement around this, from its content file.
+///
 /// Rather than comparing equations symbolically, every line is validated against the
 /// KNOWN answer: a legal algebra move keeps the equation true when x = answer. That
 /// holds for linear equations and squared ones alike, so the Pythagorean level works
@@ -23,29 +27,26 @@ public static class LineChecker
     private const double Eps = 1e-6;
     private const double Near = 1e-4;
 
-    private static readonly string[] Encouragements =
-        ["Almost", "So close", "Not quite", "Hold up", "Deep breath"];
-
     public static CheckResult Check(string line, double answer)
     {
         var trimmed = (line ?? string.Empty).Trim();
 
         if (trimmed.Length == 0)
         {
-            return new CheckResult(CheckStatus.Wrong, "Write your next line and I'll cheer you on! 📣");
+            return new CheckResult(CheckStatus.Wrong, "Write your next line and we'll check it.");
         }
 
         var equalsCount = trimmed.Count(c => c == '=');
         if (equalsCount == 0)
         {
             return new CheckResult(CheckStatus.Wrong,
-                "Every line needs an equals sign (=)! Keep both sides balanced, squad. 📣");
+                "Every line needs an equals sign. Keep both sides balanced.");
         }
 
         if (equalsCount > 1)
         {
             return new CheckResult(CheckStatus.Wrong,
-                "One equals sign per line, please — this isn't a group chat. ✨");
+                "One equals sign per line.");
         }
 
         var parts = trimmed.Split('=');
@@ -55,7 +56,7 @@ public static class LineChecker
         if (left.Length == 0 || right.Length == 0)
         {
             return new CheckResult(CheckStatus.Wrong,
-                "Hmm, I couldn't read that line. Check your symbols and try again! 💭");
+                "That line couldn't be read. Check the symbols and try again.");
         }
 
         double Difference(double x) => Evaluate(left, x) - Evaluate(right, x);
@@ -69,7 +70,7 @@ public static class LineChecker
         catch
         {
             return new CheckResult(CheckStatus.Wrong,
-                "Hmm, I couldn't read that line. Check your symbols and try again! 💭");
+                "That line couldn't be read. Check the symbols and try again.");
         }
 
         // True for every x? Charming, but it doesn't pin down x.
@@ -78,7 +79,7 @@ public static class LineChecker
         if (trueEverywhere)
         {
             return new CheckResult(CheckStatus.Wrong,
-                "That line is true no matter what — adorable, but we still need to find x! Keep going. ✨");
+                "That line is true whatever x is, so it doesn't pin x down.");
         }
 
         if (Math.Abs(atAnswer) < Near)
@@ -92,18 +93,18 @@ public static class LineChecker
         if (Math.Abs(answer) > Eps && SafeNearZero(Difference, -answer))
         {
             return new CheckResult(CheckStatus.Wrong,
-                $"{Encourage()}! A sign did a backflip 🤸 — check your ➕ and ➖.");
+                "A sign flipped somewhere — check your + and −.");
         }
 
         if (SafeNearZero(Difference, answer * 2) ||
             (Math.Abs(answer) > Eps && SafeNearZero(Difference, answer / 2)))
         {
             return new CheckResult(CheckStatus.Wrong,
-                $"{Encourage()}! Did you divide (or multiply) BOTH sides all the way? ✨");
+                "Did you divide (or multiply) BOTH sides all the way?");
         }
 
         return new CheckResult(CheckStatus.Wrong,
-            $"{Encourage()}, superstar! The two sides stopped balancing — peek at your last move. 🦅");
+            "The two sides stopped balancing — look at your last move.");
     }
 
     private static bool SafeNearZero(Func<double, double> f, double x)
@@ -118,9 +119,6 @@ public static class LineChecker
             return false;
         }
     }
-
-    private static string Encourage() =>
-        Encouragements[Random.Shared.Next(Encouragements.Length)];
 
     /// <summary>Is this the finish line — literally "x = answer", either way round?</summary>
     private static bool IsSolvedForm(string left, string right, double answer)

@@ -1,0 +1,61 @@
+@namespace SmartGirlAlgebra.Components
+
+@* Shown when a URL names a version that doesn't exist. This used to fall through
+   to the default version, which meant a typo silently loaded somebody else's app
+   while the address bar still showed the wrong name — the mistake was hidden
+   rather than reported. *@
+
+<div class="sga">
+
+    <div class="sga-body sga-body--home">
+
+        <div style="text-align:center;">
+            <div class="sga-wiggle" style="font-size:3.5rem;" aria-hidden="true">🧭</div>
+            <h1 class="sga-hero">Nothing here</h1>
+            <p class="sga-hero__sub">
+                There's no version called <strong>@Requested</strong>.
+            </p>
+        </div>
+
+        @if (Suggestion is not null)
+        {
+            <div class="sga-howto" style="margin-top:1.25rem;">
+                <div class="sga-howto__eyebrow">✓ Did you mean</div>
+                <p style="margin-top:.5rem;">
+                    <a href="@Suggestion.Id" class="sga-suggest">
+                        /@Suggestion.Id — @Suggestion.Name
+                    </a>
+                </p>
+            </div>
+        }
+
+        <div>
+            <h2 class="sga-pick__title">All the versions</h2>
+            <p class="sga-pick__sub">Pick the one you're looking for.</p>
+
+            <div class="sga-levels">
+                @foreach (var entry in Available)
+                {
+                    <a class="sga-levelbtn" href="@entry.Id" style="text-decoration:none;">
+                        <span class="sga-levelbtn__num sga-levelbtn__num--code" aria-hidden="true">@entry.Id.ToUpperInvariant()</span>
+                        <span class="sga-levelbtn__body">
+                            <span class="sga-levelbtn__line">
+                                <span class="sga-levelbtn__name">@entry.Name</span>
+                            </span>
+                            <span class="sga-levelbtn__tag">/@entry.Id</span>
+                        </span>
+                        <span class="sga-levelbtn__chev" aria-hidden="true">›</span>
+                    </a>
+                }
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+    [Parameter, EditorRequired] public string Requested { get; set; } = "";
+    [Parameter, EditorRequired] public List<ProfileEntry> Available { get; set; } = [];
+    [Parameter] public ProfileEntry? Suggestion { get; set; }
+}

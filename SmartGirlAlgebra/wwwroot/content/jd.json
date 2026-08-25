@@ -1,34 +1,36 @@
 {
   "_note": "Same app as layla.json in every respect except grade. Identical palette, crest, name and voice. Grade 1 forces tap-the-answer instead of typed working, because a six-year-old has no algebraic notation — that is a consequence of the grade, not a separate design choice.",
-
   "id": "jd",
   "name": "Smart Cheer Math",
   "tagline": "Math, but make it a cheer competition. Pick your level, superstar. 🦅",
   "howToPlay": "Read the story. Then <strong>tap the answer</strong> you think is right. Get it wrong and we'll help you try again. Stuck? Tap <strong>Need a tip?</strong> 📣",
   "codePrefix": "JD",
   "mode": "Choice",
-  "crest": "images/pomstuff.png",
+  "crest": "images/cheer-lavender.png",
   "levelPickerTitle": "Choose your level",
   "levelPickerSubtitle": "Level 1 = comfy couch. Level 5 = final boss. 🔥",
   "footerNote": "✨ No sign-up, no passwords — just you, some numbers, and glory. 💙",
-
   "theme": {
-    "primary": "#16284b",
-    "primaryHi": "#233a68",
-    "accent": "#ce2233",
-    "background": "#f1f3f7",
-    "foreground": "#16284b",
+    "primary": "#6b4fa8",
+    "primaryHi": "#8a6fc4",
+    "primaryFg": "#ffffff",
+    "accent": "#e8b53d",
+    "accentFg": "#33245c",
+    "background": "#f4f1fa",
+    "foreground": "#33245c",
     "card": "#ffffff",
-    "secondary": "#d9dee7",
-    "secondaryFg": "#16284b",
-    "muted": "#e7ebf1",
-    "mutedFg": "#5c6880",
-    "border": "#c3cbd8",
-    "googleFonts": ["Baloo+2:wght@600;700;800", "Nunito:wght@400;600;700;800"],
+    "secondary": "#e3daf4",
+    "secondaryFg": "#4a3585",
+    "muted": "#ece6f7",
+    "mutedFg": "#6f6390",
+    "border": "#d0c4e8",
+    "googleFonts": [
+      "Baloo+2:wght@600;700;800",
+      "Nunito:wght@400;600;700;800"
+    ],
     "fontDisplay": "\"Baloo 2\", ui-rounded, \"Segoe UI\", system-ui, sans-serif",
     "fontSans": "\"Nunito\", ui-sans-serif, system-ui, -apple-system, sans-serif"
   },
-
   "levels": [
     {
       "id": 1,
@@ -37,7 +39,12 @@
       "difficulty": "Warm-up",
       "cheer": "You packed 3 pom-poms in your cheer bag. Coach hands you 2 more. 📣",
       "question": "How many pom-poms now?",
-      "choices": ["4", "5", "6", "7"],
+      "choices": [
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
       "correctChoice": "5",
       "hints": [
         "Hold up 3 fingers. Now put up 2 more.",
@@ -52,7 +59,12 @@
       "difficulty": "Getting spicy",
       "cheer": "The squad sold 6 spirit ribbons before lunch. After lunch they sold 3 more. 🎀",
       "question": "How many ribbons did they sell?",
-      "choices": ["8", "9", "10", "11"],
+      "choices": [
+        "8",
+        "9",
+        "10",
+        "11"
+      ],
       "correctChoice": "9",
       "hints": [
         "Start at 6. Count on: 7, 8, 9.",
@@ -67,7 +79,12 @@
       "difficulty": "Certified tricky",
       "cheer": "There were 8 orange slices for the squad. The flyers ate 3 of them. 🍊",
       "question": "How many orange slices are left?",
-      "choices": ["4", "5", "6", "11"],
+      "choices": [
+        "4",
+        "5",
+        "6",
+        "11"
+      ],
       "correctChoice": "5",
       "hints": [
         "Start at 8. Count backwards 3 times.",
@@ -82,7 +99,12 @@
       "difficulty": "Big brain",
       "cheer": "You need 7 cheerleaders for the pyramid. Only 4 have showed up so far. 📣",
       "question": "How many more do you need?",
-      "choices": ["2", "3", "4", "11"],
+      "choices": [
+        "2",
+        "3",
+        "4",
+        "11"
+      ],
       "correctChoice": "3",
       "hints": [
         "Start at 4. How many steps to get to 7?",
@@ -97,13 +119,59 @@
       "difficulty": "Final boss",
       "cheer": "You tied up 9 red balloons and 7 blue balloons for the big game. 🎈",
       "question": "How many balloons altogether?",
-      "choices": ["15", "16", "17", "18"],
+      "choices": [
+        "15",
+        "16",
+        "17",
+        "18"
+      ],
       "correctChoice": "16",
       "hints": [
         "Make a ten first. Take 1 from the 7 and give it to the 9.",
         "Now you have 10, and 6 left over.",
         "10 and 6 make 16!"
       ]
+    }
+  ],
+  "icons": [
+    "star",
+    "sparkle",
+    "flower",
+    "bow",
+    "ribbon"
+  ],
+  "_themeNote": "Lavender. Gold accent, because a second lavender would have nothing to push against.",
+  "encouragement": {
+    "correct": [
+      "Yes! You got it.",
+      "Great job!",
+      "Nice work!",
+      "That's right!"
+    ],
+    "wrong": [
+      "Oops!",
+      "Nearly!",
+      "Try again!",
+      "Not that one."
+    ],
+    "solved": [
+      "YOU DID IT!",
+      "SUPERSTAR!",
+      "ALL DONE!"
+    ]
+  },
+  "verses": [
+    {
+      "text": "I can do all things through Christ, who strengthens me.",
+      "ref": "Philippians 4:13"
+    },
+    {
+      "text": "Let us not be weary in doing good…",
+      "ref": "Galatians 6:9"
+    },
+    {
+      "text": "…I am fearfully and wonderfully made.",
+      "ref": "Psalm 139:14"
     }
   ]
 }

@@ -1,0 +1,96 @@
+@namespace SmartGirlAlgebra.Components
+
+@* A drifting layer of themed icons behind the content.
+   These are inline SVG rather than emoji on purpose: emoji have fixed colours,
+   so a lavender version would still get an orange trophy. Drawn with the
+   version's own primary and accent, they stay on-palette everywhere.
+   Purely decorative — aria-hidden, and it never takes a tap. *@
+
+<div class="sga-icons" aria-hidden="true">
+    @for (var i = 0; i < _placed.Count; i++)
+    {
+        var p = _placed[i];
+        <svg class="sga-icons__i @p.Motion" viewBox="0 0 24 24"
+             style="left:@(p.Left.ToString(Inv))%; top:@(p.Top.ToString(Inv))%; width:@(p.Size.ToString(Inv))px; color:@p.Colour; opacity:@(p.Opacity.ToString(Inv)); animation-duration:@(p.Duration.ToString(Inv))s; animation-delay:@(p.Delay.ToString(Inv))s;">
+            <path d="@Paths[p.Name]" fill="currentColor" />
+        </svg>
+    }
+</div>
+
+@code {
+    private static readonly System.Globalization.CultureInfo Inv =
+        System.Globalization.CultureInfo.InvariantCulture;
+
+    [Parameter, EditorRequired] public string[] Icons { get; set; } = [];
+
+    /// <summary>How many to scatter. More reads as busy rather than lively.</summary>
+    [Parameter] public int Count { get; set; } = 14;
+
+    private sealed record Placed(string Name, double Left, double Top, double Size,
+                                 string Colour, double Opacity, double Duration,
+                                 double Delay, string Motion);
+
+    private readonly List<Placed> _placed = [];
+    private string _signature = "";
+
+    private static readonly string[] Motions = ["sga-drift", "sga-bob", "sga-turn", "sga-throb"];
+
+    protected override void OnParametersSet()
+    {
+        var signature = string.Join(",", Icons) + "|" + Count;
+        if (signature == _signature) return;   // keep positions stable across re-renders
+        _signature = signature;
+
+        _placed.Clear();
+        if (Icons.Length == 0) return;
+
+        // Seeded from the icon set, so a version's layout is the same every visit
+        // rather than reshuffling under a child mid-session.
+        var rng = new Random(signature.Aggregate(17, (h, c) => h * 31 + c));
+
+        for (var i = 0; i < Count; i++)
+        {
+            var name = Icons[i % Icons.Length];
+            if (!Paths.ContainsKey(name)) continue;
+
+            _placed.Add(new Placed(
+                Name: name,
+                Left: Math.Round(rng.NextDouble() * 88 + 2, 2),
+                Top: Math.Round(rng.NextDouble() * 92 + 2, 2),
+                Size: Math.Round(22 + rng.NextDouble() * 30, 1),
+                Colour: rng.NextDouble() < 0.45 ? "var(--sga-accent)" : "var(--sga-primary)",
+                Opacity: Math.Round(0.07 + rng.NextDouble() * 0.10, 3),
+                Duration: Math.Round(7 + rng.NextDouble() * 9, 2),
+                Delay: Math.Round(rng.NextDouble() * 6, 2),
+                Motion: Motions[rng.Next(Motions.Length)]));
+        }
+    }
+
+    /// <summary>Simple 24x24 glyphs — they are seen small, faint and moving.</summary>
+    private static readonly Dictionary<string, string> Paths = new()
+    {
+        ["star"] = "M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z",
+        ["sparkle"] = "M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z",
+        ["trophy"] = "M7 3h10v2h3v3a4 4 0 0 1-4 4h-.4A5 5 0 0 1 13 15.9V18h3v3H8v-3h3v-2.1A5 5 0 0 1 8.4 12H8a4 4 0 0 1-4-4V5h3zM6 7v1a2 2 0 0 0 2 2V7zm12 0h-2v3a2 2 0 0 0 2-2z",
+        ["megaphone"] = "M3 10v4a1 1 0 0 0 1 1h2l8 5V4L6 9H4a1 1 0 0 0-1 1zm14.5 2a4.5 4.5 0 0 0-2-3.7v7.4a4.5 4.5 0 0 0 2-3.7zM17.5 4.6v2.1a5.6 5.6 0 0 1 0 10.6v2.1a7.7 7.7 0 0 0 0-14.8z",
+        ["pompom"] = "M12 3l1.6 3.3 3.6-1-1 3.6L19.5 10l-3.3 1.6 1 3.6-3.6-1L12 17.5l-1.6-3.3-3.6 1 1-3.6L4.5 10l3.3-1.6-1-3.6 3.6 1zM11 18h2v4h-2z",
+        ["palette"] = "M12 3a9 9 0 0 0 0 18c1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.3-.3-.4-.5-.8-.5-1.2 0-1 .8-1.5 1.8-1.5H16a5 5 0 0 0 5-5c0-3.9-4-7-9-7zM7 12.5A1.5 1.5 0 1 1 8.5 11 1.5 1.5 0 0 1 7 12.5zm2.5-4A1.5 1.5 0 1 1 11 7a1.5 1.5 0 0 1-1.5 1.5zm5 0A1.5 1.5 0 1 1 16 7a1.5 1.5 0 0 1-1.5 1.5zm3 3A1.5 1.5 0 1 1 19 10a1.5 1.5 0 0 1-1.5 1.5z",
+        ["brush"] = "M18.4 2.6a2 2 0 0 1 2.8 2.8l-8 8-2.8-2.8zM8.8 12.2l3 3-1 1a4 4 0 0 1-2.3 1.1c-.7.1-1 .4-1.3 1.1A3.6 3.6 0 0 1 4 21a3 3 0 0 0 1-2.3c0-.8.2-1.3.9-1.8a4 4 0 0 0 1.4-2z",
+        ["pencil"] = "M3 17.2V21h3.8L18 9.8 14.2 6zM20.7 7.1a1 1 0 0 0 0-1.4l-2.4-2.4a1 1 0 0 0-1.4 0l-1.8 1.8L18.9 8.9z",
+        ["note"] = "M9 18a3 3 0 1 1-2-2.8V5l12-2v11.2A3 3 0 1 1 17 14V7.4L9 9z",
+        ["mask"] = "M4 5h16v6a8 8 0 0 1-8 8 8 8 0 0 1-8-8zm4 4a1.2 1.2 0 1 0 1.2 1.2A1.2 1.2 0 0 0 8 9zm8 0a1.2 1.2 0 1 0 1.2 1.2A1.2 1.2 0 0 0 16 9zm-6.5 5.5a4.5 4.5 0 0 0 5 0z",
+        ["slipper"] = "M8 3a2 2 0 0 1 4 0c0 2-1 3.5-1 5.5S12 12 12 14a3 3 0 0 1-6 0c0-2 1-3.5 1-5.5S8 5 8 3zm7.5 12.5c2 .6 3.5 1.7 3.5 2.8S17 21 14 21s-5-1.2-5-2.5c0-.6.4-1.1 1.1-1.5a5 5 0 0 0 5.4-1.5z",
+        ["ball"] = "M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 2a8 8 0 0 1 5.2 1.9A11 11 0 0 0 13 12a11 11 0 0 0 4.2 6.1A8 8 0 0 1 6.8 5.9 11 11 0 0 0 11 12a11 11 0 0 0-4.2 6.1A8 8 0 0 1 12 4zM2.3 11h3.2a13 13 0 0 1 0 2H2.3a8 8 0 0 1 0-2zm16.2 0h3.2a8 8 0 0 1 0 2h-3.2a13 13 0 0 1 0-2z",
+        ["soccer"] = "M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 3.2l3.2 2.3-1.2 3.8h-4L8.8 7.5zM5.6 9.4l1.2 3.8-2.6 2A8 8 0 0 1 4 12a8 8 0 0 1 .4-2.5zm12.8 0l1.2.1A8 8 0 0 1 20 12a8 8 0 0 1-.2 1.6l-2.6-.4zM9.2 18.4l1.3-2.6h3l1.3 2.6A8 8 0 0 1 12 20a8 8 0 0 1-2.8-.5z",
+        ["whistle"] = "M11 8h10v6a5 5 0 0 1-9.6 2H7a4 4 0 0 1 0-8zm5 2.5A2.5 2.5 0 1 0 18.5 13 2.5 2.5 0 0 0 16 10.5zM3 9h4v2H3z",
+        ["flower"] = "M12 2a3 3 0 0 1 2.6 4.5A3 3 0 0 1 19 9a3 3 0 0 1-2.6 3 3 3 0 0 1 .1 4.6A3 3 0 0 1 12 22a3 3 0 0 1-4.5-5.4A3 3 0 0 1 5 12a3 3 0 0 1 2.4-3A3 3 0 0 1 12 2zm0 7a3 3 0 1 0 3 3 3 3 0 0 0-3-3z",
+        ["bow"] = "M12 9.5a3 3 0 0 1 1.6.5l5.2-3a1 1 0 0 1 1.5.9v8.2a1 1 0 0 1-1.5.9l-5.2-3a3 3 0 0 1-3.2 0l-5.2 3A1 1 0 0 1 3.7 16V7.9a1 1 0 0 1 1.5-.9l5.2 3a3 3 0 0 1 1.6-.5z",
+        ["mic"] = "M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3zM5 11h2a5 5 0 0 0 10 0h2a7 7 0 0 1-6 6.9V21h3v2H8v-2h3v-3.1A7 7 0 0 1 5 11z",
+        ["ribbon"] = "M12 2l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 14.4 6.9 17.2l1.2-5.6L4 7.8l5.6-.6zM9 18l-2 4 3-1 2 1 2-1 3 1-2-4z",
+        ["jet"] = "M21 15.5V14l-8-4.5V4a1.5 1.5 0 0 0-3 0v5.5L2 14v1.5l8-2.2v4.4L7.5 19.5V21l4-1 4 1v-1.5L13 17.7v-4.4z",
+        ["gauge"] = "M12 3a9 9 0 0 0-7.5 14h2.6A6.6 6.6 0 0 1 12 6.4a6.6 6.6 0 0 1 4.9 10.6h2.6A9 9 0 0 0 12 3zm4 5.6l-3.1 3.6a1.6 1.6 0 1 0 1.2 1.2z",
+        ["bolt"] = "M13 2L4 14h6l-1 8 9-12h-6z",
+        ["chevron"] = "M12 3l9 8h-4.5L12 7.4 7.5 11H3zm0 7l9 8h-4.5L12 14.4 7.5 18H3z",
+        ["propeller"] = "M11 2h2c1.2 0 2 2 2 4s-.8 3-2 3.4v1.2c.4.1.8.3 1.1.6l1-.6c.4-1.1 2.1-2.2 3.8-2.7 1.7-.5 3.2.4 2.6 1.5l-1 1.7c-.6 1-2.5 1.7-4.2 1.6l-1 .6c0 .4 0 .8-.2 1.2l1 .6c1.6-.4 3.5.2 4.4 1.2l1 1.7c.6 1.1-.9 2-2.6 1.5-1.7-.5-3.4-1.6-3.8-2.7l-1-.6c-.3.3-.7.5-1.1.6V19c1.2.4 2 1.4 2 3s-.8 4-2 4h-2c-1.2 0-2-2-2-4s.8-2.6 2-3v-1.2c-.4-.1-.8-.3-1.1-.6l-1 .6c-.4 1.1-2.1 2.2-3.8 2.7-1.7.5-3.2-.4-2.6-1.5l1-1.7c.9-1 2.8-1.6 4.4-1.2l1-.6c-.2-.4-.2-.8-.2-1.2l-1-.6c-1.7.1-3.6-.6-4.2-1.6l-1-1.7C.9 9.4 2.4 8.5 4.1 9c1.7.5 3.4 1.6 3.8 2.7l1 .6c.3-.3.7-.5 1.1-.6V10.4C8.8 10 8 9 8 6s.8-4 2-4z"
+    };
+}

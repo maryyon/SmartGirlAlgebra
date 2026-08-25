@@ -1,12 +1,13 @@
 /* ============================================================
-   Smart Girl Algebra — visual identity
-   Designed by Layla in v0, ported here. Blue / red / silver:
-   varsity team colours rather than the original hot pink.
+   Shared stylesheet for every version.
+
+   No colour is written here except as a default: each version supplies its own
+   palette at runtime, so anything hardcoded would leak one version's brand into
+   all the others. If you add a rule, take its colour from a --sga- token.
    ============================================================ */
 
-/* St. Lucie West Centennial High School — the Eagles.
-   Navy, red and white. Three colours, nothing else: no royal blue, no pink,
-   and no gradient ramps, because a school palette does not have those. */
+/* Default palette. Every version overrides these at runtime from its own
+   content file, so this block is only what shows before one loads. */
 :root {
   color-scheme: light;
 
@@ -76,8 +77,8 @@ html, body {
     max-height: calc(100dvh - 3rem);
     max-width: 420px;
     border-radius: 2.75rem;
-    border: 8px solid rgba(22, 35, 63, .85);
-    box-shadow: 0 25px 50px -12px rgba(22, 35, 63, .45);
+    border: 8px solid var(--sga-foreground);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, .35);
   }
 }
 
@@ -183,7 +184,7 @@ html, body {
   padding: 1.25rem;
   color: var(--sga-primary-fg);
   background: linear-gradient(to bottom right, var(--sga-primary), var(--sga-primary-hi));
-  box-shadow: 0 10px 15px -3px rgba(30, 79, 209, .25);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, .18);
 }
 
 .sga-problem__eyebrow {
@@ -254,7 +255,7 @@ html, body {
   border-radius: 1rem;
   border: 2px solid;
   padding: .75rem 1rem;
-  box-shadow: 0 1px 2px rgba(22, 35, 63, .05);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .06);
 }
 
 .sga-step--ok { border-color: rgba(22, 185, 129, .3); background: var(--sga-correct-bg); }
@@ -346,7 +347,7 @@ html, body {
   height: 10rem;
   touch-action: none;
   border-radius: 1rem;
-  border: 2px dashed rgba(30, 79, 209, .4);
+  border: 2px dashed var(--sga-border);
   background:
     repeating-linear-gradient(0deg, transparent, transparent 31px, var(--sga-muted) 31px, var(--sga-muted) 32px);
   display: block;
@@ -403,7 +404,7 @@ html, body {
   gap: .75rem;
   border-radius: 1.75rem;
   background: var(--sga-card);
-  box-shadow: 0 0 0 1px var(--sga-border), 0 20px 25px -5px rgba(22, 35, 63, .2);
+  box-shadow: 0 0 0 1px var(--sga-border), 0 20px 25px -5px rgba(0, 0, 0, .22);
   padding: 1rem;
 }
 
@@ -439,7 +440,7 @@ html, body {
   border-top: 1px solid var(--sga-border);
   background: var(--sga-card);
   padding: .75rem 1.25rem 1.5rem;
-  box-shadow: 0 -8px 20px -12px rgba(30, 79, 209, .4);
+  box-shadow: 0 -8px 20px -12px rgba(0, 0, 0, .28);
 }
 
 .sga-chips { display: flex; flex-wrap: wrap; gap: .375rem; margin-bottom: .625rem; }
@@ -492,7 +493,7 @@ html, body {
   font-family: var(--sga-font-display);
   font-size: 1rem;
   font-weight: 800;
-  box-shadow: 0 10px 15px -3px rgba(30, 79, 209, .3);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, .22);
 }
 
 .sga-check:disabled { opacity: .5; }
@@ -555,7 +556,7 @@ html, body {
   font-family: var(--sga-font-display);
   font-size: 2rem;
   font-weight: 800;
-  box-shadow: 0 4px 6px -1px rgba(22, 40, 75, .1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .10);
 }
 
 .sga-choice--right {
@@ -602,7 +603,7 @@ html, body {
   inset: 0;
   z-index: 20;
   display: flex;
-  background: rgba(22, 35, 63, .4);
+  background: rgba(0, 0, 0, .45);
   backdrop-filter: blur(4px);
 }
 
@@ -646,7 +647,7 @@ html, body {
 .sga-walk li {
   border: 2px solid var(--sga-secondary);
   border-radius: 1rem;
-  background: rgba(221, 228, 239, .4);
+  background: var(--sga-muted);
   padding: 1rem;
 }
 
@@ -698,7 +699,7 @@ html, body {
   font-family: var(--sga-font-display);
   font-size: 1rem;
   font-weight: 800;
-  box-shadow: 0 10px 15px -3px rgba(30, 79, 209, .3);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, .22);
 }
 
 /* ---------- celebration ---------- */
@@ -720,7 +721,7 @@ html, body {
   background: var(--sga-card);
   padding: 1.75rem;
   text-align: center;
-  box-shadow: 0 0 0 4px rgba(30, 79, 209, .3), 0 25px 50px -12px rgba(22, 35, 63, .35);
+  box-shadow: 0 0 0 4px var(--sga-secondary), 0 25px 50px -12px rgba(0, 0, 0, .35);
 }
 
 .sga-win__trophy { font-size: 3.75rem; }
@@ -770,7 +771,7 @@ html, body {
   background: var(--sga-card);
   padding: 1rem 1.125rem;
   color: inherit;
-  box-shadow: 0 1px 2px rgba(22, 35, 63, .05);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .06);
 }
 
 .sga-levelcard__head { display: flex; align-items: center; gap: .625rem; }
@@ -797,6 +798,60 @@ html, body {
 
 .sga-levelcard__diff { margin: .125rem 0 0; font-size: .75rem; font-weight: 700; color: var(--sga-muted-fg); }
 .sga-levelcard__tag { margin: .625rem 0 0; font-size: .875rem; font-weight: 600; }
+
+/* ---------- drifting themed icons ----------
+   A decorative layer behind everything. Kept faint and slow: a child is reading
+   a maths question over the top of it, and anything brighter or faster competes
+   with the thing she is meant to be looking at. */
+
+.sga-icons {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.sga-icons__i {
+  position: absolute;
+  height: auto;
+  will-change: transform;
+}
+
+/* Content sits above the layer. Without this the icons would swallow taps. */
+.sga-frame > .sga { position: relative; z-index: 1; background: transparent; }
+.sga-frame { background: var(--sga-background); }
+
+@keyframes sga-drift {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  33%  { transform: translate(14px, -18px) rotate(8deg); }
+  66%  { transform: translate(-10px, -8px) rotate(-6deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+@keyframes sga-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-16px); }
+}
+
+@keyframes sga-turn {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes sga-throb {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.18); }
+}
+
+.sga-drift { animation-name: sga-drift; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+.sga-bob   { animation-name: sga-bob;   animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+.sga-turn  { animation-name: sga-turn;  animation-timing-function: linear;      animation-iteration-count: infinite; }
+.sga-throb { animation-name: sga-throb; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sga-icons__i { animation: none !important; }
+}
 
 /* ---------- home ---------- */
 
@@ -880,13 +935,13 @@ html, body {
   border-radius: 1.75rem;
   padding: .875rem 1rem;
   color: #fff;
-  box-shadow: 0 10px 15px -3px rgba(22, 35, 63, .2);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, .2);
 }
 
 /* Accent numeral on a primary tile puts both of a version's colours in one mark.
-   These must be the themed tokens, not the Centennial ones: --sga-navy and
-   --sga-red are Layla's school colours and are never overridden per version, so
-   using them here left every version's numerals stuck on Centennial red. */
+   These must be the themed tokens: --sga-navy and --sga-red are defaults that
+   are never overridden per version, so using them here left every version's
+   numerals stuck on the default red. */
 .sga-levelbtn__num {
   width: 2.75rem;
   height: 2.75rem;
@@ -899,6 +954,17 @@ html, body {
   font-family: var(--sga-font-display);
   font-size: 1.5rem;
   font-weight: 800;
+}
+
+/* The version directory puts a two-letter id in this tile instead of a digit,
+   which needs a smaller face to fit the same square. */
+.sga-levelbtn__num--code { font-size: 1.05rem; letter-spacing: .02em; }
+
+.sga-suggest {
+  font-family: var(--sga-font-display);
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: var(--sga-primary);
 }
 
 /* The last level's tile is already the accent, so its numeral inverts to stay legible. */
@@ -952,7 +1018,7 @@ html, body {
   font-size: .75rem;
   font-weight: 600;
   color: var(--sga-muted-fg);
-  box-shadow: 0 -8px 20px -12px rgba(30, 79, 209, .4);
+  box-shadow: 0 -8px 20px -12px rgba(0, 0, 0, .28);
 }
 
 .sga-footnote a { color: var(--sga-primary); font-weight: 800; margin-left: .5rem; }
@@ -1086,4 +1152,40 @@ html, body {
   .sga-pop, .sga-shake, .sga-bounce-in, .sga-wiggle, .sga-confetti {
     animation: none !important;
   }
+}
+
+/* ---------- encouragement and verses ---------- */
+
+/* The same bubble as a correction, but in the "you got it" colours. */
+.sga-step__msg--ok {
+  background: var(--sga-correct-bg);
+  color: var(--sga-correct);
+  border-radius: 1rem .375rem 1rem 1rem;
+}
+
+.sga-verse {
+  margin: 1rem 0 0;
+  padding: .875rem 1rem;
+  border-left: 3px solid var(--sga-accent);
+  border-radius: 0 .75rem .75rem 0;
+  background: var(--sga-muted);
+  text-align: left;
+}
+
+.sga-verse__text {
+  margin: 0;
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--sga-foreground);
+}
+
+.sga-verse__ref {
+  display: block;
+  margin-top: .375rem;
+  font-size: .75rem;
+  font-weight: 800;
+  font-style: normal;
+  letter-spacing: .04em;
+  color: var(--sga-muted-fg);
 }

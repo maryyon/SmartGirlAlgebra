@@ -1,11 +1,37 @@
 {
-  "_note": "The index of versions. Adding one means adding its JSON file next to this and listing its id here. Nothing needs rebuilding.",
-
+  "_note": "The index of versions. Adding one means adding its JSON file next to this and listing it here. Nothing needs rebuilding.",
   "_hostMapNote": "Which version a bare domain opens on. Any version is still reachable by path from any domain — this only decides the root. smartgirlalgebra.com is deliberately absent so its root stays on the default.",
-
   "default": "layla",
-  "available": ["layla", "jd", "rz", "sl", "vc", "jq"],
-
+  "available": [
+    {
+      "id": "layla",
+      "name": "Smart Girl Algebra"
+    },
+    {
+      "id": "jd",
+      "name": "Smart Cheer Math"
+    },
+    {
+      "id": "sl",
+      "name": "Smart Squad Math"
+    },
+    {
+      "id": "rz",
+      "name": "Smart Studio Algebra"
+    },
+    {
+      "id": "vc",
+      "name": "Smart Stage Algebra"
+    },
+    {
+      "id": "jq",
+      "name": "Smart Court Algebra"
+    },
+    {
+      "id": "dm",
+      "name": "Smart Flight Physics"
+    }
+  ],
   "hostMap": {
     "smartmathclub.com": "jq"
   }
