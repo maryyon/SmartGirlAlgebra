@@ -9,6 +9,13 @@ public class ProfileIndex
 {
     public string Default { get; set; } = "layla";
     public List<string> Available { get; set; } = [];
+
+    /// <summary>
+    /// Which version a bare domain lands on. smartgirlalgebra.com is Layla's own
+    /// front door, so its root is the default; a version served from its own
+    /// domain shouldn't make a child type a path to reach herself.
+    /// </summary>
+    public Dictionary<string, string> HostMap { get; set; } = new(StringComparer.OrdinalIgnoreCase);
 }
 
 /// <summary>
@@ -64,7 +71,12 @@ public class ProfileService
     {
         var index = await GetIndexAsync();
 
-        var wanted = string.IsNullOrWhiteSpace(id) ? index.Default : id.Trim().ToLowerInvariant();
+        // An explicit route segment always wins. Otherwise the domain decides,
+        // and only then do we fall back to the default version.
+        var wanted = string.IsNullOrWhiteSpace(id)
+            ? ProfileForHost(index)
+            : id.Trim().ToLowerInvariant();
+
         if (!index.Available.Contains(wanted)) wanted = index.Default;
 
         if (Current?.Id == wanted) return Current;
@@ -94,6 +106,27 @@ public class ProfileService
         {
             return Current;
         }
+    }
+
+    /// <summary>
+    /// Maps the domain the app is being served from to a version. The host comes
+    /// from the content client's base address, which is this app's own origin.
+    /// A "www." prefix is ignored so both spellings land in the same place.
+    /// </summary>
+    private string ProfileForHost(ProfileIndex index)
+    {
+        var host = _http.BaseAddress?.Host;
+        if (string.IsNullOrWhiteSpace(host)) return index.Default;
+
+        if (index.HostMap.TryGetValue(host, out var byHost)) return byHost;
+
+        if (host.StartsWith("www.", StringComparison.OrdinalIgnoreCase) &&
+            index.HostMap.TryGetValue(host[4..], out var byBare))
+        {
+            return byBare;
+        }
+
+        return index.Default;
     }
 
     private async Task ApplyThemeAsync(Theme theme)

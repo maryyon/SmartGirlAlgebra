@@ -1,5 +1,12 @@
 {
   "_note": "The index of versions. Adding one means adding its JSON file next to this and listing its id here. Nothing needs rebuilding.",
+
+  "_hostMapNote": "Which version a bare domain opens on. Any version is still reachable by path from any domain — this only decides the root. smartgirlalgebra.com is deliberately absent so its root stays on the default.",
+
   "default": "layla",
-  "available": ["layla", "jd", "rz", "sl", "vc", "jq"]
+  "available": ["layla", "jd", "rz", "sl", "vc", "jq"],
+
+  "hostMap": {
+    "smartmathclub.com": "jq"
+  }
 }
