@@ -1,65 +1,89 @@
 @page "/"
+@page "/{ProfileId}"
 @inject NavigationManager Nav
+@inject ProfileService Profiles
+@inject PlayerService Player
 
-<PageTitle>Smart Girl Algebra</PageTitle>
+<PageTitle>@(_profile?.Name ?? "Smart Girl Algebra")</PageTitle>
 
 <div class="sga">
 
-    @* Spacing comes from each block's own margin, matching the v0 design;
-       the shared body gap would add to it and spread the screen out. *@
-    <div class="sga-body sga-body--home">
+    @if (_profile is null)
+    {
+        <div class="sga-body"><p>Loading…</p></div>
+    }
+    else
+    {
+        <div class="sga-body sga-body--home">
 
-        <div style="text-align:center;">
-            @* The emoji bow renders magenta on every platform, which is off-brand.
-               pomstuff is the school's own blue-and-silver bow, poms and megaphone. *@
-            <img class="sga-crest sga-wiggle" src="images/pomstuff.png" alt="Cheer bow, pom-poms and megaphone" />
-            <h1 class="sga-hero">Smart Girl Algebra</h1>
-            <p class="sga-hero__sub">Math, but make it a cheer competition. Pick your level, superstar. 🦅</p>
-        </div>
-
-        <div class="sga-howto">
-            <div class="sga-howto__eyebrow">✓ How to play</div>
-            <p>
-                Read the silly word problem, then solve it <strong>one line at a time</strong>.
-                Tap <strong>Check!</strong> after every line — we cheer the wins and gently roast
-                the oops. Stuck? Grab a hint or tap <strong>Show me how</strong>. 📣
-            </p>
-        </div>
-
-        <div>
-            <h2 class="sga-pick__title">Choose your level</h2>
-            <p class="sga-pick__sub">Level 1 = comfy couch. Level 5 = final boss. 🔥</p>
-
-            <div class="sga-levels">
-                @foreach (var level in Levels.All)
+            <div style="text-align:center;">
+                @if (!string.IsNullOrWhiteSpace(_profile.Crest))
                 {
-                    <button type="button" class="sga-levelbtn" style="background-color:@level.Color"
-                            @onclick="@(() => Nav.NavigateTo($"solve/{level.Id}"))">
-                        <span class="sga-levelbtn__num" aria-hidden="true">@level.Id</span>
-                        <span class="sga-levelbtn__body">
-                            <span class="sga-levelbtn__line">
-                                <span class="sga-levelbtn__name">@level.Name</span>
-                                <span class="sga-levelbtn__diff">@level.Difficulty</span>
-                            </span>
-                            <span class="sga-levelbtn__tag">@level.Tagline</span>
-                        </span>
-                        <span class="sga-levelbtn__chev" aria-hidden="true">›</span>
-                    </button>
+                    <img class="sga-crest sga-wiggle" src="@_profile.Crest" alt="" />
                 }
+                <h1 class="sga-hero">@_profile.Name</h1>
+                <p class="sga-hero__sub">@_profile.Tagline</p>
             </div>
+
+            @if (!string.IsNullOrWhiteSpace(_profile.HowToPlay))
+            {
+                <div class="sga-howto">
+                    <div class="sga-howto__eyebrow">✓ How to play</div>
+                    <p>@((MarkupString)_profile.HowToPlay)</p>
+                </div>
+            }
+
+            <div>
+                <h2 class="sga-pick__title">@_profile.LevelPickerTitle</h2>
+                <p class="sga-pick__sub">@_profile.LevelPickerSubtitle</p>
+
+                <div class="sga-levels">
+                    @foreach (var level in _profile.Levels)
+                    {
+                        var id = level.Id;
+                        <button type="button" class="sga-levelbtn" style="background-color:@level.Color"
+                                @onclick="@(() => Nav.NavigateTo($"{_profile.Id}/play/{id}"))">
+                            <span class="sga-levelbtn__num" aria-hidden="true">@level.Id</span>
+                            <span class="sga-levelbtn__body">
+                                <span class="sga-levelbtn__line">
+                                    <span class="sga-levelbtn__name">@level.Name</span>
+                                    <span class="sga-levelbtn__diff">@level.Difficulty</span>
+                                </span>
+                                <span class="sga-levelbtn__tag">@level.Tagline</span>
+                            </span>
+                            <span class="sga-levelbtn__chev" aria-hidden="true">›</span>
+                        </button>
+                    }
+                </div>
+            </div>
+
+            @if (_profile.Id == "layla")
+            {
+                <p style="text-align:center; margin-top:.5rem;">
+                    <a href="about" style="color:var(--sga-primary); font-weight:700; font-size:.875rem;">
+                        📣 The secret origin story 📣
+                    </a>
+                </p>
+            }
+
         </div>
 
-        <p style="text-align:center; margin-top:.5rem;">
-            <a href="about" style="color:var(--sga-primary); font-weight:700; font-size:.875rem;">
-                📣 The secret origin story 📣
-            </a>
-        </p>
-
-    </div>
-
-    <div class="sga-footnote">
-        ✨ No sign-up, no passwords — just you, some triangles, and glory. 💙
-        <a href="mycode">My code</a>
-    </div>
+        <div class="sga-footnote">
+            @_profile.FooterNote
+            <a href="@($"{_profile.Id}/mycode")">My code</a>
+        </div>
+    }
 
 </div>
+
+@code {
+    [Parameter] public string? ProfileId { get; set; }
+
+    private Profile? _profile;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _profile = await Profiles.LoadAsync(ProfileId);
+        if (_profile is not null) await Player.UseProfileAsync(_profile);
+    }
+}

@@ -9,17 +9,22 @@ namespace SmartGirlAlgebra.Services;
 /// silently the first time she answers something, so nothing is ever gated behind
 /// a sign-up, and typing it on another device brings her progress with her.
 ///
+/// Everything is scoped to a version: storage keys, the code prefix, and therefore
+/// the totals. A younger child's streak never mixes with an older one's, and a code
+/// from one version will not resolve in another.
+///
 /// Totals are kept locally so the UI never waits on the network; the server is
 /// updated in the background and is allowed to fail quietly. Offline still plays.
 /// </summary>
 public class PlayerService
 {
-    private const string CodeKey = "sgaPlayerCode";
-    private const string StatsKey = "sgaPlayerStats";
     private const string CodeHeader = "X-Player-Code";
 
     private readonly HttpClient _http;
     private readonly IJSRuntime _js;
+
+    private string _profileId = "";
+    private string _codePrefix = "SGA";
 
     public PlayerService(HttpClient http, IJSRuntime js)
     {
@@ -34,32 +39,43 @@ public class PlayerService
 
     public bool HasIdentity => !string.IsNullOrEmpty(Code);
 
-    public async Task InitializeAsync()
+    private string CodeKey => $"sgaPlayerCode:{_profileId}";
+    private string StatsKey => $"sgaPlayerStats:{_profileId}";
+
+    /// <summary>
+    /// Points the player at a version and loads that version's saved progress.
+    /// Switching versions swaps identity wholesale rather than carrying anything over.
+    /// </summary>
+    public async Task UseProfileAsync(Profile profile)
     {
-        // Local totals come back first so the screen is right immediately, even
-        // with no network and even before an API exists.
+        if (_profileId == profile.Id) return;
+
+        _profileId = profile.Id;
+        _codePrefix = string.IsNullOrWhiteSpace(profile.CodePrefix) ? "SGA" : profile.CodePrefix;
+
+        Code = null;
+        Stats = new PlayerResponse();
+        _http.DefaultRequestHeaders.Remove(CodeHeader);
+
         var cached = await LoadStatsAsync();
         if (cached is not null) Stats = cached;
 
         Code = await GetStoredCodeAsync();
-        if (string.IsNullOrEmpty(Code))
+        if (!string.IsNullOrEmpty(Code))
         {
-            Changed?.Invoke();
-            return;
-        }
+            ApplyHeader(Code);
 
-        ApplyHeader(Code);
-
-        // Then reconcile with the server. Whichever side has seen more work wins
-        // each total, so playing offline on one device never erases the other.
-        try
-        {
-            var remote = await _http.GetFromJsonAsync<PlayerResponse>("api/progress");
-            if (remote is not null) Merge(remote);
-        }
-        catch
-        {
-            // Offline, or a cold API still waking up — local totals stand.
+            // Reconcile with the server, taking whichever side has seen more work,
+            // so playing offline on one device never erases the other.
+            try
+            {
+                var remote = await _http.GetFromJsonAsync<PlayerResponse>("api/progress");
+                if (remote is not null) Merge(remote);
+            }
+            catch
+            {
+                // Offline, or a cold API still waking up — local totals stand.
+            }
         }
 
         Changed?.Invoke();
@@ -86,7 +102,7 @@ public class PlayerService
 
         try
         {
-            var response = await _http.PostAsync("api/identity/new", null);
+            var response = await _http.PostAsync($"api/identity/new?prefix={Uri.EscapeDataString(_codePrefix)}", null);
             if (!response.IsSuccessStatusCode) return;
 
             var player = await response.Content.ReadFromJsonAsync<PlayerResponse>();
@@ -107,9 +123,17 @@ public class PlayerService
     /// <summary>Adopts an existing code typed in from another device.</summary>
     public async Task<(bool Ok, string? Error)> ClaimAsync(string code)
     {
+        // Reject another version's code before troubling the server: the child would
+        // otherwise be told "not found" for a code that is perfectly valid elsewhere.
+        var typed = new string((code ?? "").ToUpperInvariant().Where(char.IsLetterOrDigit).ToArray());
+        if (typed.Length > 6 && !typed.StartsWith(_codePrefix, StringComparison.OrdinalIgnoreCase))
+        {
+            return (false, $"That code belongs to a different app. This one's codes start with {_codePrefix}.");
+        }
+
         try
         {
-            var response = await _http.PostAsJsonAsync("api/identity/claim", new ClaimRequest { Code = code });
+            var response = await _http.PostAsJsonAsync("api/identity/claim", new ClaimRequest { Code = code ?? "" });
 
             if (!response.IsSuccessStatusCode)
             {
@@ -123,6 +147,7 @@ public class PlayerService
             Stats = player;
             await StoreCodeAsync(player.Code);
             ApplyHeader(player.Code);
+            await SaveStatsAsync();
             Changed?.Invoke();
             return (true, null);
         }
@@ -133,7 +158,7 @@ public class PlayerService
     }
 
     /// <summary>
-    /// Records one answered line and pushes the new totals up. Called on every
+    /// Records one answered problem and pushes the new totals up. Called on every
     /// submission, so it must stay cheap and never throw into the UI.
     /// </summary>
     public async Task RecordAttemptAsync(bool correct, int pointsEarned)

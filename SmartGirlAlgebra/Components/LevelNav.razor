@@ -1,0 +1,44 @@
+@namespace SmartGirlAlgebra.Components
+@inject NavigationManager Nav
+
+@* Back / Skip / Next, shared by both boards. Skip exists so a child who is stuck
+   can move on without needing an adult — being trapped on one problem is how a
+   practice app gets abandoned. *@
+
+<nav class="sga-nav" aria-label="Move between levels">
+    <button type="button" class="sga-nav__btn"
+            disabled="@(!HasPrevious)"
+            @onclick="@(() => Go(Level.Id - 1))">
+        ‹ Back
+    </button>
+    <button type="button" class="sga-nav__btn sga-nav__btn--skip" @onclick="Skip">
+        Skip
+    </button>
+    <button type="button" class="sga-nav__btn"
+            disabled="@(!HasNext)"
+            @onclick="@(() => Go(Level.Id + 1))">
+        Next ›
+    </button>
+</nav>
+
+@code {
+    [Parameter, EditorRequired] public Profile Profile { get; set; } = default!;
+    [Parameter, EditorRequired] public Level Level { get; set; } = default!;
+
+    private bool HasPrevious => Profile.LevelById(Level.Id - 1) is not null;
+    private bool HasNext => Profile.LevelById(Level.Id + 1) is not null;
+
+    private void Go(int id)
+    {
+        if (Profile.LevelById(id) is null) return;
+        Nav.NavigateTo($"{Profile.Id}/play/{id}");
+    }
+
+    // Forward if there is anywhere to go, otherwise back to the level list rather
+    // than leaving her stuck on the last problem.
+    private void Skip()
+    {
+        if (HasNext) Go(Level.Id + 1);
+        else Nav.NavigateTo(Profile.Id);
+    }
+}

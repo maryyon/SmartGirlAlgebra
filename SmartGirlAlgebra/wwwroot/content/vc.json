@@ -1,0 +1,144 @@
+{
+  "_note": "VC · 5th grade · singing, ballet and paper dolls. Same grade as RZ, so the same show-your-working board and the same equation types — only the stories and the skin differ. Theatre garnet and antique gold on soft ivory.",
+
+  "id": "vc",
+  "name": "Smart Stage Algebra",
+  "tagline": "Math, but make it a performance. Take your position. 🩰",
+  "howToPlay": "Read the problem, then solve it <strong>one line at a time</strong>. Tap <strong>Check!</strong> after every line and we'll tell you exactly where it went wrong. Stuck? Grab a hint or tap <strong>Show me how</strong>.",
+  "codePrefix": "VC",
+  "mode": "Steps",
+  "crest": "images/stage-crest.png",
+  "levelPickerTitle": "Choose your number",
+  "levelPickerSubtitle": "Level 1 = the warm-up barre. Level 5 = opening night. 🌟",
+  "footerNote": "✨ No sign-up, no passwords — just you, the numbers, and the curtain call.",
+
+  "theme": {
+    "primary": "#5c2233",
+    "primaryHi": "#7d3348",
+    "accent": "#c9962f",
+    "background": "#f3f0ec",
+    "foreground": "#3d1c26",
+    "card": "#ffffff",
+    "secondary": "#e6ddd6",
+    "secondaryFg": "#5c2233",
+    "muted": "#ece5df",
+    "mutedFg": "#6f6259",
+    "border": "#d5cabf",
+    "googleFonts": ["Prata", "Nunito:wght@400;600;700;800"],
+    "fontDisplay": "\"Prata\", Georgia, \"Times New Roman\", serif",
+    "fontSans": "\"Nunito\", ui-sans-serif, system-ui, -apple-system, sans-serif"
+  },
+
+  "levels": [
+    {
+      "id": 1,
+      "name": "The Missing Dancers",
+      "tagline": "One move and it's solved.",
+      "difficulty": "At the barre",
+      "cheer": "Some dancers were already warming up. Then 47 more arrived for the rehearsal, and now there are 132 in the studio. 🩰",
+      "question": "How many were warming up to begin with?",
+      "equation": "x + 47 = 132",
+      "variableMeaning": "x = dancers at the start",
+      "answer": "x = 85",
+      "answerValue": 85,
+      "chips": ["x", "=", "+", "−"],
+      "hints": [
+        "The x is stuck with a “+ 47”. Get rid of it.",
+        "Subtract 47 from BOTH sides to keep it balanced.",
+        "132 − 47 = 85. So x = 85."
+      ],
+      "walkthrough": [
+        { "title": "Find the goal", "body": "We want x on its own. Right now it has “+ 47” attached.", "math": "x + 47 = 132" },
+        { "title": "Undo the addition", "body": "Subtract 47 from BOTH sides. 132 − 47 = 85.", "math": "x = 85" }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Sheet Music",
+      "tagline": "How many in each folder?",
+      "difficulty": "Finding the key",
+      "cheer": "The choir has 6 identical music folders. Altogether they hold 84 pages of sheet music. 🎼",
+      "question": "How many pages are in one folder?",
+      "equation": "6x = 84",
+      "variableMeaning": "x = pages per folder",
+      "answer": "x = 14",
+      "answerValue": 14,
+      "chips": ["x", "=", "+", "−", "×", "÷"],
+      "hints": [
+        "6x means 6 times x. To undo times, you divide.",
+        "Divide BOTH sides by 6.",
+        "84 ÷ 6 = 14. So x = 14."
+      ],
+      "walkthrough": [
+        { "title": "Read what's happening", "body": "x has been multiplied by 6.", "math": "6x = 84" },
+        { "title": "Undo the multiplication", "body": "Divide BOTH sides by 6. 84 ÷ 6 = 14.", "math": "x = 14" }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Costume Budget",
+      "tagline": "Two moves, in the right order.",
+      "difficulty": "Two-step",
+      "cheer": "Each costume costs the same. You ordered 3 of them plus a $12 box of ribbon, and spent $45 in total. 🎭",
+      "question": "How much was one costume?",
+      "equation": "3x + 12 = 45",
+      "variableMeaning": "x = cost of one costume",
+      "answer": "x = 11",
+      "answerValue": 11,
+      "chips": ["x", "=", "+", "−", "×", "÷"],
+      "hints": [
+        "Deal with the lonely number first. That + 12 goes.",
+        "Subtract 12 from both sides → 3x = 33.",
+        "Now divide both sides by 3. 33 ÷ 3 = 11."
+      ],
+      "walkthrough": [
+        { "title": "Clear the extra", "body": "Subtract 12 from BOTH sides. 45 − 12 = 33.", "math": "3x = 33" },
+        { "title": "Split it up", "body": "x is multiplied by 3, so divide BOTH sides by 3.", "math": "x = 11" }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Paper Doll Sale",
+      "tagline": "Now with a decimal point.",
+      "difficulty": "Careful work",
+      "cheer": "You had some money saved for paper doll sets. You found $2.75 in your coat pocket, and now you have $9.50. ✂️",
+      "question": "How much had you saved?",
+      "equation": "x + 2.75 = 9.5",
+      "variableMeaning": "x = dollars saved",
+      "answer": "x = 6.75",
+      "answerValue": 6.75,
+      "chips": ["x", "=", "+", "−", "."],
+      "hints": [
+        "Same idea as before — undo the addition.",
+        "Subtract 2.75 from BOTH sides.",
+        "9.50 − 2.75 = 6.75. Line up the decimal points!"
+      ],
+      "walkthrough": [
+        { "title": "Same move, new numbers", "body": "A decimal changes nothing about the method.", "math": "x + 2.75 = 9.5" },
+        { "title": "Subtract carefully", "body": "9.50 − 2.75 = 6.75. Keep the decimal points lined up.", "math": "x = 6.75" }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Opening Night",
+      "tagline": "Brackets. The curtain call. 🌟",
+      "difficulty": "Opening night",
+      "cheer": "The stage holds 2 identical rows. Each row has your dancers plus the 5 guest performers. Altogether 34 people are on stage. 🎭",
+      "question": "How many of your dancers are in each row?",
+      "equation": "2(x + 5) = 34",
+      "variableMeaning": "x = your dancers per row",
+      "answer": "x = 12",
+      "answerValue": 12,
+      "chips": ["x", "=", "+", "−", "×", "÷", "(", ")"],
+      "hints": [
+        "You can divide both sides by 2 first, or multiply out the bracket. Either works.",
+        "Dividing by 2 gives x + 5 = 17.",
+        "Then subtract 5. x = 12."
+      ],
+      "walkthrough": [
+        { "title": "Undo the outside first", "body": "The whole bracket is multiplied by 2, so divide BOTH sides by 2. 34 ÷ 2 = 17.", "math": "x + 5 = 17" },
+        { "title": "Now the inside", "body": "Subtract 5 from BOTH sides. 17 − 5 = 12.", "math": "x = 12" }
+      ]
+    }
+  ]
+}

@@ -20,14 +20,16 @@ public class IdentityController : ControllerBase
     /// <summary>
     /// Issues a brand new sync code. Called silently by the app the first time
     /// someone answers a problem — the player never has to ask for it.
+    ///
+    /// The prefix names the version, so progress never mixes between them.
     /// </summary>
     [HttpPost("new")]
-    public async Task<ActionResult<PlayerResponse>> CreateNew()
+    public async Task<ActionResult<PlayerResponse>> CreateNew([FromQuery] string? prefix = null)
     {
         // Retry on the vanishingly unlikely collision rather than trusting one draw.
         for (var attempt = 0; attempt < 5; attempt++)
         {
-            var code = SyncCodeGenerator.Generate();
+            var code = SyncCodeGenerator.Generate(prefix);
             if (await _context.Players.AnyAsync(p => p.Code == code)) continue;
 
             var player = new Player { Code = code };
@@ -49,7 +51,7 @@ public class IdentityController : ControllerBase
         var code = SyncCodeGenerator.Normalize(request.Code);
         if (code == null)
         {
-            return BadRequest(new { message = "That doesn't look like a code. They look like SGA-7K4M2P." });
+            return BadRequest(new { message = "That doesn't look like a code. Codes have a few letters, a dash, then six characters." });
         }
 
         var player = await _context.Players.FirstOrDefaultAsync(p => p.Code == code);

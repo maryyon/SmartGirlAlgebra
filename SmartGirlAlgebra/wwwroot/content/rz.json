@@ -1,0 +1,144 @@
+{
+  "_note": "RZ · 5th grade · art. Fifth grade writes and solves equations with an unknown (Florida MA.5.AR.2), so she gets the show-your-working board rather than tap-the-answer. Palette is pigment violet and vermilion on cool paper.",
+
+  "id": "rz",
+  "name": "Smart Studio Algebra",
+  "tagline": "Math, but make it a studio. Pick your canvas. 🎨",
+  "howToPlay": "Read the problem, then solve it <strong>one line at a time</strong>. Tap <strong>Check!</strong> after every line and we'll tell you exactly where it went wrong. Stuck? Grab a hint or tap <strong>Show me how</strong>.",
+  "codePrefix": "RZ",
+  "mode": "Steps",
+  "crest": "images/art-palette.png",
+  "levelPickerTitle": "Choose your canvas",
+  "levelPickerSubtitle": "Level 1 = a quick sketch. Level 5 = the masterpiece. 🖌️",
+  "footerNote": "✨ No sign-up, no passwords — just you, the numbers, and a finished piece.",
+
+  "theme": {
+    "primary": "#4a2e7a",
+    "primaryHi": "#6a49a0",
+    "accent": "#e0523b",
+    "background": "#f1eef5",
+    "foreground": "#2a2140",
+    "card": "#ffffff",
+    "secondary": "#ded7ea",
+    "secondaryFg": "#3d2a6b",
+    "muted": "#e9e4f0",
+    "mutedFg": "#6b6280",
+    "border": "#cdc3de",
+    "googleFonts": ["Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800", "Nunito:wght@400;600;700;800"],
+    "fontDisplay": "\"Fraunces\", Georgia, \"Times New Roman\", serif",
+    "fontSans": "\"Nunito\", ui-sans-serif, system-ui, -apple-system, sans-serif"
+  },
+
+  "levels": [
+    {
+      "id": 1,
+      "name": "The Missing Tubes",
+      "tagline": "One move and it's solved.",
+      "difficulty": "Quick sketch",
+      "cheer": "The art room had a stack of paint tubes. The teacher ordered 47 more, and now there are 132 on the shelf. 🎨",
+      "question": "How many tubes were there to begin with?",
+      "equation": "x + 47 = 132",
+      "variableMeaning": "x = tubes at the start",
+      "answer": "x = 85",
+      "answerValue": 85,
+      "chips": ["x", "=", "+", "−"],
+      "hints": [
+        "The x is stuck with a “+ 47”. Get rid of it.",
+        "Subtract 47 from BOTH sides to keep it balanced.",
+        "132 − 47 = 85. So x = 85."
+      ],
+      "walkthrough": [
+        { "title": "Find the goal", "body": "We want x on its own. Right now it has “+ 47” attached.", "math": "x + 47 = 132" },
+        { "title": "Undo the addition", "body": "Subtract 47 from BOTH sides. 132 − 47 = 85.", "math": "x = 85" }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Brush Sets",
+      "tagline": "How many in each set?",
+      "difficulty": "Getting inky",
+      "cheer": "You bought 6 identical brush sets for the studio. Altogether that's 84 brushes. 🖌️",
+      "question": "How many brushes are in one set?",
+      "equation": "6x = 84",
+      "variableMeaning": "x = brushes per set",
+      "answer": "x = 14",
+      "answerValue": 14,
+      "chips": ["x", "=", "+", "−", "×", "÷"],
+      "hints": [
+        "6x means 6 times x. To undo times, you divide.",
+        "Divide BOTH sides by 6.",
+        "84 ÷ 6 = 14. So x = 14."
+      ],
+      "walkthrough": [
+        { "title": "Read what's happening", "body": "x has been multiplied by 6.", "math": "6x = 84" },
+        { "title": "Undo the multiplication", "body": "Divide BOTH sides by 6. 84 ÷ 6 = 14.", "math": "x = 14" }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Framing Day",
+      "tagline": "Two moves, in the right order.",
+      "difficulty": "Two-step",
+      "cheer": "Each frame costs the same. You bought 3 frames and a $12 roll of tape, and spent $45 in total. 🖼️",
+      "question": "How much was one frame?",
+      "equation": "3x + 12 = 45",
+      "variableMeaning": "x = cost of one frame",
+      "answer": "x = 11",
+      "answerValue": 11,
+      "chips": ["x", "=", "+", "−", "×", "÷"],
+      "hints": [
+        "Deal with the lonely number first. That + 12 goes.",
+        "Subtract 12 from both sides → 3x = 33.",
+        "Now divide both sides by 3. 33 ÷ 3 = 11."
+      ],
+      "walkthrough": [
+        { "title": "Clear the extra", "body": "Subtract 12 from BOTH sides. 45 − 12 = 33.", "math": "3x = 33" },
+        { "title": "Split it up", "body": "x is multiplied by 3, so divide BOTH sides by 3.", "math": "x = 11" }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Decimal Paints",
+      "tagline": "Now with a decimal point.",
+      "difficulty": "Careful work",
+      "cheer": "You had some money saved. You found $2.75 in your smock pocket, and now you have $9.50 for supplies. 💰",
+      "question": "How much had you saved?",
+      "equation": "x + 2.75 = 9.5",
+      "variableMeaning": "x = dollars saved",
+      "answer": "x = 6.75",
+      "answerValue": 6.75,
+      "chips": ["x", "=", "+", "−", "."],
+      "hints": [
+        "Same idea as before — undo the addition.",
+        "Subtract 2.75 from BOTH sides.",
+        "9.50 − 2.75 = 6.75. Line up the decimal points!"
+      ],
+      "walkthrough": [
+        { "title": "Same move, new numbers", "body": "A decimal changes nothing about the method.", "math": "x + 2.75 = 9.5" },
+        { "title": "Subtract carefully", "body": "9.50 − 2.75 = 6.75. Keep the decimal points lined up.", "math": "x = 6.75" }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "The Gallery Wall",
+      "tagline": "Brackets. The masterpiece. 🏆",
+      "difficulty": "Masterpiece",
+      "cheer": "You're hanging art in 2 identical rows. Each row has your paintings plus the 5 borrowed ones. All together there are 34 pieces on the wall. 🖼️",
+      "question": "How many of your paintings are in each row?",
+      "equation": "2(x + 5) = 34",
+      "variableMeaning": "x = your paintings per row",
+      "answer": "x = 12",
+      "answerValue": 12,
+      "chips": ["x", "=", "+", "−", "×", "÷", "(", ")"],
+      "hints": [
+        "You can divide both sides by 2 first, or multiply out the bracket. Either works.",
+        "Dividing by 2 gives x + 5 = 17.",
+        "Then subtract 5. x = 12."
+      ],
+      "walkthrough": [
+        { "title": "Undo the outside first", "body": "The whole bracket is multiplied by 2, so divide BOTH sides by 2. 34 ÷ 2 = 17.", "math": "x + 5 = 17" },
+        { "title": "Now the inside", "body": "Subtract 5 from BOTH sides. 17 − 5 = 12.", "math": "x = 12" }
+      ]
+    }
+  ]
+}

@@ -519,6 +519,60 @@ html, body {
 .sga-action--undo { background: var(--sga-muted); color: var(--sga-secondary-fg); }
 .sga-action:disabled { opacity: .45; }
 
+/* ---------- tap-the-answer board ----------
+   Sized for a six-year-old's finger and a six-year-old's reading: the question
+   is large, the choices are enormous, and nothing requires the keyboard. */
+
+.sga-problem__cheer--big {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+
+.sga-ask {
+  margin-top: .875rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, .95);
+  padding: 1rem;
+  text-align: center;
+  font-family: var(--sga-font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--sga-primary);
+}
+
+.sga-choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .75rem;
+}
+
+.sga-choice {
+  min-height: 5rem;
+  border: 3px solid var(--sga-border);
+  border-radius: 1.5rem;
+  background: var(--sga-card);
+  color: var(--sga-primary);
+  font-family: var(--sga-font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  box-shadow: 0 4px 6px -1px rgba(22, 40, 75, .1);
+}
+
+.sga-choice--right {
+  border-color: var(--sga-correct);
+  background: var(--sga-correct-bg);
+  color: var(--sga-correct);
+}
+
+/* A wrong answer fades out of the running rather than shouting. She is six. */
+.sga-choice--wrong {
+  border-color: var(--sga-border);
+  background: var(--sga-muted);
+  color: var(--sga-muted-fg);
+  opacity: .5;
+  text-decoration: line-through;
+}
+
 /* ---------- level navigation ---------- */
 
 .sga-nav {
@@ -829,8 +883,10 @@ html, body {
   box-shadow: 0 10px 15px -3px rgba(22, 35, 63, .2);
 }
 
-/* Red numeral on a navy tile puts all three school colours in one mark.
-   The final boss inverts, so its numeral stays legible on red. */
+/* Accent numeral on a primary tile puts both of a version's colours in one mark.
+   These must be the themed tokens, not the Centennial ones: --sga-navy and
+   --sga-red are Layla's school colours and are never overridden per version, so
+   using them here left every version's numerals stuck on Centennial red. */
 .sga-levelbtn__num {
   width: 2.75rem;
   height: 2.75rem;
@@ -838,15 +894,17 @@ html, body {
   display: grid;
   place-items: center;
   border-radius: 1rem;
-  background: var(--sga-red);
-  color: #fff;
+  background: var(--sga-accent);
+  color: var(--sga-accent-fg);
   font-family: var(--sga-font-display);
   font-size: 1.5rem;
   font-weight: 800;
 }
 
+/* The last level's tile is already the accent, so its numeral inverts to stay legible. */
 .sga-levels > .sga-levelbtn:last-child .sga-levelbtn__num {
-  background: var(--sga-navy);
+  background: var(--sga-primary);
+  color: var(--sga-primary-fg);
 }
 
 .sga-levelbtn__body { min-width: 0; flex: 1; }

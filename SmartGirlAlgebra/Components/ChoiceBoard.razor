@@ -1,0 +1,160 @@
+@namespace SmartGirlAlgebra.Components
+@inject NavigationManager Nav
+@inject PlayerService Player
+
+@* Tap-the-answer board, for children too young for algebraic notation.
+   No typing, no equals sign, no keyboard. A wrong tap dims that choice and
+   invites another go rather than ending the attempt — at this age the point is
+   to keep her trying, not to score her. *@
+
+<div class="sga">
+
+    <header class="sga-header">
+        <div class="sga-header__left">
+            <button type="button" class="sga-iconbtn" aria-label="Back to the games"
+                    @onclick="@(() => Nav.NavigateTo(Profile.Id))">🏠</button>
+            <div>
+                <div style="display:flex; align-items:center; gap:.375rem;">
+                    <span class="sga-levelbadge" style="background-color:@Level.Color" aria-hidden="true">@Level.Id</span>
+                    <h1 class="sga-title">@Level.Name</h1>
+                </div>
+                <p class="sga-subtitle">@Level.Difficulty</p>
+            </div>
+        </div>
+        <span class="sga-wiggle" style="font-size:1.5rem;" aria-hidden="true">⭐</span>
+    </header>
+
+    <div class="sga-body">
+
+        <section class="sga-problem" aria-label="The question">
+            <p class="sga-problem__cheer sga-problem__cheer--big">@Level.Cheer</p>
+            <div class="sga-ask">@Level.Question</div>
+        </section>
+
+        <section class="sga-choices" aria-label="Answers">
+            @foreach (var choice in Level.Choices)
+            {
+                var c = choice;
+                var state = StateFor(c);
+                <button type="button"
+                        class="sga-choice @state"
+                        disabled="@(_solved || _rejected.Contains(c))"
+                        @onclick="@(() => Pick(c))">
+                    @c
+                </button>
+            }
+        </section>
+
+        @if (_hintIndex >= 0)
+        {
+            <section class="sga-hints" aria-label="Hints">
+                <div class="sga-hints__eyebrow">💡 Here's a tip</div>
+                @foreach (var hint in Level.Hints.Take(_hintIndex + 1))
+                {
+                    <p>@hint</p>
+                }
+            </section>
+        }
+
+    </div>
+
+    <div class="sga-dock">
+        <div class="sga-actions">
+            <button type="button" class="sga-action sga-action--hint"
+                    disabled="@(_hintIndex >= Level.Hints.Length - 1)"
+                    @onclick="ShowHint">
+                💡 @(_hintIndex < 0 ? "Need a tip?" : "Another tip")
+            </button>
+            <button type="button" class="sga-action sga-action--undo"
+                    disabled="@(_rejected.Count == 0 || _solved)"
+                    @onclick="TryAgain">
+                ↩️ Try again
+            </button>
+        </div>
+
+        <LevelNav Profile="Profile" Level="Level" />
+    </div>
+
+    @if (_solved)
+    {
+        <Celebration Answer="@Level.CorrectChoice" OnReplay="Reset" />
+    }
+
+</div>
+
+@code {
+    [Parameter, EditorRequired] public Profile Profile { get; set; } = default!;
+    [Parameter, EditorRequired] public Level Level { get; set; } = default!;
+
+    private readonly HashSet<string> _rejected = [];
+    private bool _solved;
+    private int _hintIndex = -1;
+    private string? _shaking;
+    private int _startedLevel = -1;
+
+    protected override void OnParametersSet()
+    {
+        if (_startedLevel == Level.Id) return;
+        _startedLevel = Level.Id;
+        Reset();
+    }
+
+    private void Reset()
+    {
+        _rejected.Clear();
+        _solved = false;
+        _hintIndex = -1;
+        _shaking = null;
+    }
+
+    private string StateFor(string choice)
+    {
+        if (_solved && choice == Level.CorrectChoice) return "sga-choice--right sga-pop";
+        if (_rejected.Contains(choice)) return "sga-choice--wrong";
+        if (_shaking == choice) return "sga-shake";
+        return "";
+    }
+
+    private async Task Pick(string choice)
+    {
+        if (_solved) return;
+
+        var right = string.Equals(choice.Trim(), Level.CorrectChoice.Trim(), StringComparison.OrdinalIgnoreCase);
+        var firstTry = _rejected.Count == 0;
+
+        // The screen updates before anything touches the network. Recording an
+        // attempt can wake a sleeping API and a paused database, which takes up to
+        // a minute — a child must never tap an answer and watch nothing happen.
+        if (right)
+        {
+            _solved = true;
+        }
+        else
+        {
+            _rejected.Add(choice);
+            _shaking = choice;
+        }
+
+        StateHasChanged();
+
+        // Score the first attempt on a question, so a child who guesses through
+        // every option does not earn the same streak as one who knew it.
+        _ = Player.RecordAttemptAsync(correct: right && firstTry, pointsEarned: 20);
+
+        if (right)
+        {
+            await Task.Delay(350);
+            return;
+        }
+
+        await Task.Delay(450);
+        _shaking = null;
+
+        // After two wrong taps, surface a tip unasked rather than letting her stall.
+        if (_rejected.Count >= 2 && _hintIndex < 0) ShowHint();
+    }
+
+    private void TryAgain() => _rejected.Clear();
+
+    private void ShowHint() => _hintIndex = Math.Min(_hintIndex + 1, Level.Hints.Length - 1);
+}

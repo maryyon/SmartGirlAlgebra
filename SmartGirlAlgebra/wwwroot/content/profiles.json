@@ -1,0 +1,5 @@
+{
+  "_note": "The index of versions. Adding one means adding its JSON file next to this and listing its id here. Nothing needs rebuilding.",
+  "default": "layla",
+  "available": ["layla", "jd", "rz", "sl", "vc", "jq"]
+}

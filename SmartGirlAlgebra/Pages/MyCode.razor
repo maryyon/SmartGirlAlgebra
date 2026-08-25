@@ -1,18 +1,20 @@
 @page "/mycode"
+@page "/{ProfileId}/mycode"
 @inject NavigationManager Nav
+@inject ProfileService Profiles
 @inject PlayerService Player
 @implements IDisposable
 
-<PageTitle>My code · Smart Girl Algebra</PageTitle>
+<PageTitle>My code · @(_profile?.Name ?? "Smart Girl Algebra")</PageTitle>
 
 <div class="sga">
 
     <header class="sga-header">
         <div class="sga-header__left">
             <button type="button" class="sga-iconbtn" aria-label="Back"
-                    @onclick="@(() => Nav.NavigateTo(""))">🏠</button>
+                    @onclick="@(() => Nav.NavigateTo(_profile?.Id ?? ""))">🏠</button>
             <div>
-                <h1 class="sga-title">Your squad code</h1>
+                <h1 class="sga-title">Your code</h1>
                 <p class="sga-subtitle">Takes your progress anywhere</p>
             </div>
         </div>
@@ -31,13 +33,13 @@
                 </div>
                 <p class="sga-problem__cheer" style="margin-top:.75rem;">
                     Type this on any other phone, tablet or laptop and your streak comes with you.
-                    Write it somewhere safe — it's the only way back to your score. 📣
+                    Write it somewhere safe — it's the only way back to your score.
                 </p>
             }
             else
             {
                 <p class="sga-problem__cheer">
-                    You'll get a code the moment you answer your first line. Nothing to sign up for. 📣
+                    You'll get a code the moment you answer your first question. Nothing to sign up for.
                 </p>
             }
         </section>
@@ -46,7 +48,7 @@
             <div class="sga-problem__eyebrow">🏆 Your stats</div>
             <div class="sga-stats">
                 <div class="sga-stat">
-                    <div class="sga-stat__label">Lines solved</div>
+                    <div class="sga-stat__label">Right answers</div>
                     <div class="sga-stat__value">@Player.Stats.TotalCorrect</div>
                 </div>
                 <div class="sga-stat">
@@ -74,7 +76,7 @@
                            @bind="_entry"
                            @bind:event="oninput"
                            @onkeydown="OnKeyDown"
-                           placeholder="SGA-7K4M2P"
+                           placeholder="@($"{_profile?.CodePrefix ?? "SGA"}-7K4M2P")"
                            autocapitalize="characters"
                            autocomplete="off"
                            spellcheck="false"
@@ -102,12 +104,21 @@
 </div>
 
 @code {
+    [Parameter] public string? ProfileId { get; set; }
+
+    private Profile? _profile;
     private string _entry = "";
     private string? _message;
     private bool _ok;
     private bool _busy;
 
     protected override void OnInitialized() => Player.Changed += OnChanged;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _profile = await Profiles.LoadAsync(ProfileId);
+        if (_profile is not null) await Player.UseProfileAsync(_profile);
+    }
 
     private async Task Claim()
     {

@@ -7,8 +7,14 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
+// Two clients on purpose: the API lives on another host, while version content
+// is static and served from this app's own origin.
 var apiBaseAddress = builder.Configuration["ApiBaseAddress"] ?? builder.HostEnvironment.BaseAddress;
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(apiBaseAddress) });
+
+builder.Services.AddScoped(sp => new ProfileService(
+    new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) },
+    sp.GetRequiredService<Microsoft.JSInterop.IJSRuntime>()));
 
 builder.Services.AddScoped<PlayerService>();
 
@@ -20,11 +26,4 @@ builder.Services.AddSingleton<EquationParser>();
 builder.Services.AddSingleton<LinearEquationSolver>();
 builder.Services.AddSingleton<ProblemGenerator>();
 
-var host = builder.Build();
-
-// Picks up an existing sync code if this device already has one. Never blocks
-// play — a failure here just means she starts fresh on this device.
-var player = host.Services.GetRequiredService<PlayerService>();
-await player.InitializeAsync();
-
-await host.RunAsync();
+await builder.Build().RunAsync();

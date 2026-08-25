@@ -1,0 +1,50 @@
+@page "/{ProfileId}/play/{LevelId:int}"
+@inject NavigationManager Nav
+@inject ProfileService Profiles
+@inject PlayerService Player
+
+@* One route for every version. Which board appears is the version's play mode:
+   older children show their working line by line, younger ones tap an answer. *@
+
+<PageTitle>@(_level?.Name ?? "Play")</PageTitle>
+
+@if (_profile is null || _level is null)
+{
+    <div class="sga">
+        <div class="sga-body">
+            @if (_profile is not null)
+            {
+                <p>That level doesn't exist. <a href="@_profile.Id">Back to the levels</a>.</p>
+            }
+            else
+            {
+                <p>Loading…</p>
+            }
+        </div>
+    </div>
+}
+else if (_profile.Mode == PlayMode.Choice)
+{
+    <ChoiceBoard Profile="_profile" Level="_level" />
+}
+else
+{
+    <StepsBoard Profile="_profile" Level="_level" />
+}
+
+@code {
+    [Parameter] public string ProfileId { get; set; } = "";
+    [Parameter] public int LevelId { get; set; }
+
+    private Profile? _profile;
+    private Level? _level;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _profile = await Profiles.LoadAsync(ProfileId);
+        if (_profile is null) return;
+
+        await Player.UseProfileAsync(_profile);
+        _level = _profile.LevelById(LevelId);
+    }
+}
