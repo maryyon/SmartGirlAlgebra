@@ -61,6 +61,12 @@ public class Profile
     /// <summary>Verses shown at the milestones, pitched at this version's age.</summary>
     public List<Verse> Verses { get; set; } = [];
 
+    /// <summary>
+    /// The teaching track: ideas taught, then applied, then quietly checked.
+    /// Empty means this version is practice-only and no Learn button appears.
+    /// </summary>
+    public List<Lesson> Lessons { get; set; } = [];
+
     public List<Level> Levels { get; set; } = [];
 
     public Level? LevelById(int id) => Levels.FirstOrDefault(l => l.Id == id);

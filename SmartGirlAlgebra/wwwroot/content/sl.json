@@ -177,5 +177,622 @@
       "text": "For God didn’t give us a spirit of fear, but of power, love, and self-control.",
       "ref": "2 Timothy 1:7"
     }
+  ],
+  "lessons": [
+    {
+      "id": 1,
+      "title": "Equal groups",
+      "subtitle": "Same size groups. Every time.",
+      "teach": [
+        {
+          "heading": "Groups that match",
+          "body": "Multiplying is just adding the same number again and again. If 3 dancers hold 4 ribbons each, that is 3 groups of 4.",
+          "example": "4 + 4 + 4 = 12   is   3 x 4 = 12"
+        },
+        {
+          "heading": "The groups must be equal",
+          "body": "This only works if every group is the same size. If one dancer has 4 ribbons and one has 7, you cannot multiply. You have to add.",
+          "example": "3 groups of 4  ✓      4 and 7 and 2  ✗"
+        },
+        {
+          "heading": "Say it out loud",
+          "body": "Read 3 x 4 as \"3 groups of 4.\" It helps you picture it. Then count them up.",
+          "example": "3 x 4  =  3 groups of 4  =  12"
+        }
+      ],
+      "practice": [
+        {
+          "prompt": "5 singers each hold 2 song sheets.",
+          "question": "How many song sheets?",
+          "choices": [
+            "10",
+            "7",
+            "3",
+            "12"
+          ],
+          "correct": "10",
+          "explain": "5 groups of 2. Count: 2, 4, 6, 8, 10."
+        },
+        {
+          "prompt": "One dancer has 3 bows. One has 6 bows. One has 1 bow.",
+          "question": "Can you multiply to find the total?",
+          "choices": [
+            "No, the groups are not equal",
+            "Yes",
+            "Only if you round",
+            "Yes, 3 x 6"
+          ],
+          "correct": "No, the groups are not equal",
+          "explain": "The groups are different sizes. You must add: 3 + 6 + 1 = 10."
+        },
+        {
+          "prompt": "4 + 4 + 4 + 4 + 4 is written on the board.",
+          "question": "What is the short way to write it?",
+          "choices": [
+            "5 x 4",
+            "4 x 4",
+            "5 + 4",
+            "4 x 20"
+          ],
+          "correct": "5 x 4",
+          "explain": "There are five 4s. That is 5 groups of 4, or 5 x 4 = 20."
+        },
+        {
+          "prompt": "A coach says \"6 x 3\" out loud.",
+          "question": "What does that mean?",
+          "choices": [
+            "6 groups of 3",
+            "6 plus 3",
+            "6 take away 3",
+            "6 shared by 3"
+          ],
+          "correct": "6 groups of 3",
+          "explain": "The x means groups of. 6 groups of 3 is 18."
+        }
+      ],
+      "reinforce": [
+        {
+          "prompt": "3 gymnasts each have 5 medals.",
+          "question": "How many medals?",
+          "choices": [
+            "15",
+            "8",
+            "35",
+            "10"
+          ],
+          "correct": "15",
+          "explain": "3 groups of 5. Count: 5, 10, 15."
+        },
+        {
+          "prompt": "2 + 2 + 2 + 2",
+          "question": "What is the short way?",
+          "choices": [
+            "4 x 2",
+            "2 x 2",
+            "4 + 2",
+            "8 x 2"
+          ],
+          "correct": "4 x 2",
+          "explain": "There are four 2s. 4 x 2 = 8."
+        },
+        {
+          "prompt": "One box has 5 ribbons. One box has 9 ribbons.",
+          "question": "Can you multiply?",
+          "choices": [
+            "No, they are not equal",
+            "Yes",
+            "Yes, 5 x 9",
+            "Only on Tuesdays"
+          ],
+          "correct": "No, they are not equal",
+          "explain": "Different sizes means you add: 5 + 9 = 14."
+        },
+        {
+          "prompt": "\"7 x 2\"",
+          "question": "What does it mean?",
+          "choices": [
+            "7 groups of 2",
+            "7 and 2",
+            "7 minus 2",
+            "2 minus 7"
+          ],
+          "correct": "7 groups of 2",
+          "explain": "7 groups of 2 is 14."
+        }
+      ],
+      "masteryRequired": 3
+    },
+    {
+      "id": 2,
+      "title": "Skip counting",
+      "subtitle": "A fast way to count groups.",
+      "teach": [
+        {
+          "heading": "Jump, do not crawl",
+          "body": "You do not have to count every single thing. You can jump. To count groups of 5, jump by 5s.",
+          "example": "5, 10, 15, 20, 25"
+        },
+        {
+          "heading": "It is the same as multiplying",
+          "body": "Every jump is one more group. Jump 4 times by 5 and you have done 4 x 5.",
+          "example": "5, 10, 15, 20  is  4 x 5 = 20"
+        },
+        {
+          "heading": "The easy ones",
+          "body": "Twos, fives and tens are the easiest jumps. Learn those first and a lot of maths gets faster.",
+          "example": "2, 4, 6, 8   ·   5, 10, 15   ·   10, 20, 30"
+        }
+      ],
+      "practice": [
+        {
+          "prompt": "Start at 0 and jump by 5, four times.",
+          "question": "Where do you land?",
+          "choices": [
+            "20",
+            "15",
+            "25",
+            "9"
+          ],
+          "correct": "20",
+          "explain": "5, 10, 15, 20. That is 4 x 5 = 20."
+        },
+        {
+          "prompt": "2, 4, 6, 8, ...",
+          "question": "What comes next?",
+          "choices": [
+            "10",
+            "9",
+            "12",
+            "16"
+          ],
+          "correct": "10",
+          "explain": "You are jumping by 2 each time. 8 + 2 = 10."
+        },
+        {
+          "prompt": "6 teams. Each team has 10 girls.",
+          "question": "How many girls? Jump by 10.",
+          "choices": [
+            "60",
+            "16",
+            "50",
+            "610"
+          ],
+          "correct": "60",
+          "explain": "10, 20, 30, 40, 50, 60. Six jumps."
+        },
+        {
+          "prompt": "10, 20, 30, ...",
+          "question": "What comes next?",
+          "choices": [
+            "40",
+            "31",
+            "50",
+            "13"
+          ],
+          "correct": "40",
+          "explain": "Jumping by 10. 30 + 10 = 40."
+        }
+      ],
+      "reinforce": [
+        {
+          "prompt": "Jump by 5 three times from 0.",
+          "question": "Where do you land?",
+          "choices": [
+            "15",
+            "8",
+            "20",
+            "10"
+          ],
+          "correct": "15",
+          "explain": "5, 10, 15."
+        },
+        {
+          "prompt": "5, 10, 15, 20, ...",
+          "question": "Next?",
+          "choices": [
+            "25",
+            "21",
+            "30",
+            "24"
+          ],
+          "correct": "25",
+          "explain": "Add 5 more."
+        },
+        {
+          "prompt": "4 rows. 10 seats in each row.",
+          "question": "How many seats?",
+          "choices": [
+            "40",
+            "14",
+            "20",
+            "410"
+          ],
+          "correct": "40",
+          "explain": "10, 20, 30, 40."
+        },
+        {
+          "prompt": "2, 4, 6, ...",
+          "question": "Next?",
+          "choices": [
+            "8",
+            "7",
+            "10",
+            "12"
+          ],
+          "correct": "8",
+          "explain": "Jumping by 2."
+        }
+      ],
+      "masteryRequired": 3
+    },
+    {
+      "id": 3,
+      "title": "Rows and columns",
+      "subtitle": "Lining things up makes it easy.",
+      "teach": [
+        {
+          "heading": "Lines that match",
+          "body": "When things line up in rows, every row is a group. Count one row. Then count how many rows.",
+          "example": "4 rows with 6 in each  =  4 x 6 = 24"
+        },
+        {
+          "heading": "It works both ways",
+          "body": "You can count rows or count columns. You get the same answer. 4 x 6 and 6 x 4 both make 24.",
+          "example": "4 x 6 = 24      6 x 4 = 24"
+        },
+        {
+          "heading": "That is a handy trick",
+          "body": "If one way is hard, flip it. 2 x 9 might feel tricky. 9 x 2 is just double 9.",
+          "example": "2 x 9  is the same as  9 x 2  =  18"
+        }
+      ],
+      "practice": [
+        {
+          "prompt": "The squad lines up in 3 rows. Each row has 6 girls.",
+          "question": "How many girls?",
+          "choices": [
+            "18",
+            "9",
+            "12",
+            "36"
+          ],
+          "correct": "18",
+          "explain": "3 rows of 6. 6, 12, 18."
+        },
+        {
+          "prompt": "Someone says 5 x 3 and 3 x 5 give different answers.",
+          "question": "Are they right?",
+          "choices": [
+            "No, both are 15",
+            "Yes",
+            "Only for big numbers",
+            "Only for odd numbers"
+          ],
+          "correct": "No, both are 15",
+          "explain": "Flipping the order never changes the answer."
+        },
+        {
+          "prompt": "2 rows of 8 chairs.",
+          "question": "How many chairs?",
+          "choices": [
+            "16",
+            "10",
+            "6",
+            "28"
+          ],
+          "correct": "16",
+          "explain": "2 rows of 8. Or flip it: 8 + 8 = 16."
+        },
+        {
+          "prompt": "You find 7 x 2 hard, but you know doubles well.",
+          "question": "What is the easier way?",
+          "choices": [
+            "Flip it to 2 x 7 and double 7",
+            "Add 7 and 2",
+            "Count to 7 twice slowly",
+            "Take 2 from 7"
+          ],
+          "correct": "Flip it to 2 x 7 and double 7",
+          "explain": "Double 7 is 14. Flipping is allowed and it is faster."
+        }
+      ],
+      "reinforce": [
+        {
+          "prompt": "4 rows of 5 dancers.",
+          "question": "How many dancers?",
+          "choices": [
+            "20",
+            "9",
+            "45",
+            "10"
+          ],
+          "correct": "20",
+          "explain": "5, 10, 15, 20."
+        },
+        {
+          "prompt": "Is 6 x 2 the same as 2 x 6?",
+          "question": "Pick one.",
+          "choices": [
+            "Yes, both are 12",
+            "No",
+            "Only sometimes",
+            "No, one is 8"
+          ],
+          "correct": "Yes, both are 12",
+          "explain": "Order does not matter when you multiply."
+        },
+        {
+          "prompt": "3 rows of 10 seats.",
+          "question": "How many seats?",
+          "choices": [
+            "30",
+            "13",
+            "310",
+            "20"
+          ],
+          "correct": "30",
+          "explain": "10, 20, 30."
+        },
+        {
+          "prompt": "9 x 2 feels hard.",
+          "question": "What is the easy way?",
+          "choices": [
+            "Double 9",
+            "Add 9 and 2",
+            "Halve 9",
+            "Count by 9s"
+          ],
+          "correct": "Double 9",
+          "explain": "Double 9 is 18. Same answer, less work."
+        }
+      ],
+      "masteryRequired": 3
+    },
+    {
+      "id": 4,
+      "title": "Sharing equally",
+      "subtitle": "That is what dividing means.",
+      "teach": [
+        {
+          "heading": "Fair shares",
+          "body": "Dividing means sharing something out so everyone gets the same. If 12 ribbons go to 3 girls, each one gets 4.",
+          "example": "12 ÷ 3 = 4"
+        },
+        {
+          "heading": "Everyone gets the same",
+          "body": "It is only dividing if the shares are equal. One girl cannot get 6 while another gets 2.",
+          "example": "4 and 4 and 4  ✓      6 and 2 and 4  ✗"
+        },
+        {
+          "heading": "Two ways to ask it",
+          "body": "12 ÷ 3 can mean share into 3 groups. Or it can mean how many groups of 3 fit in 12. Both give 4.",
+          "example": "12 ÷ 3 = 4"
+        }
+      ],
+      "practice": [
+        {
+          "prompt": "20 medals are shared by 4 gymnasts. Everyone gets the same.",
+          "question": "How many each?",
+          "choices": [
+            "5",
+            "4",
+            "16",
+            "24"
+          ],
+          "correct": "5",
+          "explain": "20 shared 4 ways. 4 x 5 = 20, so each gets 5."
+        },
+        {
+          "prompt": "18 girls need to make lines of 6.",
+          "question": "How many lines?",
+          "choices": [
+            "3",
+            "12",
+            "24",
+            "6"
+          ],
+          "correct": "3",
+          "explain": "How many 6s fit in 18? 6, 12, 18. That is 3 lines."
+        },
+        {
+          "prompt": "10 sweets. One girl takes 7. The other gets 3.",
+          "question": "Did they divide them?",
+          "choices": [
+            "No, the shares are not equal",
+            "Yes",
+            "Yes, 10 ÷ 2",
+            "Only if she says sorry"
+          ],
+          "correct": "No, the shares are not equal",
+          "explain": "Dividing means equal shares. 5 and 5 would be dividing."
+        },
+        {
+          "prompt": "15 ribbons shared by 5 dancers.",
+          "question": "How many each?",
+          "choices": [
+            "3",
+            "5",
+            "10",
+            "20"
+          ],
+          "correct": "3",
+          "explain": "5 x 3 = 15, so each dancer gets 3."
+        }
+      ],
+      "reinforce": [
+        {
+          "prompt": "12 cupcakes shared by 4 girls.",
+          "question": "How many each?",
+          "choices": [
+            "3",
+            "4",
+            "8",
+            "16"
+          ],
+          "correct": "3",
+          "explain": "4 x 3 = 12."
+        },
+        {
+          "prompt": "16 dancers in lines of 4.",
+          "question": "How many lines?",
+          "choices": [
+            "4",
+            "12",
+            "20",
+            "8"
+          ],
+          "correct": "4",
+          "explain": "4, 8, 12, 16. Four lines."
+        },
+        {
+          "prompt": "9 stickers. One girl gets 8, one gets 1.",
+          "question": "Is that dividing?",
+          "choices": [
+            "No, not equal",
+            "Yes",
+            "Yes, 9 ÷ 2",
+            "Only if they swap"
+          ],
+          "correct": "No, not equal",
+          "explain": "Shares must match."
+        },
+        {
+          "prompt": "21 ribbons shared by 3.",
+          "question": "How many each?",
+          "choices": [
+            "7",
+            "6",
+            "9",
+            "18"
+          ],
+          "correct": "7",
+          "explain": "3 x 7 = 21."
+        }
+      ],
+      "masteryRequired": 3
+    },
+    {
+      "id": 5,
+      "title": "They undo each other",
+      "subtitle": "Times and divide are opposites.",
+      "teach": [
+        {
+          "heading": "One undoes the other",
+          "body": "Multiplying makes groups. Dividing takes them apart. They are opposites, like adding and taking away.",
+          "example": "3 x 4 = 12      12 ÷ 3 = 4"
+        },
+        {
+          "heading": "Three facts, one family",
+          "body": "If you know one, you know the others. 3, 4 and 12 belong together. You can write them four ways.",
+          "example": "3 x 4 = 12   ·   4 x 3 = 12   ·   12 ÷ 3 = 4   ·   12 ÷ 4 = 3"
+        },
+        {
+          "heading": "Use it to check",
+          "body": "Finished a divide? Multiply it back. If you land where you started, you got it right.",
+          "example": "20 ÷ 5 = 4   →   5 x 4 = 20   ✓"
+        }
+      ],
+      "practice": [
+        {
+          "prompt": "You know 6 x 5 = 30.",
+          "question": "So what is 30 ÷ 5?",
+          "choices": [
+            "6",
+            "5",
+            "25",
+            "35"
+          ],
+          "correct": "6",
+          "explain": "Dividing undoes multiplying. The 6 comes straight back."
+        },
+        {
+          "prompt": "You work out 24 ÷ 4 = 6 and want to check it.",
+          "question": "What should you do?",
+          "choices": [
+            "Multiply 4 x 6 and see if you get 24",
+            "Divide again",
+            "Add 4 and 6",
+            "Take 6 from 24"
+          ],
+          "correct": "Multiply 4 x 6 and see if you get 24",
+          "explain": "4 x 6 = 24. It checks out."
+        },
+        {
+          "prompt": "The numbers 2, 8 and 16 are a family.",
+          "question": "Which one is NOT in that family?",
+          "choices": [
+            "16 ÷ 3 = 5",
+            "2 x 8 = 16",
+            "16 ÷ 2 = 8",
+            "8 x 2 = 16"
+          ],
+          "correct": "16 ÷ 3 = 5",
+          "explain": "3 and 5 are not part of this family. The other three are."
+        },
+        {
+          "prompt": "You know 7 x 3 = 21.",
+          "question": "What is 21 ÷ 7?",
+          "choices": [
+            "3",
+            "7",
+            "14",
+            "28"
+          ],
+          "correct": "3",
+          "explain": "Same family. Dividing by 7 gives back the 3."
+        }
+      ],
+      "reinforce": [
+        {
+          "prompt": "You know 5 x 4 = 20.",
+          "question": "What is 20 ÷ 4?",
+          "choices": [
+            "5",
+            "4",
+            "16",
+            "24"
+          ],
+          "correct": "5",
+          "explain": "Divide undoes times."
+        },
+        {
+          "prompt": "You work out 18 ÷ 3 = 6.",
+          "question": "How do you check it?",
+          "choices": [
+            "3 x 6 should be 18",
+            "18 + 3",
+            "18 - 6",
+            "Divide once more"
+          ],
+          "correct": "3 x 6 should be 18",
+          "explain": "It is 18, so you were right."
+        },
+        {
+          "prompt": "You know 9 x 2 = 18.",
+          "question": "What is 18 ÷ 9?",
+          "choices": [
+            "2",
+            "9",
+            "16",
+            "20"
+          ],
+          "correct": "2",
+          "explain": "Same three numbers."
+        },
+        {
+          "prompt": "4, 5 and 20 are a family.",
+          "question": "Which is NOT in it?",
+          "choices": [
+            "20 ÷ 6 = 4",
+            "4 x 5 = 20",
+            "20 ÷ 4 = 5",
+            "5 x 4 = 20"
+          ],
+          "correct": "20 ÷ 6 = 4",
+          "explain": "6 does not belong with 4, 5 and 20."
+        }
+      ],
+      "masteryRequired": 3
+    }
   ]
 }

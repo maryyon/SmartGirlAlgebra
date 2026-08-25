@@ -39,6 +39,18 @@ else
                 </div>
             }
 
+            @if (_profile.Lessons.Count > 0)
+            {
+                <button type="button" class="sga-learnbtn" @onclick="@(() => Nav.NavigateTo($"{_profile.Id}/learn"))">
+                    <span class="sga-learnbtn__icon" aria-hidden="true">💡</span>
+                    <span class="sga-learnbtn__body">
+                        <span class="sga-learnbtn__title">Learn it first</span>
+                        <span class="sga-learnbtn__sub">Short lessons, then try it yourself</span>
+                    </span>
+                    <span class="sga-levelbtn__chev" aria-hidden="true">›</span>
+                </button>
+            }
+
             <div>
                 <h2 class="sga-pick__title">@_profile.LevelPickerTitle</h2>
                 <p class="sga-pick__sub">@_profile.LevelPickerSubtitle</p>

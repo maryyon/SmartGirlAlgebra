@@ -1189,3 +1189,71 @@ html, body {
   letter-spacing: .04em;
   color: var(--sga-muted-fg);
 }
+
+/* ---------- lessons ---------- */
+
+.sga-teach__heading {
+  margin: .5rem 0 .625rem;
+  font-family: var(--sga-font-display);
+  font-size: 1.375rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+/* Lesson answers are sentences, not numbers, so they stack full width. */
+.sga-choices--stack { grid-template-columns: 1fr; }
+
+.sga-choice--wide {
+  min-height: 3.25rem;
+  font-family: var(--sga-font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: left;
+  padding: .875rem 1rem;
+  line-height: 1.4;
+}
+
+.sga-learnbtn {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  width: 100%;
+  margin-top: 1.25rem;
+  text-align: left;
+  border: 2px dashed var(--sga-accent);
+  border-radius: 1.5rem;
+  background: var(--sga-muted);
+  padding: .875rem 1rem;
+  color: var(--sga-foreground);
+}
+
+.sga-learnbtn__icon { font-size: 1.5rem; }
+.sga-learnbtn__body { flex: 1; min-width: 0; }
+
+.sga-learnbtn__title {
+  display: block;
+  font-family: var(--sga-font-display);
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--sga-primary);
+}
+
+.sga-learnbtn__sub {
+  display: block;
+  font-size: .8125rem;
+  font-weight: 600;
+  color: var(--sga-muted-fg);
+}
+
+/* A locked lesson reads as "not yet", not as a wall. */
+.sga-levelbtn--locked { opacity: .45; }
+
+/* Counting prompts lay objects out in rows, so their line breaks are content.
+   Emoji also need room to breathe at this size or they read as a solid block. */
+.sga-prewrap { white-space: pre-wrap; }
+
+.sga-problem__cheer--big.sga-prewrap {
+  font-size: 1.9rem;
+  line-height: 1.6;
+  letter-spacing: .14em;
+}

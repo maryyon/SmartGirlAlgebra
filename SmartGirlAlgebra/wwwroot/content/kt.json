@@ -1,0 +1,776 @@
+{
+  "_note": "KT · kindergarten · boy · rescue pups, trains and toys. Visual first: the objects are the question. NOT Paw Patrol or Thomas — those are live trademarks and this site is public; these are generic equivalents.",
+  "id": "kt",
+  "name": "Smart Start Math",
+  "tagline": "Count the pups. Count the trains. You've got this! 🚂",
+  "howToPlay": "Look at the picture. Count what you see. Then <strong>tap your answer</strong>. Get it wrong and we'll help you try again.",
+  "codePrefix": "KT",
+  "mode": "Choice",
+  "crest": "images/toys-crest.png",
+  "levelPickerTitle": "Pick a game",
+  "levelPickerSubtitle": "Start at 1. Go as far as you like! ⭐",
+  "footerNote": "No sign-up and no passwords. Just you and the counting.",
+  "_themeNote": "Bright primary colours for a five-year-old. Multi-colour palette so every game looks different.",
+  "theme": {
+    "primary": "#1e6fd9",
+    "primaryHi": "#3d8ced",
+    "primaryFg": "#ffffff",
+    "accent": "#f5a623",
+    "accentFg": "#173a63",
+    "background": "#eef4fc",
+    "foreground": "#173a63",
+    "card": "#ffffff",
+    "secondary": "#d3e3f7",
+    "secondaryFg": "#1e6fd9",
+    "muted": "#e2ecf9",
+    "mutedFg": "#5b7a9e",
+    "border": "#bcd3ee",
+    "googleFonts": [
+      "Baloo+2:wght@600;700;800",
+      "Nunito:wght@400;600;700;800"
+    ],
+    "fontDisplay": "\"Baloo 2\", ui-rounded, \"Segoe UI\", system-ui, sans-serif",
+    "fontSans": "\"Nunito\", ui-sans-serif, system-ui, -apple-system, sans-serif",
+    "palette": [
+      "#1e6fd9",
+      "#e8412c",
+      "#0e9e63",
+      "#e07b0f",
+      "#7b33c4"
+    ]
+  },
+  "icons": [
+    "star",
+    "ball",
+    "bolt",
+    "trophy",
+    "sparkle"
+  ],
+  "encouragement": {
+    "correct": [
+      "Yes! You got it.",
+      "Great counting!",
+      "That's right!",
+      "Nice work!"
+    ],
+    "wrong": [
+      "Not that one.",
+      "Try again!",
+      "Oops!",
+      "Have another go."
+    ],
+    "solved": [
+      "YOU DID IT!",
+      "GREAT JOB!",
+      "ALL DONE!"
+    ]
+  },
+  "verses": [
+    {
+      "text": "Let all that you do be done in love.",
+      "ref": "1 Corinthians 16:14"
+    },
+    {
+      "text": "I can do all things through Christ, who strengthens me.",
+      "ref": "Philippians 4:13"
+    },
+    {
+      "text": "Let us not be weary in doing good…",
+      "ref": "Galatians 6:9"
+    }
+  ],
+  "levels": [
+    {
+      "id": 1,
+      "name": "Count the Pups",
+      "tagline": "How many do you see?",
+      "difficulty": "Start here",
+      "cheer": "The rescue pups are lining up.\n\n🐶🐶🐶🐶",
+      "question": "How many pups?",
+      "choices": [
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "correctChoice": "4",
+      "hints": [
+        "Point at each pup and count out loud.",
+        "One, two, three, four.",
+        "There are 4 pups!"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "More Trains",
+      "tagline": "Which line has more?",
+      "difficulty": "Looking closely",
+      "cheer": "Two lines of trains.\n\nTop:  🚂🚂🚂🚂🚂\nBottom:  🚂🚂🚂",
+      "question": "Which line has MORE trains?",
+      "choices": [
+        "The top line",
+        "The bottom line",
+        "They are the same",
+        "Neither"
+      ],
+      "correctChoice": "The top line",
+      "hints": [
+        "Count the top line. Then count the bottom.",
+        "Top has 5. Bottom has 3.",
+        "5 is more than 3!"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Put Them Together",
+      "tagline": "Adding is putting together.",
+      "difficulty": "Adding",
+      "cheer": "Some cars, and then some more cars.\n\n🚗🚗🚗  and  🚗🚗",
+      "question": "How many cars altogether?",
+      "choices": [
+        "4",
+        "5",
+        "6",
+        "1"
+      ],
+      "correctChoice": "5",
+      "hints": [
+        "Count them all. Do not stop in the middle.",
+        "One, two, three... four, five.",
+        "3 and 2 make 5!"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Some Go Away",
+      "tagline": "Taking away.",
+      "difficulty": "Taking away",
+      "cheer": "There were 5 bears. Two went home.\n\n🧸🧸🧸🧸🧸\n\nCross off 2 in your head.",
+      "question": "How many bears are left?",
+      "choices": [
+        "2",
+        "3",
+        "4",
+        "7"
+      ],
+      "correctChoice": "3",
+      "hints": [
+        "Start with 5. Take 2 away.",
+        "Count backwards: 5, then 4, 3.",
+        "There are 3 bears left!"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Fair Groups",
+      "tagline": "Same size groups. 🏆",
+      "difficulty": "Big kid",
+      "cheer": "The diggers are parked in 2 equal groups.\n\n🚜🚜🚜   🚜🚜🚜",
+      "question": "How many diggers altogether?",
+      "choices": [
+        "5",
+        "6",
+        "7",
+        "3"
+      ],
+      "correctChoice": "6",
+      "hints": [
+        "Count one group. Then count the other.",
+        "3 in this group, 3 in that group.",
+        "3 and 3 make 6!"
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": 1,
+      "title": "Counting",
+      "subtitle": "One thing, one number.",
+      "teach": [
+        {
+          "heading": "Touch and say",
+          "body": "Point at one thing. Say one number. Point at the next. Say the next number. Do not skip and do not say two numbers for one thing.",
+          "example": "⚽⚽⚽   one, two, three"
+        },
+        {
+          "heading": "The last number is the answer",
+          "body": "When you run out of things to point at, the last number you said is how many there are.",
+          "example": "🐶🐶🐶🐶   the last one you say is four"
+        }
+      ],
+      "practice": [
+        {
+          "prompt": "🐶🐶🐶",
+          "question": "How many pups?",
+          "choices": [
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "correct": "3",
+          "explain": "One, two, three. Three pups."
+        },
+        {
+          "prompt": "🚂🚂🚂🚂🚂",
+          "question": "How many trains?",
+          "choices": [
+            "4",
+            "5",
+            "6",
+            "3"
+          ],
+          "correct": "5",
+          "explain": "Count each one. Five trains."
+        },
+        {
+          "prompt": "🚗🚗",
+          "question": "How many cars?",
+          "choices": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "correct": "2",
+          "explain": "Two cars."
+        },
+        {
+          "prompt": "🧸🧸🧸🧸🧸🧸",
+          "question": "How many bears?",
+          "choices": [
+            "5",
+            "6",
+            "7",
+            "4"
+          ],
+          "correct": "6",
+          "explain": "Six bears. Point at each one."
+        }
+      ],
+      "reinforce": [
+        {
+          "prompt": "🚜🚜🚜🚜",
+          "question": "How many diggers?",
+          "choices": [
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "correct": "4",
+          "explain": "Four diggers."
+        },
+        {
+          "prompt": "⚽⚽",
+          "question": "How many balls?",
+          "choices": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "correct": "2",
+          "explain": "Two balls."
+        },
+        {
+          "prompt": "🐶🐶🐶🐶🐶",
+          "question": "How many pups?",
+          "choices": [
+            "4",
+            "5",
+            "6",
+            "7"
+          ],
+          "correct": "5",
+          "explain": "Five pups."
+        },
+        {
+          "prompt": "🚂🚂🚂",
+          "question": "How many trains?",
+          "choices": [
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "correct": "3",
+          "explain": "Three trains."
+        }
+      ],
+      "masteryRequired": 3
+    },
+    {
+      "id": 2,
+      "title": "More and fewer",
+      "subtitle": "Which group is bigger?",
+      "teach": [
+        {
+          "heading": "Count both, then compare",
+          "body": "To find which group has more, count one group. Then count the other. The bigger number has more.",
+          "example": "🚗🚗🚗🚗  vs  🚗🚗   four is more"
+        },
+        {
+          "heading": "Same is allowed too",
+          "body": "Sometimes both groups have the same amount. That is fine. Neither one has more.",
+          "example": "⚽⚽⚽  vs  ⚽⚽⚽   the same"
+        }
+      ],
+      "practice": [
+        {
+          "prompt": "🐶🐶🐶🐶🐶\nvs\n🐶🐶",
+          "question": "Which has more?",
+          "choices": [
+            "The top one",
+            "The bottom one",
+            "The same",
+            "Neither"
+          ],
+          "correct": "The top one",
+          "explain": "5 is more than 2."
+        },
+        {
+          "prompt": "🚂🚂🚂\nvs\n🚂🚂🚂",
+          "question": "Which has more?",
+          "choices": [
+            "They are the same",
+            "The top one",
+            "The bottom one",
+            "Cannot tell"
+          ],
+          "correct": "They are the same",
+          "explain": "Both have 3. Neither has more."
+        },
+        {
+          "prompt": "🧸\nvs\n🧸🧸🧸🧸",
+          "question": "Which has FEWER?",
+          "choices": [
+            "The top one",
+            "The bottom one",
+            "The same",
+            "Neither"
+          ],
+          "correct": "The top one",
+          "explain": "Fewer means less. 1 is less than 4."
+        },
+        {
+          "prompt": "🚗🚗🚗🚗🚗🚗\nvs\n🚗🚗🚗🚗",
+          "question": "Which has more?",
+          "choices": [
+            "The top one",
+            "The bottom one",
+            "The same",
+            "Neither"
+          ],
+          "correct": "The top one",
+          "explain": "6 is more than 4."
+        }
+      ],
+      "reinforce": [
+        {
+          "prompt": "⚽⚽\nvs\n⚽⚽⚽⚽⚽",
+          "question": "Which has more?",
+          "choices": [
+            "The bottom one",
+            "The top one",
+            "The same",
+            "Neither"
+          ],
+          "correct": "The bottom one",
+          "explain": "5 is more than 2."
+        },
+        {
+          "prompt": "🐶🐶🐶🐶\nvs\n🐶🐶🐶🐶",
+          "question": "Which has more?",
+          "choices": [
+            "They are the same",
+            "The top one",
+            "The bottom one",
+            "Cannot tell"
+          ],
+          "correct": "They are the same",
+          "explain": "Both have 4."
+        },
+        {
+          "prompt": "🚜🚜🚜🚜🚜\nvs\n🚜🚜🚜",
+          "question": "Which has FEWER?",
+          "choices": [
+            "The bottom one",
+            "The top one",
+            "The same",
+            "Neither"
+          ],
+          "correct": "The bottom one",
+          "explain": "3 is less than 5."
+        },
+        {
+          "prompt": "🚂🚂🚂🚂🚂🚂\nvs\n🚂🚂",
+          "question": "Which has more?",
+          "choices": [
+            "The top one",
+            "The bottom one",
+            "The same",
+            "Neither"
+          ],
+          "correct": "The top one",
+          "explain": "6 is more than 2."
+        }
+      ],
+      "masteryRequired": 3
+    },
+    {
+      "id": 3,
+      "title": "Putting together",
+      "subtitle": "That is adding.",
+      "teach": [
+        {
+          "heading": "Push them together and count",
+          "body": "When you put two groups together, count everything. Start at one and keep going. Do not start again in the middle.",
+          "example": "🚗🚗 and 🚗🚗🚗  =  five"
+        },
+        {
+          "heading": "A shortcut",
+          "body": "You can start at the first number and count on. Start at 3, then count 4, 5. That is faster than starting again.",
+          "example": "3 and 2 more  →  4, 5"
+        }
+      ],
+      "practice": [
+        {
+          "prompt": "🐶🐶 and 🐶🐶",
+          "question": "How many altogether?",
+          "choices": [
+            "3",
+            "4",
+            "5",
+            "2"
+          ],
+          "correct": "4",
+          "explain": "2 and 2 make 4."
+        },
+        {
+          "prompt": "⚽⚽⚽ and ⚽",
+          "question": "How many altogether?",
+          "choices": [
+            "3",
+            "4",
+            "5",
+            "2"
+          ],
+          "correct": "4",
+          "explain": "3 and 1 make 4."
+        },
+        {
+          "prompt": "🚂🚂🚂🚂 and 🚂🚂",
+          "question": "How many altogether?",
+          "choices": [
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "correct": "6",
+          "explain": "Start at 4. Count 5, 6."
+        },
+        {
+          "prompt": "🧸 and 🧸🧸🧸🧸",
+          "question": "How many altogether?",
+          "choices": [
+            "4",
+            "5",
+            "6",
+            "3"
+          ],
+          "correct": "5",
+          "explain": "1 and 4 make 5."
+        }
+      ],
+      "reinforce": [
+        {
+          "prompt": "🚗🚗🚗 and 🚗🚗",
+          "question": "How many altogether?",
+          "choices": [
+            "4",
+            "5",
+            "6",
+            "3"
+          ],
+          "correct": "5",
+          "explain": "3 and 2 make 5."
+        },
+        {
+          "prompt": "🚜 and 🚜🚜",
+          "question": "How many altogether?",
+          "choices": [
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "correct": "3",
+          "explain": "1 and 2 make 3."
+        },
+        {
+          "prompt": "🐶🐶🐶🐶🐶 and 🐶",
+          "question": "How many altogether?",
+          "choices": [
+            "5",
+            "6",
+            "7",
+            "4"
+          ],
+          "correct": "6",
+          "explain": "Start at 5. Count 6."
+        },
+        {
+          "prompt": "⚽⚽ and ⚽⚽⚽⚽",
+          "question": "How many altogether?",
+          "choices": [
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "correct": "6",
+          "explain": "2 and 4 make 6."
+        }
+      ],
+      "masteryRequired": 3
+    },
+    {
+      "id": 4,
+      "title": "Taking away",
+      "subtitle": "Some go, some stay.",
+      "teach": [
+        {
+          "heading": "Count what is left",
+          "body": "When some go away, count the ones still there. Those are the ones that matter.",
+          "example": "🧸🧸🧸🧸🧸  take 2 away  →  three left"
+        },
+        {
+          "heading": "Count backwards",
+          "body": "You can also count backwards. Start at 5 and go back two: 4, 3. You land on the answer.",
+          "example": "5, then 4, 3"
+        }
+      ],
+      "practice": [
+        {
+          "prompt": "🐶🐶🐶🐶\n\n1 pup goes home.",
+          "question": "How many are left?",
+          "choices": [
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "correct": "3",
+          "explain": "4 take away 1 is 3."
+        },
+        {
+          "prompt": "🚗🚗🚗🚗🚗\n\n2 cars drive off.",
+          "question": "How many are left?",
+          "choices": [
+            "2",
+            "3",
+            "4",
+            "7"
+          ],
+          "correct": "3",
+          "explain": "5 take away 2 is 3."
+        },
+        {
+          "prompt": "⚽⚽⚽\n\n3 balls roll away.",
+          "question": "How many are left?",
+          "choices": [
+            "0",
+            "1",
+            "3",
+            "6"
+          ],
+          "correct": "0",
+          "explain": "All of them went. Zero left!"
+        },
+        {
+          "prompt": "🚂🚂🚂🚂🚂🚂\n\n1 train goes to the shed.",
+          "question": "How many are left?",
+          "choices": [
+            "4",
+            "5",
+            "6",
+            "7"
+          ],
+          "correct": "5",
+          "explain": "6 take away 1 is 5."
+        }
+      ],
+      "reinforce": [
+        {
+          "prompt": "🧸🧸🧸🧸\n\n2 go away.",
+          "question": "How many left?",
+          "choices": [
+            "1",
+            "2",
+            "3",
+            "6"
+          ],
+          "correct": "2",
+          "explain": "4 take away 2 is 2."
+        },
+        {
+          "prompt": "🚜🚜🚜\n\n1 goes away.",
+          "question": "How many left?",
+          "choices": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "correct": "2",
+          "explain": "3 take away 1 is 2."
+        },
+        {
+          "prompt": "🐶🐶🐶🐶🐶\n\n3 go home.",
+          "question": "How many left?",
+          "choices": [
+            "1",
+            "2",
+            "3",
+            "8"
+          ],
+          "correct": "2",
+          "explain": "5 take away 3 is 2."
+        },
+        {
+          "prompt": "🚗🚗\n\n2 drive off.",
+          "question": "How many left?",
+          "choices": [
+            "0",
+            "1",
+            "2",
+            "4"
+          ],
+          "correct": "0",
+          "explain": "They all went. Zero!"
+        }
+      ],
+      "masteryRequired": 3
+    },
+    {
+      "id": 5,
+      "title": "Equal groups",
+      "subtitle": "Groups that match.",
+      "teach": [
+        {
+          "heading": "Same size groups",
+          "body": "Sometimes things are parked in groups that are all the same size. Count one group. Then count how many groups.",
+          "example": "🚜🚜   🚜🚜   two groups of two"
+        },
+        {
+          "heading": "Then count them all",
+          "body": "To find how many there are altogether, count every single one. Later you will learn a faster way.",
+          "example": "🚜🚜   🚜🚜  =  four"
+        }
+      ],
+      "practice": [
+        {
+          "prompt": "🐶🐶   🐶🐶",
+          "question": "How many pups altogether?",
+          "choices": [
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "correct": "4",
+          "explain": "Two groups of 2. That is 4."
+        },
+        {
+          "prompt": "⚽⚽⚽   ⚽⚽⚽",
+          "question": "How many balls altogether?",
+          "choices": [
+            "3",
+            "5",
+            "6",
+            "9"
+          ],
+          "correct": "6",
+          "explain": "Two groups of 3. That is 6."
+        },
+        {
+          "prompt": "🚗   🚗   🚗",
+          "question": "How many cars?",
+          "choices": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "correct": "3",
+          "explain": "Three groups of 1. That is 3."
+        },
+        {
+          "prompt": "🚂🚂   🚂🚂🚂",
+          "question": "Are these groups equal?",
+          "choices": [
+            "No, one has more",
+            "Yes",
+            "Cannot tell",
+            "Both are empty"
+          ],
+          "correct": "No, one has more",
+          "explain": "One has 2 and one has 3. Equal means the same."
+        }
+      ],
+      "reinforce": [
+        {
+          "prompt": "🧸🧸   🧸🧸   🧸🧸",
+          "question": "How many bears?",
+          "choices": [
+            "4",
+            "5",
+            "6",
+            "8"
+          ],
+          "correct": "6",
+          "explain": "Three groups of 2 is 6."
+        },
+        {
+          "prompt": "🚜🚜🚜🚜   🚜🚜🚜🚜",
+          "question": "Are the groups equal?",
+          "choices": [
+            "Yes",
+            "No",
+            "Cannot tell",
+            "Only one group"
+          ],
+          "correct": "Yes",
+          "explain": "Both have 4. That is equal."
+        },
+        {
+          "prompt": "🐶   🐶",
+          "question": "How many pups?",
+          "choices": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "correct": "2",
+          "explain": "Two groups of 1 is 2."
+        },
+        {
+          "prompt": "⚽⚽⚽⚽⚽   ⚽⚽",
+          "question": "Are they equal?",
+          "choices": [
+            "No",
+            "Yes",
+            "Cannot tell",
+            "Both empty"
+          ],
+          "correct": "No",
+          "explain": "5 and 2 are not the same."
+        }
+      ],
+      "masteryRequired": 3
+    }
+  ]
+}

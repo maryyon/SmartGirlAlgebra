@@ -30,6 +30,10 @@
     {
       "id": "dm",
       "name": "Smart Flight Physics"
+    },
+    {
+      "id": "kt",
+      "name": "Smart Start Math"
     }
   ],
   "hostMap": {

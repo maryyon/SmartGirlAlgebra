@@ -276,5 +276,617 @@
       "text": "Let us not be weary in doing good, for we will reap in due season, if we don’t give up.",
       "ref": "Galatians 6:9"
     }
+  ],
+  "lessons": [
+    {
+      "id": 1,
+      "title": "What x actually is",
+      "subtitle": "It's just a number wearing a disguise.",
+      "teach": [
+        {
+          "heading": "x is a hiding place",
+          "body": "When you don't know a number yet, you give it a letter and carry on. That's all algebra is. If paint tubes come in a box and you don't know how many, call it x and keep going.",
+          "example": "x = the number we don't know yet"
+        },
+        {
+          "heading": "It's ONE number, not any number",
+          "body": "In one problem, x is a single fixed number the whole way through. It doesn't change halfway. Your job is to find out which number it was all along.",
+          "example": "x + 3 = 7   →   x was 4 the entire time"
+        },
+        {
+          "heading": "You can already do this",
+          "body": "You've been doing it since you were small. “What plus 3 makes 7?” is algebra. Writing x instead of “what” is the only new part.",
+          "example": "? + 3 = 7   is the same as   x + 3 = 7"
+        }
+      ],
+      "practice": [
+        {
+          "prompt": "You find a sealed box of paint tubes. The label says the box plus 5 loose ones makes 12 altogether.",
+          "question": "If x is what's in the box, which equation says that?",
+          "choices": [
+            "x + 5 = 12",
+            "x − 5 = 12",
+            "5x = 12",
+            "x = 5 + 12"
+          ],
+          "correct": "x + 5 = 12",
+          "explain": "The box (x) AND 5 more makes 12. “And” means add: x + 5 = 12."
+        },
+        {
+          "prompt": "Someone insists x means “any number you like, it's basically vibes.”",
+          "question": "In the equation x + 2 = 9, how many numbers can x be?",
+          "choices": [
+            "Exactly one",
+            "Any number",
+            "Two numbers",
+            "None"
+          ],
+          "correct": "Exactly one",
+          "explain": "Only 7 works. In one equation, x is one fixed number — not a mood."
+        },
+        {
+          "prompt": "Your art teacher writes “? × 4 = 20” on the board and then, for no reason, rewrites it.",
+          "question": "Which rewrite means exactly the same thing?",
+          "choices": [
+            "4x = 20",
+            "x + 4 = 20",
+            "x − 4 = 20",
+            "x ÷ 4 = 20"
+          ],
+          "correct": "4x = 20",
+          "explain": "4x is shorthand for 4 × x. The ? just became an x."
+        },
+        {
+          "prompt": "You see this written down: y + 1 = 6.",
+          "question": "Is that still algebra, even though it isn't an x?",
+          "choices": [
+            "Yes — the letter doesn't matter",
+            "No, it must be x",
+            "Only if you rename it",
+            "No, y means something else"
+          ],
+          "correct": "Yes — the letter doesn't matter",
+          "explain": "The letter is just a label. x, y, n, or a smiley face — it's whatever number is hiding."
+        }
+      ],
+      "reinforce": [
+        {
+          "prompt": "A crate of paint tubes plus 8 spare ones makes 20.",
+          "question": "Which equation says that?",
+          "choices": [
+            "x + 8 = 20",
+            "8x = 20",
+            "x − 8 = 20",
+            "x = 8 − 20"
+          ],
+          "correct": "x + 8 = 20",
+          "explain": "The crate (x) and 8 more, together, is 20. Together means add."
+        },
+        {
+          "prompt": "In the equation n − 2 = 10, someone says n could be lots of things.",
+          "question": "How many numbers actually work?",
+          "choices": [
+            "Just one",
+            "Lots",
+            "Two",
+            "Zero"
+          ],
+          "correct": "Just one",
+          "explain": "Only 12 works. One equation, one hidden number."
+        },
+        {
+          "prompt": "“Something times 3 equals 21.”",
+          "question": "Which one is that in algebra?",
+          "choices": [
+            "3x = 21",
+            "x + 3 = 21",
+            "x ÷ 3 = 21",
+            "x − 3 = 21"
+          ],
+          "correct": "3x = 21",
+          "explain": "“Times” means multiply, and 3x is how we write 3 × x."
+        },
+        {
+          "prompt": "Two people write the same problem: one uses x, the other uses b.",
+          "question": "Are they doing the same maths?",
+          "choices": [
+            "Yes",
+            "No",
+            "Only if they swap",
+            "Only one is right"
+          ],
+          "correct": "Yes",
+          "explain": "The letter is a name tag, not a rule. Same problem either way."
+        }
+      ],
+      "masteryRequired": 3
+    },
+    {
+      "id": 2,
+      "title": "The balance rule",
+      "subtitle": "An equals sign is a promise, not a full stop.",
+      "teach": [
+        {
+          "heading": "= means the two sides weigh the same",
+          "body": "Think of an equation as an old-fashioned scale. The equals sign says: this side and that side balance exactly. Not “the answer is next” — balance.",
+          "example": "x + 3 = 7   →   left side weighs the same as right side"
+        },
+        {
+          "heading": "Do it to one side, do it to the other",
+          "body": "You can change an equation as much as you like, on one condition: whatever you do to one side, you do the identical thing to the other. Then it still balances.",
+          "example": "x + 3 = 7   →   subtract 3 from BOTH   →   x = 4"
+        },
+        {
+          "heading": "Break the rule and it stops being true",
+          "body": "Take something off one side only and the scale tips. The equation is now a lie, and everything after it is wrong too. This is the single most common mistake in all of algebra.",
+          "example": "x + 3 = 7   →   take 3 off the left only   →   x = 7   ✗"
+        }
+      ],
+      "practice": [
+        {
+          "prompt": "You have 6 = 6. Comforting. True. You subtract 2 from the left side only, because you're feeling reckless.",
+          "question": "What do you have now?",
+          "choices": [
+            "4 = 6, which is false",
+            "4 = 4, still fine",
+            "6 = 4, still fine",
+            "Nothing changes"
+          ],
+          "correct": "4 = 6, which is false",
+          "explain": "Touch one side only and it stops balancing. That's why we always do both."
+        },
+        {
+          "prompt": "x + 4 = 9. You want x on its own.",
+          "question": "What should you do?",
+          "choices": [
+            "Subtract 4 from both sides",
+            "Subtract 4 from the left only",
+            "Add 4 to both sides",
+            "Subtract 9 from both sides"
+          ],
+          "correct": "Subtract 4 from both sides",
+          "explain": "The + 4 is stuck to x. Subtract 4 from BOTH sides and it lifts off, still balanced."
+        },
+        {
+          "prompt": "Someone divides the left side of an equation by 2 and leaves the right side alone, then insists the canvas is fine.",
+          "question": "Is the equation still true?",
+          "choices": [
+            "No",
+            "Yes",
+            "Only if x is even",
+            "Only on the first line"
+          ],
+          "correct": "No",
+          "explain": "Halving one side and not the other tips the scale. It's false from that line onward."
+        },
+        {
+          "prompt": "2x = 10, and you multiply BOTH sides by 3 for absolutely no reason.",
+          "question": "Is the equation still true?",
+          "choices": [
+            "Yes — pointless, but true",
+            "No",
+            "Only if you undo it",
+            "Only for x = 5"
+          ],
+          "correct": "Yes — pointless, but true",
+          "explain": "Both sides, same thing — it stays balanced. Useless here, but perfectly legal."
+        }
+      ],
+      "reinforce": [
+        {
+          "prompt": "10 = 10. You add 5 to the right side only.",
+          "question": "What's true now?",
+          "choices": [
+            "10 = 15, which is false",
+            "15 = 15, fine",
+            "Still 10 = 10",
+            "It's now an inequality"
+          ],
+          "correct": "10 = 15, which is false",
+          "explain": "One side only always breaks it."
+        },
+        {
+          "prompt": "x − 6 = 2 and you want x alone.",
+          "question": "What do you do?",
+          "choices": [
+            "Add 6 to both sides",
+            "Subtract 6 from both sides",
+            "Add 6 to the left only",
+            "Add 2 to both sides"
+          ],
+          "correct": "Add 6 to both sides",
+          "explain": "A − 6 is undone by + 6, on BOTH sides."
+        },
+        {
+          "prompt": "3x = 12, and you divide both sides by 3.",
+          "question": "Still true?",
+          "choices": [
+            "Yes",
+            "No",
+            "Only sometimes",
+            "Only if x is 3"
+          ],
+          "correct": "Yes",
+          "explain": "Both sides, same operation. Balanced — and now x is alone."
+        },
+        {
+          "prompt": "Someone says “the equals sign just means here comes the answer.”",
+          "question": "Are they right?",
+          "choices": [
+            "No — it means both sides are equal",
+            "Yes",
+            "Only in addition",
+            "Only for one-step problems"
+          ],
+          "correct": "No — it means both sides are equal",
+          "explain": "It's a balance, not an arrow. That idea carries you through all of algebra."
+        }
+      ],
+      "masteryRequired": 3
+    },
+    {
+      "id": 3,
+      "title": "Undoing things",
+      "subtitle": "Every operation has an opposite that cancels it.",
+      "teach": [
+        {
+          "heading": "Opposites cancel",
+          "body": "Adding is undone by subtracting. Multiplying is undone by dividing. To set x free, do the opposite of whatever is stuck to it.",
+          "example": "+ undoes −      × undoes ÷"
+        },
+        {
+          "heading": "Look at what's attached to x",
+          "body": "Read the equation and ask one question: what is being done TO x? Then do the opposite of that, to both sides.",
+          "example": "x − 5 = 2   →   5 is being subtracted   →   add 5"
+        },
+        {
+          "heading": "5x means 5 TIMES x",
+          "body": "When a number sits right against a letter, they're being multiplied. There's no hidden plus. So you undo it by dividing.",
+          "example": "5x = 20   →   divide both sides by 5   →   x = 4"
+        }
+      ],
+      "practice": [
+        {
+          "prompt": "x + 9 = 15 has a clingy + 9 that will not leave the studio.",
+          "question": "How do you get rid of it?",
+          "choices": [
+            "Subtract 9 from both sides",
+            "Add 9 to both sides",
+            "Divide both sides by 9",
+            "Multiply both sides by 9"
+          ],
+          "correct": "Subtract 9 from both sides",
+          "explain": "Adding is undone by subtracting. x = 6."
+        },
+        {
+          "prompt": "7x = 42.",
+          "question": "What's being done to x, and what undoes it?",
+          "choices": [
+            "Multiplied by 7 — so divide by 7",
+            "Added 7 — so subtract 7",
+            "Divided by 7 — so multiply by 7",
+            "Subtracted 7 — so add 7"
+          ],
+          "correct": "Multiplied by 7 — so divide by 7",
+          "explain": "7x is 7 × x. Divide both sides by 7 and x = 6."
+        },
+        {
+          "prompt": "x ÷ 3 = 4. Unusual, but it happens.",
+          "question": "What undoes a divide by 3?",
+          "choices": [
+            "Multiply both sides by 3",
+            "Divide both sides by 3",
+            "Add 3",
+            "Subtract 3"
+          ],
+          "correct": "Multiply both sides by 3",
+          "explain": "Multiplying undoes dividing. x = 12."
+        },
+        {
+          "prompt": "Someone solves x − 4 = 10 by subtracting 4 from both sides and gets x = 6.",
+          "question": "What went wrong?",
+          "choices": [
+            "They should have ADDED 4",
+            "Nothing, that's right",
+            "They should have divided",
+            "They should have added 10"
+          ],
+          "correct": "They should have ADDED 4",
+          "explain": "The 4 was being subtracted, so add it back. x = 14, not 6."
+        }
+      ],
+      "reinforce": [
+        {
+          "prompt": "x + 12 = 20.",
+          "question": "What undoes the + 12?",
+          "choices": [
+            "Subtract 12 from both sides",
+            "Add 12 to both sides",
+            "Divide by 12",
+            "Multiply by 12"
+          ],
+          "correct": "Subtract 12 from both sides",
+          "explain": "Opposite of adding is subtracting. x = 8."
+        },
+        {
+          "prompt": "9x = 36.",
+          "question": "What do you do?",
+          "choices": [
+            "Divide both sides by 9",
+            "Subtract 9",
+            "Add 9",
+            "Multiply by 9"
+          ],
+          "correct": "Divide both sides by 9",
+          "explain": "9x means 9 × x, so divide. x = 4."
+        },
+        {
+          "prompt": "x − 7 = 3.",
+          "question": "What undoes the − 7?",
+          "choices": [
+            "Add 7 to both sides",
+            "Subtract 7 from both sides",
+            "Divide by 7",
+            "Multiply by 7"
+          ],
+          "correct": "Add 7 to both sides",
+          "explain": "Subtracting is undone by adding. x = 10."
+        },
+        {
+          "prompt": "x ÷ 5 = 6.",
+          "question": "What undoes it?",
+          "choices": [
+            "Multiply both sides by 5",
+            "Divide both sides by 5",
+            "Add 5",
+            "Subtract 5"
+          ],
+          "correct": "Multiply both sides by 5",
+          "explain": "Multiplying undoes dividing. x = 30."
+        }
+      ],
+      "masteryRequired": 3
+    },
+    {
+      "id": 4,
+      "title": "One-step equations",
+      "subtitle": "Everything you've learned, used once.",
+      "teach": [
+        {
+          "heading": "One move is all it takes",
+          "body": "Find what's attached to x. Do the opposite, to both sides. Done. That's the whole method and it never changes.",
+          "example": "x + 6 = 14   →   subtract 6 from both   →   x = 8"
+        },
+        {
+          "heading": "Always check it",
+          "body": "Put your answer back into the original and see if it balances. If it does, you're right. This takes five seconds and catches almost every mistake.",
+          "example": "x = 8   →   8 + 6 = 14   ✓"
+        }
+      ],
+      "practice": [
+        {
+          "prompt": "You had some paint tubes, were given 7 more, and now have 19.",
+          "question": "Solve x + 7 = 19.",
+          "choices": [
+            "12",
+            "26",
+            "13",
+            "7"
+          ],
+          "correct": "12",
+          "explain": "Subtract 7 from both sides. 19 − 7 = 12. Check: 12 + 7 = 19 ✓"
+        },
+        {
+          "prompt": "6 equal brush sets hold 54 paint tubes altogether.",
+          "question": "Solve 6x = 54.",
+          "choices": [
+            "9",
+            "48",
+            "60",
+            "8"
+          ],
+          "correct": "9",
+          "explain": "Divide both sides by 6. 54 ÷ 6 = 9. Check: 6 × 9 = 54 ✓"
+        },
+        {
+          "prompt": "You lost 8 paint tubes and have 15 left. Tragic, but solvable.",
+          "question": "Solve x − 8 = 15.",
+          "choices": [
+            "23",
+            "7",
+            "120",
+            "17"
+          ],
+          "correct": "23",
+          "explain": "Add 8 to both sides. 15 + 8 = 23. Check: 23 − 8 = 15 ✓"
+        },
+        {
+          "prompt": "x = 5 is offered as the solution to x + 5 = 20. Confidently.",
+          "question": "Is it right?",
+          "choices": [
+            "No — check it: 5 + 5 = 10, not 20",
+            "Yes",
+            "Only if you round",
+            "You can't check it"
+          ],
+          "correct": "No — check it: 5 + 5 = 10, not 20",
+          "explain": "Checking catches it instantly. x = 15."
+        }
+      ],
+      "reinforce": [
+        {
+          "prompt": "x + 4 = 11.",
+          "question": "What is x?",
+          "choices": [
+            "7",
+            "15",
+            "44",
+            "3"
+          ],
+          "correct": "7",
+          "explain": "Subtract 4. Check: 7 + 4 = 11 ✓"
+        },
+        {
+          "prompt": "5x = 45.",
+          "question": "What is x?",
+          "choices": [
+            "9",
+            "40",
+            "50",
+            "8"
+          ],
+          "correct": "9",
+          "explain": "Divide by 5. Check: 5 × 9 = 45 ✓"
+        },
+        {
+          "prompt": "x − 3 = 12.",
+          "question": "What is x?",
+          "choices": [
+            "15",
+            "9",
+            "36",
+            "4"
+          ],
+          "correct": "15",
+          "explain": "Add 3. Check: 15 − 3 = 12 ✓"
+        },
+        {
+          "prompt": "x ÷ 2 = 8.",
+          "question": "What is x?",
+          "choices": [
+            "16",
+            "4",
+            "10",
+            "6"
+          ],
+          "correct": "16",
+          "explain": "Multiply by 2. Check: 16 ÷ 2 = 8 ✓"
+        }
+      ],
+      "masteryRequired": 3
+    },
+    {
+      "id": 5,
+      "title": "Two-step equations",
+      "subtitle": "Two things stuck to x, and an order to peel them off.",
+      "teach": [
+        {
+          "heading": "Undo the lonely number first",
+          "body": "When x has both a multiply AND an add stuck to it, deal with the number standing on its own first. Then deal with the one touching x.",
+          "example": "3x + 4 = 19   →   subtract 4   →   3x = 15   →   divide by 3   →   x = 5"
+        },
+        {
+          "heading": "It's the reverse of how you'd build it",
+          "body": "To build 3x + 4 you'd multiply first, then add. To take it apart you go backwards: undo the add, then undo the multiply. Last on, first off.",
+          "example": "build: × then +      undo: − then ÷"
+        },
+        {
+          "heading": "Check it the same way",
+          "body": "Put your answer back into the original, both steps. If it balances, you're finished.",
+          "example": "x = 5   →   3 × 5 + 4 = 19   ✓"
+        }
+      ],
+      "practice": [
+        {
+          "prompt": "Brush sets cost the same each. You bought 2 and a $5 roll of tape, and spent $17.",
+          "question": "Solve 2x + 5 = 17.",
+          "choices": [
+            "6",
+            "11",
+            "8",
+            "22"
+          ],
+          "correct": "6",
+          "explain": "Subtract 5 → 2x = 12. Divide by 2 → x = 6. Check: 2(6) + 5 = 17 ✓"
+        },
+        {
+          "prompt": "Someone divides by 3 FIRST on 3x + 6 = 18, before touching the 6.",
+          "question": "What's the safe order?",
+          "choices": [
+            "Subtract the 6 first, then divide",
+            "Divide first, always",
+            "Either, it never matters",
+            "Multiply first"
+          ],
+          "correct": "Subtract the 6 first, then divide",
+          "explain": "Undo the lonely number first. Dividing first works only if you divide EVERY term — easy to get wrong."
+        },
+        {
+          "prompt": "4x − 3 = 21.",
+          "question": "What is x?",
+          "choices": [
+            "6",
+            "4.5",
+            "72",
+            "18"
+          ],
+          "correct": "6",
+          "explain": "Add 3 → 4x = 24. Divide by 4 → x = 6. Check: 4(6) − 3 = 21 ✓"
+        },
+        {
+          "prompt": "x = 4 is offered for 5x + 2 = 27.",
+          "question": "Does it check out?",
+          "choices": [
+            "No — 5(4) + 2 = 22, not 27",
+            "Yes",
+            "Only if you round",
+            "Can't tell"
+          ],
+          "correct": "No — 5(4) + 2 = 22, not 27",
+          "explain": "Checking catches it. Subtract 2 → 5x = 25 → x = 5."
+        }
+      ],
+      "reinforce": [
+        {
+          "prompt": "3x + 2 = 14.",
+          "question": "What is x?",
+          "choices": [
+            "4",
+            "5",
+            "12",
+            "16"
+          ],
+          "correct": "4",
+          "explain": "Subtract 2 → 3x = 12. Divide by 3 → x = 4."
+        },
+        {
+          "prompt": "2x − 6 = 10.",
+          "question": "What is x?",
+          "choices": [
+            "8",
+            "2",
+            "5",
+            "16"
+          ],
+          "correct": "8",
+          "explain": "Add 6 → 2x = 16. Divide by 2 → x = 8."
+        },
+        {
+          "prompt": "In 5x + 10 = 35, which move comes first?",
+          "question": "Pick the first step.",
+          "choices": [
+            "Subtract 10 from both sides",
+            "Divide both sides by 5",
+            "Add 10",
+            "Multiply by 5"
+          ],
+          "correct": "Subtract 10 from both sides",
+          "explain": "Lonely number first. Then 5x = 25 → x = 5."
+        },
+        {
+          "prompt": "6x + 1 = 25.",
+          "question": "What is x?",
+          "choices": [
+            "4",
+            "5",
+            "24",
+            "26"
+          ],
+          "correct": "4",
+          "explain": "Subtract 1 → 6x = 24. Divide by 6 → x = 4."
+        }
+      ],
+      "masteryRequired": 3
+    }
   ]
 }

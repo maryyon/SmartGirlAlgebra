@@ -17,6 +17,7 @@ builder.Services.AddScoped(sp => new ProfileService(
     sp.GetRequiredService<Microsoft.JSInterop.IJSRuntime>()));
 
 builder.Services.AddScoped<PlayerService>();
+builder.Services.AddScoped<LessonProgress>();
 
 // Algebra engine
 builder.Services.AddSingleton<ExpressionParser>();

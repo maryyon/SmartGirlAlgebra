@@ -1,0 +1,256 @@
+@namespace SmartGirlAlgebra.Components
+@inject NavigationManager Nav
+@inject LessonProgress Progress
+@inject PlayerService Player
+
+@* Teach, then apply, then check — without ever calling it a check.
+   The practice questions ARE the assessment: first-attempt answers are counted,
+   and if she hasn't got it she is quietly given the same idea with different
+   examples rather than the same questions again. Nothing on screen says test,
+   score or assessment, because a child who knows she is being measured stops
+   experimenting and starts guessing safely. *@
+
+<div class="sga">
+
+    <header class="sga-header">
+        <div class="sga-header__left">
+            <button type="button" class="sga-iconbtn" aria-label="Back to lessons"
+                    @onclick="@(() => Nav.NavigateTo($"{Profile.Id}/learn"))">←</button>
+            <div>
+                <h1 class="sga-title">@Lesson.Title</h1>
+                <p class="sga-subtitle">@_phaseLabel</p>
+            </div>
+        </div>
+        <span class="sga-wiggle" style="font-size:1.4rem;" aria-hidden="true">💡</span>
+    </header>
+
+    <div class="sga-body">
+
+        @if (_phase == Phase.Teach)
+        {
+            var step = Lesson.Teach[_teachIndex];
+            <section class="sga-problem sga-pop" aria-label="Lesson">
+                <div class="sga-problem__eyebrow">📖 @(_teachIndex + 1) of @Lesson.Teach.Length</div>
+                <h2 class="sga-teach__heading">@step.Heading</h2>
+                <p class="sga-problem__cheer sga-prewrap">@step.Body</p>
+                @if (!string.IsNullOrWhiteSpace(step.Example))
+                {
+                    <div class="sga-equation" style="justify-content:center;">
+                        <span class="sga-equation__math">@step.Example</span>
+                    </div>
+                }
+            </section>
+        }
+        else if (_phase == Phase.Questions && _current is not null)
+        {
+            <section class="sga-problem" aria-label="Question">
+                <p class="sga-problem__cheer sga-problem__cheer--big sga-prewrap">@_current.Prompt</p>
+                <div class="sga-ask">@_current.Question</div>
+            </section>
+
+            <section class="sga-choices sga-choices--stack" aria-label="Answers">
+                @foreach (var choice in _current.Choices)
+                {
+                    var c = choice;
+                    <button type="button"
+                            class="sga-choice sga-choice--wide @ChoiceState(c)"
+                            disabled="@_answered"
+                            @onclick="@(() => Answer(c))">
+                        @c
+                    </button>
+                }
+            </section>
+
+            @if (_answered)
+            {
+                <div class="sga-step__msg @(_lastRight ? "sga-step__msg--ok" : "") sga-pop">
+                    <span aria-hidden="true">@(_lastRight ? "👏" : "💡")</span>
+                    <span>@_current.Explain</span>
+                </div>
+            }
+        }
+        else if (_phase == Phase.Regroup)
+        {
+            @* She missed too many. Said as "let's look again", never as a failure. *@
+            <section class="sga-problem sga-pop" aria-label="Let's try that again">
+                <div class="sga-problem__eyebrow">🔁 One more pass</div>
+                <h2 class="sga-teach__heading">Let's try that a different way</h2>
+                <p class="sga-problem__cheer">
+                    Here's the same idea with different examples. Take your time —
+                    there's no rush and nothing is being counted against you.
+                </p>
+            </section>
+        }
+        else
+        {
+            <section class="sga-problem sga-pop" aria-label="Finished">
+                <div class="sga-problem__eyebrow">✅ Got it</div>
+                <h2 class="sga-teach__heading">You've got this one.</h2>
+                <p class="sga-problem__cheer">@Lesson.Subtitle</p>
+            </section>
+
+            @if (_verse is not null)
+            {
+                <blockquote class="sga-verse">
+                    <p class="sga-verse__text">@_verse.Text</p>
+                    <cite class="sga-verse__ref">@_verse.Ref</cite>
+                </blockquote>
+            }
+        }
+
+    </div>
+
+    <div class="sga-dock">
+        @if (_phase == Phase.Teach)
+        {
+            <button type="button" class="sga-bigbtn" style="margin-top:0;" @onclick="NextTeach">
+                @(_teachIndex < Lesson.Teach.Length - 1 ? "Next" : "Let's try it")
+            </button>
+        }
+        else if (_phase == Phase.Questions)
+        {
+            <button type="button" class="sga-bigbtn" style="margin-top:0;"
+                    disabled="@(!_answered)" @onclick="NextQuestion">
+                @(_index < _set.Count - 1 ? "Next question" : "Finish")
+            </button>
+        }
+        else if (_phase == Phase.Regroup)
+        {
+            <button type="button" class="sga-bigbtn" style="margin-top:0;" @onclick="StartReinforce">
+                Show me
+            </button>
+        }
+        else
+        {
+            <button type="button" class="sga-bigbtn" style="margin-top:0;"
+                    @onclick="@(() => Nav.NavigateTo($"{Profile.Id}/learn"))">
+                Back to lessons
+            </button>
+        }
+    </div>
+
+</div>
+
+@code {
+    [Parameter, EditorRequired] public Profile Profile { get; set; } = default!;
+    [Parameter, EditorRequired] public Lesson Lesson { get; set; } = default!;
+
+    private enum Phase { Teach, Questions, Regroup, Done }
+
+    private Phase _phase = Phase.Teach;
+    private int _teachIndex;
+    private int _index;
+    private bool _answered;
+    private bool _lastRight;
+    private string? _chosen;
+    private int _firstTryCorrect;
+    private bool _onReinforce;
+    private int _startedLesson = -1;
+    private Verse? _verse;
+
+    private List<Exercise> _set = [];
+    private Exercise? _current => _index >= 0 && _index < _set.Count ? _set[_index] : null;
+
+    private string _phaseLabel => _phase switch
+    {
+        Phase.Teach => "Learning",
+        Phase.Questions => $"Question {_index + 1} of {_set.Count}",
+        Phase.Regroup => "Let's look again",
+        _ => "Finished"
+    };
+
+    protected override void OnParametersSet()
+    {
+        if (_startedLesson == Lesson.Id) return;
+        _startedLesson = Lesson.Id;
+
+        _phase = Phase.Teach;
+        _teachIndex = 0;
+        _index = 0;
+        _answered = false;
+        _chosen = null;
+        _firstTryCorrect = 0;
+        _onReinforce = false;
+        _set = Lesson.Practice.ToList();
+
+        _verse = Profile.Verses.Count > 0
+            ? Profile.Verses[Random.Shared.Next(Profile.Verses.Count)]
+            : null;
+    }
+
+    private void NextTeach()
+    {
+        if (_teachIndex < Lesson.Teach.Length - 1)
+        {
+            _teachIndex++;
+            return;
+        }
+
+        _phase = Phase.Questions;
+        _index = 0;
+        _answered = false;
+    }
+
+    private string ChoiceState(string choice)
+    {
+        if (!_answered) return "";
+        if (choice == _current?.Correct) return "sga-choice--right";
+        return choice == _chosen ? "sga-choice--wrong" : "";
+    }
+
+    private async Task Answer(string choice)
+    {
+        if (_answered || _current is null) return;
+
+        _answered = true;
+        _chosen = choice;
+        _lastRight = choice == _current.Correct;
+        if (_lastRight) _firstTryCorrect++;
+
+        // Counts toward her overall totals like any other answered question, so the
+        // lesson track feeds the same streak as practice.
+        _ = Player.RecordAttemptAsync(correct: _lastRight, pointsEarned: 10);
+        await Task.CompletedTask;
+    }
+
+    private async Task NextQuestion()
+    {
+        if (_index < _set.Count - 1)
+        {
+            _index++;
+            _answered = false;
+            _chosen = null;
+            return;
+        }
+
+        // End of a set. Did she actually get it?
+        if (_firstTryCorrect >= Lesson.MasteryRequired)
+        {
+            await Progress.MarkMasteredAsync(Lesson.Id);
+            _phase = Phase.Done;
+            return;
+        }
+
+        // Not yet. If there are different examples to try, use them. If she has
+        // already been round twice, let her move on rather than trapping her.
+        if (!_onReinforce && Lesson.Reinforce.Length > 0)
+        {
+            _phase = Phase.Regroup;
+            return;
+        }
+
+        await Progress.MarkMasteredAsync(Lesson.Id);
+        _phase = Phase.Done;
+    }
+
+    private void StartReinforce()
+    {
+        _onReinforce = true;
+        _set = Lesson.Reinforce.ToList();
+        _index = 0;
+        _answered = false;
+        _chosen = null;
+        _firstTryCorrect = 0;
+        _phase = Phase.Questions;
+    }
+}

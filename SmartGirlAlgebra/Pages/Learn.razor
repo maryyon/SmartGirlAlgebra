@@ -1,0 +1,119 @@
+@page "/{ProfileId}/learn"
+@page "/{ProfileId}/learn/{LessonId:int}"
+@inject NavigationManager Nav
+@inject ProfileService Profiles
+@inject PlayerService Player
+@inject LessonProgress Progress
+@implements IDisposable
+
+<PageTitle>@(_profile?.Name ?? "Learn")</PageTitle>
+
+@if (_profile is null)
+{
+    <div class="sga"><div class="sga-body"><p>Loading…</p></div></div>
+}
+else if (_profile.Lessons.Count == 0)
+{
+    <div class="sga">
+        <div class="sga-body">
+            <p>This one is practice only. <a href="@_profile.Id">Back to the levels</a>.</p>
+        </div>
+    </div>
+}
+else if (LessonId is not null && _lesson is not null)
+{
+    <LessonBoard Profile="_profile" Lesson="_lesson" />
+}
+else
+{
+    <div class="sga">
+        <header class="sga-header">
+            <div class="sga-header__left">
+                <button type="button" class="sga-iconbtn" aria-label="Back"
+                        @onclick="@(() => Nav.NavigateTo(_profile.Id))">🏠</button>
+                <div>
+                    <h1 class="sga-title">Learn it first</h1>
+                    <p class="sga-subtitle">@_mastered of @_profile.Lessons.Count finished</p>
+                </div>
+            </div>
+            <span class="sga-wiggle" style="font-size:1.4rem;" aria-hidden="true">💡</span>
+        </header>
+
+        <div class="sga-body">
+            <div class="sga-levels">
+                @foreach (var lesson in _profile.Lessons)
+                {
+                    var id = lesson.Id;
+                    var done = Progress.IsMastered(id);
+                    var open = Progress.IsUnlocked(_profile.Lessons, id);
+
+                    <button type="button" class="sga-levelbtn @(open ? "" : "sga-levelbtn--locked")"
+                            style="background-color:@ColourFor(lesson)"
+                            disabled="@(!open)"
+                            @onclick="@(() => Nav.NavigateTo($"{_profile.Id}/learn/{id}"))">
+                        <span class="sga-levelbtn__num" aria-hidden="true">@(done ? "✓" : lesson.Id.ToString())</span>
+                        <span class="sga-levelbtn__body">
+                            <span class="sga-levelbtn__line">
+                                <span class="sga-levelbtn__name">@lesson.Title</span>
+                                @if (done)
+                                {
+                                    <span class="sga-levelbtn__diff">done</span>
+                                }
+                            </span>
+                            <span class="sga-levelbtn__tag">
+                                @(open ? lesson.Subtitle : "Finish the one before this")
+                            </span>
+                        </span>
+                        <span class="sga-levelbtn__chev" aria-hidden="true">@(open ? "›" : "🔒")</span>
+                    </button>
+                }
+            </div>
+
+            <p style="font-size:.8125rem; color:var(--sga-muted-fg); text-align:center;">
+                Already know this? <a href="@_profile.Id">Skip to the problems</a>.
+            </p>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public string ProfileId { get; set; } = "";
+    [Parameter] public int? LessonId { get; set; }
+
+    private Profile? _profile;
+    private Lesson? _lesson;
+    private int _mastered;
+
+    protected override void OnInitialized() => Progress.Changed += OnChanged;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _profile = await Profiles.LoadAsync(ProfileId);
+        if (_profile is null) return;
+
+        await Player.UseProfileAsync(_profile);
+        await Progress.UseProfileAsync(_profile.Id);
+
+        _lesson = LessonId is null ? null : _profile.Lessons.FirstOrDefault(l => l.Id == LessonId);
+        _mastered = _profile.Lessons.Count(l => Progress.IsMastered(l.Id));
+    }
+
+    // Lessons take the version's palette the same way levels do.
+    private string ColourFor(Lesson lesson)
+    {
+        if (_profile is null) return "";
+        var swatches = _profile.Theme.Palette;
+        if (swatches.Count == 0) return _profile.Theme.Primary;
+
+        var index = _profile.Lessons.FindIndex(l => l.Id == lesson.Id);
+        return swatches[Math.Max(0, index) % swatches.Count];
+    }
+
+    private void OnChanged()
+    {
+        if (_profile is not null) _mastered = _profile.Lessons.Count(l => Progress.IsMastered(l.Id));
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose() => Progress.Changed -= OnChanged;
+}
