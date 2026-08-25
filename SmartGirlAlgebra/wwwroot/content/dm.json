@@ -1,6 +1,5 @@
 {
   "_note": "DM · 11th grade · military aviation · PHYSICS, not algebra. Every level is one core law, named in full on the card, restated in the hints and restated again in the walkthrough — so he meets the same fundamentals on every single problem rather than once. The board already forces a typed response per line, which is the engagement: he cannot watch, he has to answer.",
-
   "id": "dm",
   "name": "Smart Flight Physics",
   "tagline": "Physics, but everything is on fire and moving fast. Pick your sortie. ✈️",
@@ -11,9 +10,7 @@
   "levelPickerTitle": "Pick your sortie",
   "levelPickerSubtitle": "Five laws. You will know all five by the end. ✈️",
   "footerNote": "No sign-up, no passwords — just you, the numbers, and gravity.",
-
   "_themeNote": "Aviation navy and safety orange. Condensed display face for the instrument-panel feel.",
-
   "theme": {
     "primary": "#16324f",
     "primaryHi": "#24507c",
@@ -28,27 +25,64 @@
     "muted": "#e3e8ed",
     "mutedFg": "#5b6b7c",
     "border": "#bcc8d4",
-    "googleFonts": ["Saira+Condensed:wght@600;700;800", "Nunito:wght@400;600;700;800"],
+    "googleFonts": [
+      "Saira+Condensed:wght@600;700;800",
+      "Nunito:wght@400;600;700;800"
+    ],
     "fontDisplay": "\"Saira Condensed\", \"Arial Narrow\", system-ui, sans-serif",
     "fontSans": "\"Nunito\", ui-sans-serif, system-ui, -apple-system, sans-serif"
   },
-
-  "icons": ["jet", "gauge", "bolt", "chevron", "propeller"],
-
-  "encouragement": {
-    "correct": ["Cleared.", "On vector.", "Copy that.", "Locked on.", "Still airborne."],
-    "wrong": ["Abort, abort.", "Off course.", "Negative.", "Check six.", "That's how you lose a wing."],
-    "solved": ["MISSION COMPLETE!", "WHEELS DOWN!", "CLEARED TO LAND!", "THAT'S A KILL!"]
-  },
-
-  "verses": [
-    { "text": "Whatever you do, work heartily, as for the Lord…", "ref": "Colossians 3:23" },
-    { "text": "The plans of the diligent surely lead to profit…", "ref": "Proverbs 21:5" },
-    { "text": "Don’t you be afraid, for I am with you… I will strengthen you.", "ref": "Isaiah 41:10" },
-    { "text": "For God didn’t give us a spirit of fear, but of power, love, and self-control.", "ref": "2 Timothy 1:7" },
-    { "text": "I can do all things through Christ, who strengthens me.", "ref": "Philippians 4:13" }
+  "icons": [
+    "jet",
+    "gauge",
+    "bolt",
+    "chevron",
+    "propeller"
   ],
-
+  "encouragement": {
+    "correct": [
+      "Cleared.",
+      "On vector.",
+      "Copy that.",
+      "Locked on.",
+      "Still airborne."
+    ],
+    "wrong": [
+      "Abort, abort.",
+      "Off course.",
+      "Negative.",
+      "Check six.",
+      "That's how you lose a wing."
+    ],
+    "solved": [
+      "MISSION COMPLETE!",
+      "WHEELS DOWN!",
+      "CLEARED TO LAND!",
+      "THAT'S A KILL!"
+    ]
+  },
+  "verses": [
+    {
+      "text": "Whatever you do, work heartily, as for the Lord…",
+      "ref": "Colossians 3:23"
+    },
+    {
+      "text": "The plans of the diligent surely lead to profit…",
+      "ref": "Proverbs 21:5"
+    },
+    {
+      "text": "The heart of the discerning gets knowledge. The ear of the wise seeks knowledge.",
+      "ref": "Proverbs 18:15"
+    },
+    {
+      "text": "For God didn’t give us a spirit of fear, but of power, love, and self-control.",
+      "ref": "2 Timothy 1:7"
+    },
+    {
+      "text": "I can do all things through Christ, who strengthens me.",
+      "ref": "Philippians 4:13"
+    }
+  ],
   "levels": [
     {
       "id": 1,
@@ -61,16 +95,35 @@
       "variableMeaning": "F = ma · x = acceleration (m/s²)",
       "answer": "x = 6",
       "answerValue": 6,
-      "chips": ["x", "=", "+", "−", "×", "÷"],
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−",
+        "×",
+        "÷"
+      ],
       "hints": [
         "THE LAW: F = ma. You have F and m. Solve for a.",
         "15000x = 90000. x is multiplied by 15000, so divide BOTH sides by 15000.",
         "90000 ÷ 15000 = 6. So a = 6 m/s². Say it back: force equals mass times acceleration."
       ],
       "walkthrough": [
-        { "title": "The law, every time", "body": "Newton's Second Law: Force = mass × acceleration. Write it before you write anything else.", "math": "F = ma" },
-        { "title": "Put the numbers in", "body": "F is 90,000 N. m is 15,000 kg. The unknown is a.", "math": "15000x = 90000" },
-        { "title": "Undo the multiplication", "body": "Divide BOTH sides by 15,000. Coffee accelerated at 6 m/s².", "math": "x = 6" }
+        {
+          "title": "The law, every time",
+          "body": "Newton's Second Law: Force = mass × acceleration. Write it before you write anything else.",
+          "math": "F = ma"
+        },
+        {
+          "title": "Put the numbers in",
+          "body": "F is 90,000 N. m is 15,000 kg. The unknown is a.",
+          "math": "15000x = 90000"
+        },
+        {
+          "title": "Undo the multiplication",
+          "body": "Divide BOTH sides by 15,000. Coffee accelerated at 6 m/s².",
+          "math": "x = 6"
+        }
       ]
     },
     {
@@ -84,16 +137,35 @@
       "variableMeaning": "v = u + at · x = time (s)",
       "answer": "x = 9",
       "answerValue": 9,
-      "chips": ["x", "=", "+", "−", "×", "÷"],
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−",
+        "×",
+        "÷"
+      ],
       "hints": [
         "THE LAW: v = u + at. You start from rest, so u = 0 and it becomes v = at.",
         "54 = 6x. Divide BOTH sides by 6.",
         "54 ÷ 6 = 9 seconds. Say it back: final speed equals starting speed plus acceleration times time."
       ],
       "walkthrough": [
-        { "title": "The law, every time", "body": "v = u + at. Final speed equals starting speed plus acceleration multiplied by time.", "math": "v = u + at" },
-        { "title": "Kill the zero", "body": "You started from rest, so u = 0. That leaves v = at.", "math": "54 = 6x" },
-        { "title": "Solve for time", "body": "Divide BOTH sides by 6. Nine seconds to rotate.", "math": "x = 9" }
+        {
+          "title": "The law, every time",
+          "body": "v = u + at. Final speed equals starting speed plus acceleration multiplied by time.",
+          "math": "v = u + at"
+        },
+        {
+          "title": "Kill the zero",
+          "body": "You started from rest, so u = 0. That leaves v = at.",
+          "math": "54 = 6x"
+        },
+        {
+          "title": "Solve for time",
+          "body": "Divide BOTH sides by 6. Nine seconds to rotate.",
+          "math": "x = 9"
+        }
       ]
     },
     {
@@ -107,16 +179,35 @@
       "variableMeaning": "W = Fd · x = force (N)",
       "answer": "x = 600",
       "answerValue": 600,
-      "chips": ["x", "=", "+", "−", "×", "÷"],
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−",
+        "×",
+        "÷"
+      ],
       "hints": [
         "THE LAW: W = Fd. Work equals force times distance.",
         "800x = 480000. Divide BOTH sides by 800.",
         "480000 ÷ 800 = 600 N. Say it back: work equals force times distance."
       ],
       "walkthrough": [
-        { "title": "The law, every time", "body": "Work = force × distance. Work is measured in joules, force in newtons, distance in metres.", "math": "W = Fd" },
-        { "title": "Put the numbers in", "body": "W is 480,000 J. d is 800 m. The unknown is F.", "math": "800x = 480000" },
-        { "title": "Solve for force", "body": "Divide BOTH sides by 800. You were pulling with 600 N.", "math": "x = 600" }
+        {
+          "title": "The law, every time",
+          "body": "Work = force × distance. Work is measured in joules, force in newtons, distance in metres.",
+          "math": "W = Fd"
+        },
+        {
+          "title": "Put the numbers in",
+          "body": "W is 480,000 J. d is 800 m. The unknown is F.",
+          "math": "800x = 480000"
+        },
+        {
+          "title": "Solve for force",
+          "body": "Divide BOTH sides by 800. You were pulling with 600 N.",
+          "math": "x = 600"
+        }
       ]
     },
     {
@@ -130,16 +221,35 @@
       "variableMeaning": "p = mv · x = velocity (m/s)",
       "answer": "x = 20",
       "answerValue": 20,
-      "chips": ["x", "=", "+", "−", "×", "÷"],
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−",
+        "×",
+        "÷"
+      ],
       "hints": [
         "THE LAW: p = mv. Momentum equals mass times velocity.",
         "12000x = 240000. Divide BOTH sides by 12000.",
         "240000 ÷ 12000 = 20 m/s. Say it back: momentum equals mass times velocity."
       ],
       "walkthrough": [
-        { "title": "The law, every time", "body": "Momentum = mass × velocity. Heavy and slow can carry the same momentum as light and fast.", "math": "p = mv" },
-        { "title": "Put the numbers in", "body": "p is 240,000 kg·m/s. m is 12,000 kg. The unknown is v.", "math": "12000x = 240000" },
-        { "title": "Solve for velocity", "body": "Divide BOTH sides by 12,000. Twenty metres per second.", "math": "x = 20" }
+        {
+          "title": "The law, every time",
+          "body": "Momentum = mass × velocity. Heavy and slow can carry the same momentum as light and fast.",
+          "math": "p = mv"
+        },
+        {
+          "title": "Put the numbers in",
+          "body": "p is 240,000 kg·m/s. m is 12,000 kg. The unknown is v.",
+          "math": "12000x = 240000"
+        },
+        {
+          "title": "Solve for velocity",
+          "body": "Divide BOTH sides by 12,000. Twenty metres per second.",
+          "math": "x = 20"
+        }
       ]
     },
     {
@@ -153,16 +263,37 @@
       "variableMeaning": "F(net) = ma · x = acceleration (m/s²)",
       "answer": "x = 5",
       "answerValue": 5,
-      "chips": ["x", "=", "+", "−", "×", "÷", "(", ")"],
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−",
+        "×",
+        "÷",
+        "(",
+        ")"
+      ],
       "hints": [
         "THE LAW: only NET force accelerates anything. Thrust − drag = ma.",
         "Deal with drag first: subtract 30000 from BOTH sides → 12000x = 60000.",
         "Now divide BOTH sides by 12000. 60000 ÷ 12000 = 5 m/s². Say it back: net force equals mass times acceleration."
       ],
       "walkthrough": [
-        { "title": "The law, every time", "body": "Net force = mass × acceleration. NET means after everything pulling the other way has taken its share.", "math": "F(net) = ma" },
-        { "title": "Pay the drag", "body": "Drag takes 30,000 N off the top. Subtract it from BOTH sides.", "math": "12000x = 60000" },
-        { "title": "Solve for acceleration", "body": "Divide BOTH sides by 12,000. Five metres per second squared — not the 7.5 you'd have got by ignoring drag.", "math": "x = 5" }
+        {
+          "title": "The law, every time",
+          "body": "Net force = mass × acceleration. NET means after everything pulling the other way has taken its share.",
+          "math": "F(net) = ma"
+        },
+        {
+          "title": "Pay the drag",
+          "body": "Drag takes 30,000 N off the top. Subtract it from BOTH sides.",
+          "math": "12000x = 60000"
+        },
+        {
+          "title": "Solve for acceleration",
+          "body": "Divide BOTH sides by 12,000. Five metres per second squared — not the 7.5 you'd have got by ignoring drag.",
+          "math": "x = 5"
+        }
       ]
     }
   ]
