@@ -11,25 +11,34 @@
   "levelPickerSubtitle": "Level 1 = a quick sketch. Level 5 = the masterpiece. 🖌️",
   "footerNote": "✨ No sign-up, no passwords — just you, the numbers, and a finished piece.",
   "theme": {
-    "primary": "#b81d63",
-    "primaryHi": "#d43b81",
+    "primary": "#d6218a",
+    "primaryHi": "#e94aa5",
     "primaryFg": "#ffffff",
-    "accent": "#f2b134",
+    "accent": "#f59e0b",
     "accentFg": "#4a0e2c",
-    "background": "#faeff5",
+    "background": "#fdf2f8",
     "foreground": "#4a0e2c",
     "card": "#ffffff",
-    "secondary": "#f2d9e6",
-    "secondaryFg": "#8f1350",
-    "muted": "#f7e7f0",
-    "mutedFg": "#8a6379",
-    "border": "#e6c3d6",
+    "secondary": "#fbdcec",
+    "secondaryFg": "#a3145f",
+    "muted": "#fce8f2",
+    "mutedFg": "#8a5273",
+    "border": "#f4c2dc",
     "googleFonts": [
       "Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800",
       "Nunito:wght@400;600;700;800"
     ],
     "fontDisplay": "\"Fraunces\", Georgia, \"Times New Roman\", serif",
-    "fontSans": "\"Nunito\", ui-sans-serif, system-ui, -apple-system, sans-serif"
+    "fontSans": "\"Nunito\", ui-sans-serif, system-ui, -apple-system, sans-serif",
+    "palette": [
+      "#d6218a",
+      "#e8412c",
+      "#e07b0f",
+      "#0e9e63",
+      "#0e8fb5",
+      "#3b44c4",
+      "#7b33c4"
+    ]
   },
   "levels": [
     {
@@ -222,9 +231,11 @@
     "brush",
     "pencil",
     "sparkle",
-    "star"
+    "star",
+    "flower",
+    "ribbon"
   ],
-  "_themeNote": "Pink, with gold to lift it.",
+  "_themeNote": "Pink, and then the whole paint box. A palette of one hue isn't a palette: every level tile and every drifting icon takes a different colour from the set below. Each is deep enough to carry white text.",
   "encouragement": {
     "correct": [
       "Clean line.",

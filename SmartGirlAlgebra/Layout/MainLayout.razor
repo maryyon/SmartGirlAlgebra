@@ -10,7 +10,8 @@
     <div class="sga-frame">
         @if (Profiles.Current is { Icons.Length: > 0 } profile)
         {
-            <ThemeIcons Icons="profile.Icons" />
+            <ThemeIcons Icons="profile.Icons" Palette="profile.Theme.Palette"
+                        Count="@(profile.Theme.Palette.Count > 0 ? 20 : 14)" />
         }
         @Body
     </div>

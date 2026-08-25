@@ -26,6 +26,10 @@
     /// <summary>How many to scatter. More reads as busy rather than lively.</summary>
     [Parameter] public int Count { get; set; } = 14;
 
+    /// <summary>Extra brand colours to draw with. Empty falls back to primary
+    /// and accent, which is right for a two-tone version and wrong for a paint box.</summary>
+    [Parameter] public List<string> Palette { get; set; } = [];
+
     private sealed record Placed(string Name, double Left, double Top, double Size,
                                  string Colour, double Opacity, double Duration,
                                  double Delay, string Motion);
@@ -37,7 +41,7 @@
 
     protected override void OnParametersSet()
     {
-        var signature = string.Join(",", Icons) + "|" + Count;
+        var signature = string.Join(",", Icons) + "|" + Count + "|" + string.Join(",", Palette);
         if (signature == _signature) return;   // keep positions stable across re-renders
         _signature = signature;
 
@@ -58,8 +62,10 @@
                 Left: Math.Round(rng.NextDouble() * 88 + 2, 2),
                 Top: Math.Round(rng.NextDouble() * 92 + 2, 2),
                 Size: Math.Round(22 + rng.NextDouble() * 30, 1),
-                Colour: rng.NextDouble() < 0.45 ? "var(--sga-accent)" : "var(--sga-primary)",
-                Opacity: Math.Round(0.07 + rng.NextDouble() * 0.10, 3),
+                Colour: Palette.Count > 0
+                    ? Palette[rng.Next(Palette.Count)]
+                    : rng.NextDouble() < 0.45 ? "var(--sga-accent)" : "var(--sga-primary)",
+                Opacity: Math.Round((Palette.Count > 0 ? 0.13 : 0.07) + rng.NextDouble() * 0.10, 3),
                 Duration: Math.Round(7 + rng.NextDouble() * 9, 2),
                 Delay: Math.Round(rng.NextDouble() * 6, 2),
                 Motion: Motions[rng.Next(Motions.Length)]));

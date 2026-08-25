@@ -127,6 +127,16 @@ public class Theme
     /// </summary>
     public List<string> GoogleFonts { get; set; } = [];
 
+    /// <summary>
+    /// Extra brand colours, for versions that shouldn't be two-tone. Level tiles
+    /// and the drifting icons cycle through these, so an art version can actually
+    /// look like a paint box instead of one hue repeated. Empty means two-tone:
+    /// primary and accent only.
+    ///
+    /// These sit behind white text, so keep them deep enough to carry it.
+    /// </summary>
+    public List<string> Palette { get; set; } = [];
+
     /// <summary>Maps to the CSS custom properties the stylesheet reads.</summary>
     public Dictionary<string, string> ToCssVariables() => new()
     {

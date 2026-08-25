@@ -149,14 +149,19 @@ public class ProfileService
             if (profile is null) return Current;
 
             // Tile colours come from the palette, not the content, so a version can be
-            // re-skinned without touching a single question. The last level is the
-            // hardest, so it takes the accent.
+            // re-skinned without touching a single question.
+            var swatches = profile.Theme.Palette;
             for (var i = 0; i < profile.Levels.Count; i++)
             {
                 if (!string.IsNullOrWhiteSpace(profile.Levels[i].Color)) continue;
-                profile.Levels[i].Color = i == profile.Levels.Count - 1
-                    ? profile.Theme.Accent
-                    : profile.Theme.Primary;
+
+                profile.Levels[i].Color = swatches.Count > 0
+                    // A multi-colour version gives every level its own swatch.
+                    ? swatches[i % swatches.Count]
+                    // A two-tone version keeps the accent for the hardest level.
+                    : i == profile.Levels.Count - 1
+                        ? profile.Theme.Accent
+                        : profile.Theme.Primary;
             }
 
             Current = profile;
