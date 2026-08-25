@@ -2,7 +2,7 @@
   "_note": "Same app as layla.json in every respect except grade. Identical palette, crest, name and voice. Grade 1 forces tap-the-answer instead of typed working, because a six-year-old has no algebraic notation — that is a consequence of the grade, not a separate design choice.",
 
   "id": "jd",
-  "name": "Smart Girl Algebra",
+  "name": "Smart Cheer Math",
   "tagline": "Math, but make it a cheer competition. Pick your level, superstar. 🦅",
   "howToPlay": "Read the story. Then <strong>tap the answer</strong> you think is right. Get it wrong and we'll help you try again. Stuck? Tap <strong>Need a tip?</strong> 📣",
   "codePrefix": "JD",
