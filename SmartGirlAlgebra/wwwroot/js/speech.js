@@ -28,14 +28,17 @@ window.sgaSpeech = (function () {
 
   // A warm, clear voice in the language asked for. Whatever is first otherwise —
   // the reading matters more than the accent.
-  function pickVoice(lang) {
-    var want = (lang || 'en').toLowerCase().slice(0, 2);
+  function pickVoice(lang, strict) {
+    var tag = (lang || 'en').toLowerCase().replace('_', '-');
+    // Strict means the region matters: "en-JM" must be an actual Jamaican voice,
+    // not any English one, or Patwa comes out in an American accent.
+    var want = strict ? tag : tag.slice(0, 2);
 
     var all = [];
     try { all = window.speechSynthesis.getVoices() || []; } catch (e) { return null; }
 
     var matching = all.filter(function (v) {
-      return (v.lang || '').toLowerCase().indexOf(want) === 0;
+      return (v.lang || '').toLowerCase().replace('_', '-').indexOf(want) === 0;
     });
 
     if (!matching.length) return null;
@@ -49,7 +52,7 @@ window.sgaSpeech = (function () {
 
   // Whether this device can say anything in that language at all. A Spanish
   // line read by an English voice is worse than not saying it.
-  function hasVoice(lang) { return !!pickVoice(lang); }
+  function hasVoice(lang, strict) { return !!pickVoice(lang, strict); }
 
   function speak(text, starts, dotNetRef, rate) {
     stop();
@@ -181,7 +184,7 @@ window.sgaSpeech = (function () {
       // A real hush: the API has a volume, so a whisper is an actual whisper.
       u.volume = (it.volume === undefined) ? 1 : it.volume;
 
-      var v = pickVoice(it.lang);
+      var v = pickVoice(it.lang, it.strict);
       if (v) { u.voice = v; u.lang = v.lang; }
       else if (it.lang) { u.lang = it.lang; }
 

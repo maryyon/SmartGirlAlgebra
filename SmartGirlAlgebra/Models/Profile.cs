@@ -211,7 +211,7 @@ public class Tickle
     [
         new() { Text = "Who loves you more than a roadtrip in an RV, sweetheart?", Lang = "en-US", Weight = 7 },
         new() { Text = "¿Quién te quiere más que un viaje en la casa rodante, mi amor?", Lang = "es-US", Weight = 1.5 },
-        new() { Text = "Who love yuh more dan a road trip inna di RV, mi sweetheart?", Lang = "en-JM", Weight = 1.5 }
+        new() { Text = "Who love yuh more dan a road trip inna di RV, mi sweetheart?", Lang = "en-JM", Weight = 1.5, Strict = true }
     ];
 
     public double Rate { get; set; } = 1.0;
@@ -225,4 +225,11 @@ public class Tagline
 
     /// <summary>Relative to the others. English is deliberately the common one.</summary>
     public double Weight { get; set; } = 1;
+
+    /// <summary>
+    /// The region has to match, not just the language. Patwa needs a genuinely
+    /// Jamaican voice; read by an American one it is the thing that offends.
+    /// Until such a voice exists on the device, the line simply doesn't play.
+    /// </summary>
+    public bool Strict { get; set; }
 }

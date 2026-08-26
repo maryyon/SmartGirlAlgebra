@@ -206,7 +206,7 @@ public class ProfileService
                 {
                     lines = tickle.Lines,
                     rate = tickle.Rate,
-                    taglines = tickle.Taglines.Select(t => new { text = t.Text, lang = t.Lang, weight = t.Weight })
+                    taglines = tickle.Taglines.Select(t => new { text = t.Text, lang = t.Lang, weight = t.Weight, strict = t.Strict })
                 });
         }
         catch

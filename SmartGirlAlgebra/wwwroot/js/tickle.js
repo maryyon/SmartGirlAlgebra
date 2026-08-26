@@ -80,8 +80,10 @@ window.sgaTickle = (function () {
   // plain English, and worse still for Patwa.
   function pickTagline() {
     var usable = taglines.filter(function (tl) {
-      if (!tl.lang || tl.lang.toLowerCase().indexOf('en') === 0) return true;
-      try { return window.sgaSpeech.hasVoice(tl.lang); } catch (e) { return false; }
+      if (!tl.lang) return true;
+      // Plain English is always safe; anything else needs a real voice for it.
+      if (tl.lang.toLowerCase() === 'en-us' && !tl.strict) return true;
+      try { return window.sgaSpeech.hasVoice(tl.lang, tl.strict); } catch (e) { return false; }
     });
 
     if (!usable.length) return null;
@@ -112,6 +114,7 @@ window.sgaTickle = (function () {
       items.push({
         text: tl.text,
         lang: tl.lang || 'en-US',
+        strict: !!tl.strict,
         rate: whisper ? Math.max(0.7, rate - 0.2) : Math.max(0.75, rate - 0.12),
         volume: whisper ? 0.32 : 1,
         pitch: whisper ? 0.92 : 1.05,
