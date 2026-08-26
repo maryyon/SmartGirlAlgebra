@@ -26,18 +26,30 @@ window.sgaSpeech = (function () {
     finish();
   }
 
-  // A warm, clear English voice if the device has one. Whatever is first
-  // otherwise — the reading matters more than the accent.
-  function pickVoice() {
+  // A warm, clear voice in the language asked for. Whatever is first otherwise —
+  // the reading matters more than the accent.
+  function pickVoice(lang) {
+    var want = (lang || 'en').toLowerCase().slice(0, 2);
+
     var all = [];
     try { all = window.speechSynthesis.getVoices() || []; } catch (e) { return null; }
-    var en = all.filter(function (v) { return (v.lang || '').toLowerCase().indexOf('en') === 0; });
-    if (!en.length) return null;
-    var nice = en.filter(function (v) {
-      return /samantha|karen|moira|aria|jenny|zira|female|natural/i.test(v.name || '');
+
+    var matching = all.filter(function (v) {
+      return (v.lang || '').toLowerCase().indexOf(want) === 0;
     });
-    return nice.length ? nice[0] : en[0];
+
+    if (!matching.length) return null;
+
+    var nice = matching.filter(function (v) {
+      return /samantha|karen|moira|aria|jenny|zira|paulina|monica|helena|female|natural/i.test(v.name || '');
+    });
+
+    return nice.length ? nice[0] : matching[0];
   }
+
+  // Whether this device can say anything in that language at all. A Spanish
+  // line read by an English voice is worse than not saying it.
+  function hasVoice(lang) { return !!pickVoice(lang); }
 
   function speak(text, starts, dotNetRef, rate) {
     stop();
@@ -165,10 +177,13 @@ window.sgaSpeech = (function () {
 
       var u = new SpeechSynthesisUtterance(it.text);
       u.rate = it.rate;
-      u.pitch = 1.05;
+      u.pitch = (it.pitch === undefined) ? 1.05 : it.pitch;
+      // A real hush: the API has a volume, so a whisper is an actual whisper.
+      u.volume = (it.volume === undefined) ? 1 : it.volume;
 
-      var v = pickVoice();
+      var v = pickVoice(it.lang);
       if (v) { u.voice = v; u.lang = v.lang; }
+      else if (it.lang) { u.lang = it.lang; }
 
       u.onend = go;
       u.onerror = go;
@@ -190,6 +205,7 @@ window.sgaSpeech = (function () {
   return {
     speak: speak,
     busy: busy,
+    hasVoice: hasVoice,
     say: say,
     sequence: sequence,
     stop: stop,

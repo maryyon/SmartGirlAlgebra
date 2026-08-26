@@ -202,8 +202,27 @@ public class Tickle
 {
     public string[] Lines { get; set; } = [];
 
-    /// <summary>Hers. Changed here, it changes everywhere.</summary>
-    public string Tagline { get; set; } = "Who loves you more than a roadtrip in an RV, sweetheart?";
+    /// <summary>
+    /// Hers, in three languages. Changed here, it changes everywhere.
+    /// English carries most of the time; the other two turn up now and then, and
+    /// only on a device that actually has a voice for them.
+    /// </summary>
+    public List<Tagline> Taglines { get; set; } =
+    [
+        new() { Text = "Who loves you more than a roadtrip in an RV, sweetheart?", Lang = "en-US", Weight = 7 },
+        new() { Text = "¿Quién te quiere más que un viaje en la casa rodante, mi amor?", Lang = "es-US", Weight = 1.5 },
+        new() { Text = "Who love yuh more dan a road trip inna di RV, mi sweetheart?", Lang = "en-JM", Weight = 1.5 }
+    ];
 
     public double Rate { get; set; } = 1.0;
+}
+
+/// <summary>One language's version of the signature.</summary>
+public class Tagline
+{
+    public string Text { get; set; } = "";
+    public string Lang { get; set; } = "en-US";
+
+    /// <summary>Relative to the others. English is deliberately the common one.</summary>
+    public double Weight { get; set; } = 1;
 }

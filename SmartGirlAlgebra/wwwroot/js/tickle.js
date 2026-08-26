@@ -12,8 +12,11 @@
 //     for that word, not an invitation to be funny
 window.sgaTickle = (function () {
   var lines = [];
-  var tagline = '';
+  var taglines = [];
   var rate = 1;
+
+  // How often the signature is breathed rather than said.
+  var WHISPER_IN = 3;
 
   var ONE_IN = 25;
   var COOLDOWN_MS = 60000;
@@ -41,7 +44,7 @@ window.sgaTickle = (function () {
 
   function configure(cfg) {
     lines = (cfg && cfg.lines) || [];
-    tagline = (cfg && cfg.tagline) || '';
+    taglines = (cfg && cfg.taglines) || [];
     rate = (cfg && cfg.rate) || 1;
     arm();
   }
@@ -72,14 +75,49 @@ window.sgaTickle = (function () {
     fire();
   }
 
+  // English mostly, Spanish and Patwa now and then - but only if the device
+  // actually has a voice for it. An English voice reading Spanish is worse than
+  // plain English, and worse still for Patwa.
+  function pickTagline() {
+    var usable = taglines.filter(function (tl) {
+      if (!tl.lang || tl.lang.toLowerCase().indexOf('en') === 0) return true;
+      try { return window.sgaSpeech.hasVoice(tl.lang); } catch (e) { return false; }
+    });
+
+    if (!usable.length) return null;
+
+    var total = 0;
+    for (var i = 0; i < usable.length; i++) total += (usable[i].weight || 1);
+
+    var roll = Math.random() * total;
+    for (var j = 0; j < usable.length; j++) {
+      roll -= (usable[j].weight || 1);
+      if (roll <= 0) return usable[j];
+    }
+
+    return usable[0];
+  }
+
   function fire() {
     if (!lines.length) return;
 
     var line = lines[Math.floor(Math.random() * lines.length)];
     var items = [{ text: line, rate: rate, pause: 750 }];
 
-    // The tagline always follows, a touch warmer and slower.
-    if (tagline) items.push({ text: tagline, rate: Math.max(0.75, rate - 0.12), pause: 0 });
+    var tl = pickTagline();
+
+    if (tl) {
+      var whisper = Math.floor(Math.random() * WHISPER_IN) === 0;
+
+      items.push({
+        text: tl.text,
+        lang: tl.lang || 'en-US',
+        rate: whisper ? Math.max(0.7, rate - 0.2) : Math.max(0.75, rate - 0.12),
+        volume: whisper ? 0.32 : 1,
+        pitch: whisper ? 0.92 : 1.05,
+        pause: 0
+      });
+    }
 
     try { window.sgaSpeech.sequence(items, null); } catch (e) { }
   }

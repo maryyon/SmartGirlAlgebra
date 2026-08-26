@@ -202,7 +202,12 @@ public class ProfileService
         try
         {
             await _js.InvokeVoidAsync("sgaTickle.configure",
-                new { lines = tickle.Lines, tagline = tickle.Tagline, rate = tickle.Rate });
+                new
+                {
+                    lines = tickle.Lines,
+                    rate = tickle.Rate,
+                    taglines = tickle.Taglines.Select(t => new { text = t.Text, lang = t.Lang, weight = t.Weight })
+                });
         }
         catch
         {

@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-08-25 — The signature whispers, and speaks three languages
+
+- The tagline is **whispered about one time in three** — real volume control,
+  slower and lower, not just quieter wording.
+- It now comes in **English, Spanish and Patwa**. English carries roughly seven
+  times in ten; the other two turn up now and then.
+- A non-English line is only used if the device actually has a voice for that
+  language. Otherwise it falls back to English — an English voice reading
+  Spanish is worse than plain English, and worse still for Patwa.
+
 ## 2026-08-25 — The apps giggle back
 
 - About one button tap in twenty-five, and never twice inside a minute, the app
