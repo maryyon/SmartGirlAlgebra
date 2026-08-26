@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-08-25 — Jokes sit under the reading, not over it
+
+- The silly lines and tagline now play at **75% volume**; whispers scale from
+  that. Volume only — the recordings are untouched, so her voice keeps its tone.
+- **Reading always wins.** Asking to be read to, tapping a word, or opening the
+  microphone now stops a joke mid-flight. Previously a joke already playing
+  would talk over a child being read to.
+
 ## 2026-08-25 — It's her voice now
 
 - All 17 silly lines and the English tagline are now **Mary's own voice**

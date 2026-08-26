@@ -18,6 +18,11 @@ window.sgaTickle = (function () {
   // How often the signature is breathed rather than said.
   var WHISPER_IN = 3;
 
+  // A quarter softer than full. Volume only - the recordings are untouched, so
+  // her voice keeps its own tone; it just sits under the reading rather than
+  // over it. Reading always plays at full.
+  var VOLUME = 0.75;
+
   var ONE_IN = 25;
   var COOLDOWN_MS = 60000;
 
@@ -121,7 +126,7 @@ window.sgaTickle = (function () {
     if (!lines.length) return;
 
     var line = lines[Math.floor(Math.random() * lines.length)];
-    var items = [{ text: line, rate: rate, pause: 750 }];
+    var items = [{ text: line, rate: rate, volume: VOLUME, pause: 750 }];
 
     var tl = pickTagline();
 
@@ -133,7 +138,7 @@ window.sgaTickle = (function () {
         lang: tl.lang || 'en-US',
         strict: !!tl.strict,
         rate: whisper ? Math.max(0.7, rate - 0.2) : Math.max(0.75, rate - 0.12),
-        volume: whisper ? 0.32 : 1,
+        volume: whisper ? VOLUME * 0.42 : VOLUME,
         pitch: whisper ? 0.92 : 1.05,
         pause: 0
       });
@@ -178,8 +183,20 @@ window.sgaTickle = (function () {
     if (p && p.catch) p.catch(go);
   }
 
+  function hush() {
+    if (!playing) return;
+
+    try {
+      if (typeof playing === 'number') window.clearTimeout(playing);
+      else { playing.pause(); playing.currentTime = 0; }
+    } catch (e) { }
+
+    playing = null;
+  }
+
   return {
     configure: configure,
+    hush: hush,
     muted: muted,
     setMuted: setMuted,
     fire: fire        // so the mute toggle can play a sample when switched on

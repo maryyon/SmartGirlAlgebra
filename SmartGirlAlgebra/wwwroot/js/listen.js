@@ -44,6 +44,10 @@ window.sgaListen = (function () {
 
   function start(dotNetRef, seconds) {
     stop();
+
+    // Nothing may be making noise while the microphone is open.
+    try { if (window.sgaTickle && window.sgaTickle.hush) window.sgaTickle.hush(); } catch (e) { }
+
     ref = dotNetRef;
     settled = false;
 

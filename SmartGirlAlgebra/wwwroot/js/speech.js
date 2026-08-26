@@ -56,6 +56,9 @@ window.sgaSpeech = (function () {
 
   function speak(text, starts, dotNetRef, rate) {
     stop();
+    // Reading outranks the jokes: never let one talk over a child being read to.
+    try { if (window.sgaTickle && window.sgaTickle.hush) window.sgaTickle.hush(); } catch (e) { }
+
     ref = dotNetRef;
 
     if (!('speechSynthesis' in window)) {
@@ -125,6 +128,10 @@ window.sgaSpeech = (function () {
   // speak() so a tapped word never disturbs a read-along in progress.
   function say(word, rate, dotNetRef) {
     try { window.speechSynthesis.cancel(); } catch (e) { }
+
+    // Reading outranks the jokes: never let one talk over a child being read to.
+    try { if (window.sgaTickle && window.sgaTickle.hush) window.sgaTickle.hush(); } catch (e) { }
+
 
     if (!('speechSynthesis' in window)) {
       if (dotNetRef) { try { dotNetRef.invokeMethodAsync('OnSaid'); } catch (e) { } }
