@@ -53,3 +53,18 @@
 
     window.sgaTheme = { apply };
 })();
+
+
+// Put the scrolling area back to the top. Used when a new step appears, so the
+// story and the picture it refers to are on screen rather than scrolled away
+// above the question.
+window.sgaUi = {
+  toTop: function () {
+    try {
+      var body = document.querySelector('.sga-body');
+      if (body && body.scrollTo) body.scrollTo({ top: 0, behavior: 'smooth' });
+      else if (body) body.scrollTop = 0;
+      if (window.scrollTo) window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (e) { }
+  }
+};

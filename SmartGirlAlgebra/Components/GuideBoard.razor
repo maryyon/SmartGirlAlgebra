@@ -2,6 +2,7 @@
 @inject NavigationManager Nav
 @inject LessonProgress Progress
 @inject PlayerService Player
+@inject IJSRuntime JS
 @implements IDisposable
 
 @* Worked through, one step at a time.
@@ -266,7 +267,7 @@
         if (_hintsShown < _step.Hints.Length) _hintsShown++;
     }
 
-    private void NextStep()
+    private async Task NextStep()
     {
         if (_problem is null || !_gotIt) return;
 
@@ -278,10 +279,23 @@
             _wrong = false;
             _chosen = null;
             StartTyping(_step?.Say ?? "");
+            await ToTop();
             return;
         }
 
         _done = true;
+        await ToTop();
+    }
+
+    /// <summary>
+    /// Each new step starts at the top, so the story and the picture it is
+    /// talking about are on screen. Left alone, the page keeps growing and the
+    /// problem scrolls away above the question.
+    /// </summary>
+    private async Task ToTop()
+    {
+        try { await JS.InvokeVoidAsync("sgaUi.toTop"); }
+        catch { /* nothing to scroll */ }
     }
 
     private async Task NextProblem()
@@ -290,6 +304,7 @@
         {
             _problemIndex++;
             StartProblem();
+            await ToTop();
             return;
         }
 
