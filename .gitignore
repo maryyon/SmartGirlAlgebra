@@ -100,3 +100,6 @@ node_modules/
 # configuration, never in the repository.
 appsettings.*.local.json
 secrets.json
+
+# local rollback bundles — never pushed
+Backup/

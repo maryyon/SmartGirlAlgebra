@@ -50,7 +50,7 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
-      ctx.lineWidth = 3.5;
+      ctx.lineWidth = 5;   // a fingertip, not a stylus, on a now much bigger board
       if (snapshot) {
         const img = new Image();
         img.onload = () => ctx.drawImage(img, 0, 0, rect.width, rect.height);

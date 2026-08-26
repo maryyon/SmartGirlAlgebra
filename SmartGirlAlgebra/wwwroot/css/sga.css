@@ -334,20 +334,28 @@ html, body {
   display: flex;
   align-items: center;
   gap: .375rem;
-  margin-bottom: .375rem;
-  font-size: .75rem;
+  margin-bottom: .5rem;
+  font-size: 1rem;
   font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: .05em;
+  letter-spacing: .01em;
+  color: var(--sga-primary);
+}
+
+.sga-scratch__hint {
+  font-size: .8125rem;
+  font-weight: 600;
   color: var(--sga-muted-fg);
 }
 
 .sga-scratch__canvas {
   width: 100%;
-  height: 10rem;
+  height: 18rem;
   touch-action: none;
   border-radius: 1rem;
-  border: 2px dashed var(--sga-border);
+  /* Solid and themed, not a faint dashed hairline — the first child to use this
+     scrolled straight past it looking for somewhere to work. */
+  border: 3px solid var(--sga-primary);
+  box-shadow: 0 2px 0 var(--sga-border);
   background:
     repeating-linear-gradient(0deg, transparent, transparent 31px, var(--sga-muted) 31px, var(--sga-muted) 32px);
   display: block;
@@ -355,10 +363,10 @@ html, body {
 
 .sga-scratch__label {
   position: absolute;
-  left: .75rem;
-  top: 2rem;
+  left: 1rem;
+  top: 3rem;
   pointer-events: none;
-  font-size: .75rem;
+  font-size: .8125rem;
   font-weight: 600;
   color: var(--sga-muted-fg);
 }

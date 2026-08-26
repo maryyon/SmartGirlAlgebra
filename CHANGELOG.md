@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-08-25 — Whiteboard on every screen
+
+- The whiteboard is now on **every board in every version**: the step-by-step
+  solver, the tap-the-answer board (which never had one), and the lesson
+  questions (which never had one either).
+- **Made it much bigger and easier to spot.** It was a 10rem strip behind a faint
+  dashed hairline with a small grey caption; a child looking for somewhere to work
+  scrolled straight past it. Now 18rem tall, a solid border in the version's own
+  colour, and headed "Whiteboard — work it out here".
+- Thicker marker (3.5 → 5) to suit a fingertip on the larger board.
+
 ## [Seven versions, one app] - 2026-08-25
 
 One deployment now serves seven audiences. A version is a JSON file under
