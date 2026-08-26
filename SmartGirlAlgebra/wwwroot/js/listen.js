@@ -15,6 +15,22 @@ window.sgaListen = (function () {
     return !!(window.SpeechRecognition || window.webkitSpeechRecognition);
   }
 
+  // Whether this browser can recognise speech WITHOUT sending the audio away.
+  // On-device means a child's voice never leaves the machine, which is the whole
+  // difference that matters here.
+  function localCapable() {
+    try {
+      var Ctor = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!Ctor || typeof Ctor.available !== 'function') return Promise.resolve(false);
+
+      return Ctor.available({ langs: ['en-US'], processLocally: true })
+        .then(function (state) { return state === 'available'; })
+        .catch(function () { return false; });
+    } catch (e) {
+      return Promise.resolve(false);
+    }
+  }
+
   function clearTimer() {
     if (timer) { window.clearTimeout(timer); timer = null; }
   }
@@ -59,6 +75,12 @@ window.sgaListen = (function () {
 
     rec.lang = 'en-US';
     rec.interimResults = false;
+
+    // Keep it on the machine when the browser can. Older browsers ignore this
+    // and fall back to their cloud service, which is why the grown-up gate
+    // exists for that case.
+    try { rec.processLocally = true; } catch (e) { }
+
     rec.continuous = false;
     // A child's voice is not a news reader's. Take every guess the engine has
     // and let the caller decide whether any of them is the word.
@@ -90,5 +112,11 @@ window.sgaListen = (function () {
   // True while the microphone is open, so nothing else may speak.
   function active() { return !!rec && !settled; }
 
-  return { start: start, stop: stop, supported: supported, active: active };
+  return {
+    start: start,
+    stop: stop,
+    supported: supported,
+    localCapable: localCapable,
+    active: active
+  };
 })();

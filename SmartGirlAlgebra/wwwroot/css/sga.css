@@ -1450,3 +1450,42 @@ html, body {
 }
 
 .sga-silly:hover { color: var(--sga-primary); border-color: var(--sga-primary); }
+
+/* ---------- grown-up gate before the microphone ---------- */
+
+.sga-gate {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  border: 3px solid var(--sga-primary);
+  border-radius: 1rem;
+  background: var(--sga-card);
+  padding: .9rem 1rem;
+}
+
+.sga-gate__head {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--sga-primary);
+}
+
+.sga-gate__body {
+  margin: 0;
+  font-size: .8125rem;
+  font-weight: 600;
+  color: var(--sga-muted-fg);
+}
+
+.sga-gate__ok {
+  align-self: flex-start;
+  border: none;
+  border-radius: 999px;
+  background: var(--sga-primary);
+  color: var(--sga-primary-fg, #fff);
+  padding: .55rem 1.1rem;
+  font-family: inherit;
+  font-size: .9375rem;
+  font-weight: 800;
+  cursor: pointer;
+}

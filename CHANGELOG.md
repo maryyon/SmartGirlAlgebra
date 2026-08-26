@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-08-26 — KT's microphone stays on the machine where it can
+
+- The read-back now asks the browser to recognise his voice **on the device**,
+  so the audio never leaves the laptop.
+- Where the browser can't do that, a **grown-up must tap once per session**
+  before the microphone opens, with a plain sentence saying the sound goes to
+  the tablet's speech service and nothing is saved.
+- Background: the FTC's amended COPPA Rule (in force June 2025, compliance due
+  April 2026) makes voiceprints personal information. The narrow exception for
+  a child's voice requires immediate deletion — which can't be promised for
+  audio handled by someone else's cloud service.
+
 ## 2026-08-25 — Jokes sit under the reading, not over it
 
 - The silly lines and tagline now play at **75% volume**; whispers scale from

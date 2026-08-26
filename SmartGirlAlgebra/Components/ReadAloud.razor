@@ -46,7 +46,23 @@
         </p>
     }
 
-    @if (_step == Step.Listening)
+    @if (_step == Step.Gate)
+    {
+        @* Only appears when this browser can't recognise speech on the machine
+           itself. It is not a lock - a determined child taps it - it is a
+           deliberate pause so a grown-up is present when a microphone opens. *@
+        <div class="sga-gate" role="group" aria-label="Grown-up needed">
+            <p class="sga-gate__head">👋 A grown-up, please</p>
+            <p class="sga-gate__body">
+                To hear @ChildWord read the word, this tablet turns on the microphone
+                and sends the sound to its speech service. Nothing is saved.
+            </p>
+            <button type="button" class="sga-gate__ok" @onclick="AllowMic">
+                I'm here — turn it on
+            </button>
+        </div>
+    }
+    else if (_step == Step.Listening)
     {
         <p class="sga-read__turn" aria-live="polite">
             <span class="sga-read__mic" aria-hidden="true">🎤</span>
@@ -97,7 +113,7 @@
     /// <summary>Leave the last word out and listen for him to read it.</summary>
     [Parameter] public bool Listen { get; set; }
 
-    private enum Step { Idle, Clue, Listening, Praise, Correct, Reading }
+    private enum Step { Idle, Clue, Gate, Listening, Praise, Correct, Reading }
 
     private sealed record Tok(int Line, string Text, string Sep, int Spoken, string Say);
 
@@ -113,6 +129,11 @@
     private int _tapped = -1;
     private bool _unsupported;
     private bool _micRefused;
+    private bool _adultOk;
+    private bool? _onDevice;
+
+    /// <summary>Kept vague on purpose: this component doesn't know the child's name.</summary>
+    private const string ChildWord = "your reader";
 
     private bool _busy => _step is not Step.Idle;
 
@@ -374,6 +395,17 @@
             return;
         }
 
+        // If the browser can recognise him without sending the audio anywhere,
+        // no grown-up is needed - nothing leaves the machine.
+        _onDevice ??= await OnDeviceAsync();
+
+        if (_onDevice == false && !_adultOk)
+        {
+            _step = Step.Gate;
+            StateHasChanged();
+            return;
+        }
+
         _step = Step.Listening;
         StateHasChanged();
 
@@ -385,6 +417,23 @@
     {
         try { return await JS.InvokeAsync<bool>("sgaListen.supported"); }
         catch { return false; }
+    }
+
+    private async Task<bool> OnDeviceAsync()
+    {
+        try { return await JS.InvokeAsync<bool>("sgaListen.localCapable"); }
+        catch { return false; }
+    }
+
+    /// <summary>A grown-up said yes. Holds for the rest of the session, not forever.</summary>
+    private async Task AllowMic()
+    {
+        _adultOk = true;
+        _step = Step.Listening;
+        StateHasChanged();
+
+        try { await JS.InvokeVoidAsync("sgaListen.start", _self, 6); }
+        catch { await Correct(); }
     }
 
     [JSInvokable]
