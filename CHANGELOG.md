@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-08-25 — Read-aloud for the kindergarten version
+
+- `/kt` now has a **"Read it to me"** button on the game screen and on every
+  lesson screen. It says the instructions out loud and **lights up each word as
+  it is spoken**, so a child who can't read yet can follow along.
+- Emoji are shown but not spoken — a voice reading "dog face dog face dog face"
+  is noise, and the pictures already do that job.
+- Falls back to paced highlighting on iPads, where Safari never reports word
+  boundaries. Slightly out of step beats no highlight at all.
+
 ## 2026-08-25 — Whiteboard on every screen
 
 - The whiteboard is now on **every board in every version**: the step-by-step

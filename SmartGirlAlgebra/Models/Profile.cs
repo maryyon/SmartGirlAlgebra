@@ -67,6 +67,12 @@ public class Profile
     /// </summary>
     public List<Lesson> Lessons { get; set; } = [];
 
+    /// <summary>
+    /// Whether instructions get a "read it to me" button that says them aloud and
+    /// lights each word as it goes. On for versions whose readers can't yet.
+    /// </summary>
+    public bool ReadAloud { get; set; }
+
     public List<Level> Levels { get; set; } = [];
 
     public Level? LevelById(int id) => Levels.FirstOrDefault(l => l.Id == id);

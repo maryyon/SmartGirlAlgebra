@@ -31,8 +31,17 @@
             var step = Lesson.Teach[_teachIndex];
             <section class="sga-problem sga-pop" aria-label="Lesson">
                 <div class="sga-problem__eyebrow">📖 @(_teachIndex + 1) of @Lesson.Teach.Length</div>
-                <h2 class="sga-teach__heading">@step.Heading</h2>
-                <p class="sga-problem__cheer sga-prewrap">@step.Body</p>
+                @if (Profile.ReadAloud)
+                {
+                    <ReadAloud Lines="@(new List<ReadAloud.Line> {
+                        new(step.Heading, "sga-teach__heading"),
+                        new(step.Body, "sga-problem__cheer") })" />
+                }
+                else
+                {
+                    <h2 class="sga-teach__heading">@step.Heading</h2>
+                    <p class="sga-problem__cheer sga-prewrap">@step.Body</p>
+                }
                 @if (!string.IsNullOrWhiteSpace(step.Example))
                 {
                     <div class="sga-equation" style="justify-content:center;">
@@ -44,8 +53,17 @@
         else if (_phase == Phase.Questions && _current is not null)
         {
             <section class="sga-problem" aria-label="Question">
-                <p class="sga-problem__cheer sga-problem__cheer--big sga-prewrap">@_current.Prompt</p>
-                <div class="sga-ask">@_current.Question</div>
+                @if (Profile.ReadAloud)
+                {
+                    <ReadAloud Lines="@(new List<ReadAloud.Line> {
+                        new(_current.Prompt, "sga-problem__cheer sga-problem__cheer--big"),
+                        new(_current.Question, "sga-ask") })" />
+                }
+                else
+                {
+                    <p class="sga-problem__cheer sga-problem__cheer--big sga-prewrap">@_current.Prompt</p>
+                    <div class="sga-ask">@_current.Question</div>
+                }
             </section>
 
             <section class="sga-choices sga-choices--stack" aria-label="Answers">

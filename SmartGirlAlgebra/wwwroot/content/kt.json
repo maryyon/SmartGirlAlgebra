@@ -772,5 +772,6 @@
       ],
       "masteryRequired": 3
     }
-  ]
+  ],
+  "readAloud": true
 }

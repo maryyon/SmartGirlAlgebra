@@ -1,0 +1,114 @@
+// Reading the instructions out loud, one highlighted word at a time.
+//
+// Chrome and Edge fire a `boundary` event per word, which is exact. iOS Safari
+// never fires it, and a five-year-old on an iPad is the whole audience here, so
+// when no boundary arrives we pace the highlight ourselves off word length.
+// Slightly out of step beats no highlight at all.
+window.sgaSpeech = (function () {
+  var ref = null;
+  var timer = null;
+  var active = false;
+
+  function clearTimer() {
+    if (timer) { window.clearTimeout(timer); timer = null; }
+  }
+
+  function finish() {
+    clearTimer();
+    active = false;
+    if (ref) {
+      try { ref.invokeMethodAsync('OnDone'); } catch (e) { /* component already gone */ }
+    }
+  }
+
+  function stop() {
+    try { window.speechSynthesis.cancel(); } catch (e) { }
+    finish();
+  }
+
+  // A warm, clear English voice if the device has one. Whatever is first
+  // otherwise — the reading matters more than the accent.
+  function pickVoice() {
+    var all = [];
+    try { all = window.speechSynthesis.getVoices() || []; } catch (e) { return null; }
+    var en = all.filter(function (v) { return (v.lang || '').toLowerCase().indexOf('en') === 0; });
+    if (!en.length) return null;
+    var nice = en.filter(function (v) {
+      return /samantha|karen|moira|aria|jenny|zira|female|natural/i.test(v.name || '');
+    });
+    return nice.length ? nice[0] : en[0];
+  }
+
+  function speak(text, starts, dotNetRef, rate) {
+    stop();
+    ref = dotNetRef;
+
+    if (!('speechSynthesis' in window)) {
+      if (ref) { try { ref.invokeMethodAsync('OnUnsupported'); } catch (e) { } }
+      return;
+    }
+
+    active = true;
+    var u = new SpeechSynthesisUtterance(text);
+    u.rate = rate;
+    u.pitch = 1.05;
+
+    var v = pickVoice();
+    if (v) { u.voice = v; u.lang = v.lang; }
+
+    var gotBoundary = false;
+
+    u.onboundary = function (e) {
+      if (!active) return;
+      if (e.name && e.name !== 'word') return;
+      gotBoundary = true;
+      clearTimer();
+
+      var idx = 0;
+      for (var i = 0; i < starts.length; i++) {
+        if (starts[i] <= e.charIndex) { idx = i; } else { break; }
+      }
+      try { ref.invokeMethodAsync('OnWord', idx); } catch (err) { }
+    };
+
+    u.onend = function () { finish(); };
+    u.onerror = function () { finish(); };
+
+    window.speechSynthesis.speak(u);
+
+    // Give the real boundary events a moment to show up before falling back.
+    window.setTimeout(function () {
+      if (!active || gotBoundary) return;
+
+      var per = [];
+      for (var k = 0; k < starts.length; k++) {
+        var end = (k + 1 < starts.length) ? starts[k + 1] : text.length;
+        per.push(Math.max(230, (end - starts[k]) * 78 / rate));
+      }
+
+      var i = 0;
+      (function tick() {
+        if (!active || i >= starts.length) return;
+        try { ref.invokeMethodAsync('OnWord', i); } catch (e) { return; }
+        var wait = per[i];
+        i++;
+        timer = window.setTimeout(tick, wait);
+      })();
+    }, 420);
+  }
+
+  // Voices load asynchronously on most browsers; touching the list early makes
+  // sure one is available by the time a child presses the button.
+  if ('speechSynthesis' in window) {
+    try {
+      window.speechSynthesis.getVoices();
+      window.speechSynthesis.onvoiceschanged = function () { };
+    } catch (e) { }
+  }
+
+  return {
+    speak: speak,
+    stop: stop,
+    supported: function () { return 'speechSynthesis' in window; }
+  };
+})();

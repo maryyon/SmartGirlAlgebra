@@ -1260,3 +1260,63 @@ html, body {
   line-height: 1.6;
   letter-spacing: .14em;
 }
+
+/* ---------- read aloud ---------- */
+
+.sga-read { display: flex; flex-direction: column; gap: .5rem; }
+
+.sga-read__w {
+  border-radius: .5rem;
+  /* Sized to match the highlight so words don't jump when one lights up. */
+  padding: .05em .15em;
+  margin: 0 -.15em;
+  transition: background-color .12s ease, color .12s ease;
+}
+
+.sga-read__w--now {
+  background: var(--sga-accent);
+  color: var(--sga-accent-fg, #fff);
+  box-shadow: 0 0 0 .12em var(--sga-accent);
+}
+
+.sga-readbtn {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  border: 3px solid var(--sga-primary);
+  border-radius: 999px;
+  background: var(--sga-card);
+  color: var(--sga-primary);
+  /* A big target: this is pressed by a five-year-old, repeatedly. */
+  padding: .7rem 1.35rem;
+  font-family: inherit;
+  font-size: 1.0625rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.sga-readbtn--on {
+  background: var(--sga-primary);
+  color: var(--sga-primary-fg, #fff);
+}
+
+.sga-readbtn__icon { font-size: 1.35rem; line-height: 1; }
+
+.sga-readbtn__icon--on { animation: sga-pulse 1s ease-in-out infinite; }
+
+@keyframes sga-pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.18); }
+}
+
+.sga-read__nope {
+  margin: 0;
+  font-size: .8125rem;
+  font-weight: 600;
+  color: var(--sga-muted-fg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sga-readbtn__icon--on { animation: none; }
+}

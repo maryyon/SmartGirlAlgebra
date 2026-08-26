@@ -1,0 +1,226 @@
+@namespace SmartGirlAlgebra.Components
+@using System.Text
+@using System.Globalization
+@inject IJSRuntime JS
+@implements IAsyncDisposable
+
+@* Reads the instructions out loud and lights up each word as it is said, for a
+   child who cannot read them yet. The text is shown once and highlighted in
+   place — never repeated in a separate strip — so she is following the same
+   words she is being read.
+
+   Emoji are shown but not spoken: a screen reader voice announcing "dog face
+   dog face dog face" is noise, and the pictures are doing their own work. *@
+
+<div class="sga-read">
+
+    @for (var li = 0; li < Lines.Count; li++)
+    {
+        var line = li;
+        <p class="@Lines[line].Class sga-prewrap">
+            @foreach (var tok in _tokens.Where(t => t.Line == line))
+            {
+                var t = tok;
+                <span class="sga-read__w @(t.Spoken >= 0 && t.Spoken == _at ? "sga-read__w--now" : "")">@t.Text</span>@t.Sep
+            }
+        </p>
+    }
+
+    <button type="button"
+            class="sga-readbtn @(_speaking ? "sga-readbtn--on" : "")"
+            aria-label="@(_speaking ? "Stop reading" : "Read the instructions out loud")"
+            @onclick="Toggle">
+        <span class="sga-readbtn__icon @(_speaking ? "sga-readbtn__icon--on" : "")" aria-hidden="true">
+            @(_speaking ? "⏹" : "🔊")
+        </span>
+        <span>@(_speaking ? "Stop" : "Read it to me")</span>
+    </button>
+
+    @if (_unsupported)
+    {
+        <p class="sga-read__nope">This tablet can't read out loud. Ask a grown-up!</p>
+    }
+
+</div>
+
+@code {
+    /// <summary>A block of text to show, with the CSS class it is normally shown in.</summary>
+    public sealed record Line(string Text, string Class);
+
+    [Parameter, EditorRequired] public IReadOnlyList<Line> Lines { get; set; } = [];
+
+    /// <summary>Slower than an adult would read it. Kindergarten pace.</summary>
+    [Parameter] public double Rate { get; set; } = 0.75;
+
+    private sealed record Tok(int Line, string Text, string Sep, int Spoken);
+
+    private List<Tok> _tokens = [];
+    private string _spoken = "";
+    private int[] _starts = [];
+    private string _signature = "";
+
+    private int _at = -1;
+    private bool _speaking;
+    private bool _unsupported;
+
+    private DotNetObjectReference<ReadAloud>? _self;
+
+    protected override void OnParametersSet()
+    {
+        // Only re-tokenise when the words actually change, or every re-render
+        // during speech would rebuild the map underneath the highlight.
+        var sig = string.Join("", Lines.Select(l => l.Text));
+        if (sig == _signature) return;
+
+        _signature = sig;
+        _at = -1;
+        Build();
+    }
+
+    private void Build()
+    {
+        _tokens = [];
+        var speech = new StringBuilder();
+        var starts = new List<int>();
+
+        for (var li = 0; li < Lines.Count; li++)
+        {
+            var text = Lines[li].Text ?? "";
+            var i = 0;
+
+            while (i < text.Length)
+            {
+                // A token is a run of non-space; the whitespace after it is kept
+                // verbatim so line breaks and blank lines survive.
+                var wordStart = i;
+                while (i < text.Length && !char.IsWhiteSpace(text[i])) i++;
+                var word = text[wordStart..i];
+
+                var sepStart = i;
+                while (i < text.Length && char.IsWhiteSpace(text[i])) i++;
+                var sep = text[sepStart..i];
+
+                if (word.Length == 0)
+                {
+                    if (sep.Length > 0) _tokens.Add(new Tok(li, "", sep, -1));
+                    continue;
+                }
+
+                var say = Sayable(word);
+                var spokenIndex = -1;
+
+                if (say.Length > 0)
+                {
+                    if (speech.Length > 0) speech.Append(' ');
+                    starts.Add(speech.Length);
+                    speech.Append(say);
+                    spokenIndex = starts.Count - 1;
+                }
+
+                _tokens.Add(new Tok(li, word, sep, spokenIndex));
+            }
+
+            // A pause between the instruction and the question.
+            if (li < Lines.Count - 1 && speech.Length > 0) speech.Append('.');
+        }
+
+        _spoken = speech.ToString();
+        _starts = starts.ToArray();
+    }
+
+    /// <summary>Drops emoji and other pictographs, keeping what a voice can read.</summary>
+    private static string Sayable(string word)
+    {
+        var sb = new StringBuilder(word.Length);
+
+        for (var i = 0; i < word.Length; i++)
+        {
+            var c = word[i];
+
+            // Emoji are surrogate pairs — skip both halves together.
+            if (char.IsHighSurrogate(c))
+            {
+                i++;
+                continue;
+            }
+
+            if (char.IsLowSurrogate(c)) continue;
+
+            var cat = CharUnicodeInfo.GetUnicodeCategory(c);
+            if (cat is UnicodeCategory.OtherSymbol or UnicodeCategory.NonSpacingMark) continue;
+
+            sb.Append(c);
+        }
+
+        var result = sb.ToString().Trim();
+
+        // Punctuation on its own says nothing.
+        return result.Any(char.IsLetterOrDigit) ? result : "";
+    }
+
+    private async Task Toggle()
+    {
+        if (_speaking)
+        {
+            await Stop();
+            return;
+        }
+
+        if (_starts.Length == 0) return;
+
+        _self ??= DotNetObjectReference.Create(this);
+        _speaking = true;
+        _at = -1;
+
+        try
+        {
+            await JS.InvokeVoidAsync("sgaSpeech.speak", _spoken, _starts, _self, Rate);
+        }
+        catch
+        {
+            _speaking = false;
+            _unsupported = true;
+        }
+    }
+
+    private async Task Stop()
+    {
+        _speaking = false;
+        _at = -1;
+
+        try { await JS.InvokeVoidAsync("sgaSpeech.stop"); }
+        catch { /* nothing was speaking */ }
+    }
+
+    [JSInvokable]
+    public void OnWord(int index)
+    {
+        _at = index;
+        StateHasChanged();
+    }
+
+    [JSInvokable]
+    public void OnDone()
+    {
+        _speaking = false;
+        _at = -1;
+        StateHasChanged();
+    }
+
+    [JSInvokable]
+    public void OnUnsupported()
+    {
+        _speaking = false;
+        _unsupported = true;
+        StateHasChanged();
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        // Leaving the page must not leave a voice talking to an empty room.
+        try { await JS.InvokeVoidAsync("sgaSpeech.stop"); }
+        catch { /* the page is already going */ }
+
+        _self?.Dispose();
+    }
+}
