@@ -31,7 +31,7 @@
             aria-label="@(_speaking ? "Stop reading" : "Read the instructions out loud")"
             @onclick="Toggle">
         <span class="sga-readbtn__icon @(_speaking ? "sga-readbtn__icon--on" : "")" aria-hidden="true">
-            @(_speaking ? "⏹" : "🔊")
+            @(_speaking ? "⏹️" : "🔊")
         </span>
         <span>@(_speaking ? "Stop" : "Read it to me")</span>
     </button>
@@ -120,8 +120,13 @@
                 _tokens.Add(new Tok(li, word, sep, spokenIndex));
             }
 
-            // A pause between the instruction and the question.
-            if (li < Lines.Count - 1 && speech.Length > 0) speech.Append('.');
+            // A pause between the instruction and the question — but only if the
+            // line didn't already end in something the voice will pause on.
+            if (li < Lines.Count - 1 && speech.Length > 0 &&
+                !".!?:;".Contains(speech[^1]))
+            {
+                speech.Append('.');
+            }
         }
 
         _spoken = speech.ToString();
