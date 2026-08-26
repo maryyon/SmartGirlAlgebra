@@ -1355,5 +1355,8 @@ html, body {
   margin: 0;
   font-size: .8125rem;
   font-weight: 700;
-  color: var(--sga-muted-fg);
+  /* Sits on whatever card it lands in - white, teal, pink - so it has to take
+     the card's own text color rather than the muted grey meant for white. */
+  color: inherit;
+  opacity: .78;
 }
