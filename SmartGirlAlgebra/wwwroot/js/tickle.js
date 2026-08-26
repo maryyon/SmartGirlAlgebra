@@ -24,6 +24,21 @@ window.sgaTickle = (function () {
   var last = -Infinity;
   var armed = false;
 
+  // text -> recorded clip. Her real voice where we have it; the browser's
+  // synthetic one only where we don't, so a missing clip is a downgrade rather
+  // than a silence.
+  var clips = {};
+  var playing = null;
+
+  function loadClips() {
+    try {
+      fetch('/audio/tickle/manifest.json', { cache: 'no-cache' })
+        .then(function (r) { return r.ok ? r.json() : {}; })
+        .then(function (m) { clips = m || {}; })
+        .catch(function () { clips = {}; });
+    } catch (e) { clips = {}; }
+  }
+
   function muted() {
     try { return localStorage.getItem('sgaSilly') === 'off'; }
     catch (e) { return false; }
@@ -36,6 +51,7 @@ window.sgaTickle = (function () {
 
   function busy() {
     try {
+      if (playing) return true;
       if (window.sgaListen && window.sgaListen.active && window.sgaListen.active()) return true;
       if (window.sgaSpeech && window.sgaSpeech.busy && window.sgaSpeech.busy()) return true;
     } catch (e) { }
@@ -46,6 +62,7 @@ window.sgaTickle = (function () {
     lines = (cfg && cfg.lines) || [];
     taglines = (cfg && cfg.taglines) || [];
     rate = (cfg && cfg.rate) || 1;
+    loadClips();
     arm();
   }
 
@@ -122,7 +139,43 @@ window.sgaTickle = (function () {
       });
     }
 
-    try { window.sgaSpeech.sequence(items, null); } catch (e) { }
+    play(items, 0);
+  }
+
+  // One item at a time: her recording if we have it, the synthetic voice if not.
+  function play(items, i) {
+    if (i >= items.length) { playing = null; return; }
+
+    var it = items[i];
+    var file = clips[it.text];
+
+    if (!file) {
+      // No recording of this line - say it, then carry on down the queue.
+      try {
+        window.sgaSpeech.sequence([it], null);
+        var wait = Math.max(1600, it.text.length * 200 / (it.rate || 1)) + (it.pause || 0);
+        playing = window.setTimeout(function () { play(items, i + 1); }, wait);
+      } catch (e) { playing = null; }
+      return;
+    }
+
+    var a = new Audio('/audio/tickle/' + file);
+    a.volume = (it.volume === undefined) ? 1 : it.volume;
+
+    var moved = false;
+    function go() {
+      if (moved) return;
+      moved = true;
+      playing = window.setTimeout(function () { play(items, i + 1); }, it.pause || 0);
+    }
+
+    a.onended = go;
+    a.onerror = go;
+
+    playing = a;
+
+    var p = a.play();
+    if (p && p.catch) p.catch(go);
   }
 
   return {

@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-08-25 — It's her voice now
+
+- All 17 silly lines and the English tagline are now **Mary's own voice**
+  (ElevenLabs clone "Bea"), not the browser's synthetic one. ~600KB of audio.
+- Where no recording exists — Spanish and Patwa, until a voice is chosen — it
+  falls back to the synthetic voice rather than going silent.
+- Whispering works on recordings too: same clip, played quieter.
+
 ## 2026-08-25 — The signature whispers, and speaks three languages
 
 - The tagline is **whispered about one time in three** — real volume control,
