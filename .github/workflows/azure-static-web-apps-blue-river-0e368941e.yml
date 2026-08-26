@@ -28,6 +28,19 @@ jobs:
       - name: Build and publish
         run: dotnet publish SmartGirlAlgebra/SmartGirlAlgebra.csproj -c Release -o ./output
 
+      # Stamp the commit into the published site so a deploy can be PROVEN rather
+      # than assumed. Without this there is no way to tell a live site running
+      # this build from one running last week's - "Actions went green" only says
+      # the upload started, not what is being served.
+      - name: Stamp the build
+        run: |
+          mkdir -p ./output/wwwroot
+          printf '%s
+' "${GITHUB_SHA:0:7}" > ./output/wwwroot/version.txt
+          printf '{"commit":"%s","commitShort":"%s","built":"%s","ref":"%s"}
+'             "$GITHUB_SHA" "${GITHUB_SHA:0:7}" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$GITHUB_REF_NAME"             > ./output/wwwroot/buildinfo.json
+          cat ./output/wwwroot/version.txt ./output/wwwroot/buildinfo.json
+
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1

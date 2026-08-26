@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-08-26 — Deploys can now be proven, not assumed
+
+- The build stamps the commit into `version.txt` and `buildinfo.json`, both
+  served `no-store`.
+- Until now SmartGirlAlgebra had no version marker at all, so "the deploy went
+  green" was the only evidence the live site was current — and that only proves
+  the upload started, not what is being served.
+- P3UP's Step 6 check now works here: fetch `/version.txt` and compare it to the
+  merged SHA.
+
 ## 2026-08-26 — No moving on until it's right, in every version
 
 - The lesson boards for **/kt, /rz and /vc** used to reveal the answer after a
