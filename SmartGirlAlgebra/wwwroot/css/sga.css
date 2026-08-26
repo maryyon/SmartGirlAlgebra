@@ -332,6 +332,7 @@ html, body {
 
 .sga-scratch__eyebrow {
   display: flex;
+  min-height: 2.5rem;
   align-items: center;
   gap: .375rem;
   margin-bottom: .5rem;
@@ -341,11 +342,7 @@ html, body {
   color: var(--sga-primary);
 }
 
-.sga-scratch__hint {
-  font-size: .8125rem;
-  font-weight: 600;
-  color: var(--sga-muted-fg);
-}
+.sga-scratch__surface { position: relative; }
 
 .sga-scratch__canvas {
   width: 100%;
@@ -364,7 +361,7 @@ html, body {
 .sga-scratch__label {
   position: absolute;
   left: 1rem;
-  top: 3rem;
+  top: .75rem;
   pointer-events: none;
   font-size: .8125rem;
   font-weight: 600;

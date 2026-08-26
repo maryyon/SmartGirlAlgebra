@@ -5,7 +5,6 @@
     <div class="sga-scratch__eyebrow">
         <span aria-hidden="true">🖍️</span>
         <span>Whiteboard</span>
-        <span class="sga-scratch__hint">— work it out here</span>
 
         <div class="sga-scratch__tools">
             <button type="button"
@@ -21,11 +20,12 @@
         </div>
     </div>
 
-    <canvas @ref="_canvas"
-            class="sga-scratch__canvas"
-            aria-label="Whiteboard: draw your thinking here with your finger"></canvas>
-
-    <span class="sga-scratch__label">draw with your finger</span>
+    <div class="sga-scratch__surface">
+        <canvas @ref="_canvas"
+                class="sga-scratch__canvas"
+                aria-label="Whiteboard: draw your thinking here with your finger"></canvas>
+        <span class="sga-scratch__label">draw with your finger</span>
+    </div>
 
     @if (_pickerOpen)
     {
