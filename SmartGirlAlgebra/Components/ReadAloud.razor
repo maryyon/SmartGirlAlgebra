@@ -217,7 +217,10 @@
             {
                 if (words[k].Count(char.IsLetter) < 3) continue;
                 _target = k;
-                _targetWord = words[k];
+
+                // Said on its own, so trailing punctuation has to go: a lone
+                // "pups?" gets question intonation, which teaches the wrong shape.
+                _targetWord = words[k].Trim('.', ',', '!', '?', ':', ';', '"');
                 break;
             }
         }
