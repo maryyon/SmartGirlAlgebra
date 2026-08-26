@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-08-25 — /sl lowered to 2nd-grade math
+
+- Out: times tables to 7 x 8, one-quarter of a group, two-step problems into
+  the fifties. Those are 3rd-grade skills.
+- In: equal groups as repeated addition, skip counting by 2s/5s/10s, arrays no
+  bigger than 5 x 5, fair shares, and odd/even. Still early multiplication and
+  division — just at the age it actually starts.
+- Lesson 5 changed from "times and divide undo each other" to "odd and even".
+- No x or / notation anywhere; 2nd grade meets those as words first.
+
 ## 2026-08-25 — Read-aloud for the kindergarten version
 
 - `/kt` now has a **"Read it to me"** button on the game screen and on every
