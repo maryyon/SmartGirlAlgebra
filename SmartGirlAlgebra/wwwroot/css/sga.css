@@ -372,9 +372,7 @@ html, body {
 }
 
 .sga-scratch__tools {
-  position: absolute;
-  right: .5rem;
-  bottom: .5rem;
+  margin-left: auto;
   display: flex;
   align-items: center;
   gap: .5rem;
@@ -404,7 +402,7 @@ html, body {
 .sga-picker {
   position: absolute;
   right: .5rem;
-  bottom: 3rem;
+  top: 2.5rem;
   z-index: 10;
   display: flex;
   flex-direction: column;

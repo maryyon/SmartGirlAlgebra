@@ -6,6 +6,19 @@
         <span aria-hidden="true">🖍️</span>
         <span>Whiteboard</span>
         <span class="sga-scratch__hint">— work it out here</span>
+
+        <div class="sga-scratch__tools">
+            <button type="button"
+                    class="sga-pill"
+                    aria-label="Choose marker color"
+                    aria-expanded="@_pickerOpen"
+                    @onclick="TogglePicker">
+                🎨 <span @ref="_swatch" class="sga-swatch"></span>
+            </button>
+            <button type="button" class="sga-pill" @onclick="Clear">
+                🧽 Clear
+            </button>
+        </div>
     </div>
 
     <canvas @ref="_canvas"
@@ -13,19 +26,6 @@
             aria-label="Whiteboard: draw your thinking here with your finger"></canvas>
 
     <span class="sga-scratch__label">draw with your finger</span>
-
-    <div class="sga-scratch__tools">
-        <button type="button"
-                class="sga-pill"
-                aria-label="Choose marker color"
-                aria-expanded="@_pickerOpen"
-                @onclick="TogglePicker">
-            🎨 <span @ref="_swatch" class="sga-swatch"></span>
-        </button>
-        <button type="button" class="sga-pill" @onclick="Clear">
-            🧽 Clear
-        </button>
-    </div>
 
     @if (_pickerOpen)
     {
