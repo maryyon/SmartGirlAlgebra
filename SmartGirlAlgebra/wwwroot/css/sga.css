@@ -1596,3 +1596,32 @@ html, body {
 @media (prefers-reduced-motion: reduce) {
   .sga-pic__group { animation: none; }
 }
+
+/* ---------- mute, in every header ---------- */
+
+.sga-header__right { display: flex; align-items: center; gap: .5rem; }
+
+.sga-mute {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 2px solid var(--sga-border);
+  border-radius: 999px;
+  background: var(--sga-card);
+  font-size: 1.05rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.sga-mute:hover { border-color: var(--sga-primary); }
+
+/* Off is a state worth seeing at a glance, so nobody wonders why it went quiet. */
+.sga-mute--off {
+  background: var(--sga-muted);
+  border-color: var(--sga-muted-fg);
+  opacity: .85;
+}
+
+.sga-mute:focus-visible { outline: 3px solid var(--sga-primary); outline-offset: 2px; }

@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-08-26 — A mute button on every screen, in every version
+
+- The switch that turns off the silly lines and Nana's voice now sits in the
+  **header of every screen**, in all eight versions — not just the home page.
+  The moment you want it off is the moment it just went off, and having to
+  navigate home first is the same as not having a switch.
+- Turning it off also **stops whatever is talking right now**, which is usually
+  the reason someone reached for it.
+- Renamed from "Silly sounds" to **"Nana's voice"**, because that's what it is.
+- The setting is remembered, and both switches read the same one.
+
 ## 2026-08-26 — Deploys can now be proven, not assumed
 
 - The build stamps the commit into `version.txt` and `buildinfo.json`, both

@@ -1,0 +1,52 @@
+@namespace SmartGirlAlgebra.Components
+@inject IJSRuntime JS
+
+@* Turns off the silly lines and Nana's voice, from wherever she happens to be.
+
+   It lives in the header of every screen rather than on the home page, because
+   the moment you want it off is the moment it just went off - and having to
+   navigate home to stop it is the same as not having a switch. *@
+
+<button type="button"
+        class="sga-mute @(_on ? "" : "sga-mute--off")"
+        aria-pressed="@(!_on)"
+        title="@(_on ? "Turn off Nana's voice" : "Turn Nana's voice back on")"
+        aria-label="@(_on ? "Turn off Nana's voice and the silly lines" : "Turn Nana's voice back on")"
+        @onclick="Toggle">
+    <span aria-hidden="true">@(_on ? "🔊" : "🔇")</span>
+</button>
+
+@code {
+    private bool _on = true;
+    private bool _read;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender || _read) return;
+        _read = true;
+
+        try { _on = !await JS.InvokeAsync<bool>("sgaTickle.muted"); }
+        catch { _on = true; }
+
+        StateHasChanged();
+    }
+
+    private async Task Toggle()
+    {
+        _on = !_on;
+
+        try
+        {
+            await JS.InvokeVoidAsync("sgaTickle.setMuted", !_on);
+
+            // Turning it off stops whatever is talking right now, which is
+            // usually why she reached for it.
+            if (!_on)
+            {
+                await JS.InvokeVoidAsync("sgaTickle.hush");
+                await JS.InvokeVoidAsync("sgaSpeech.stop");
+            }
+        }
+        catch { /* no voice on this device; the setting still sticks */ }
+    }
+}
