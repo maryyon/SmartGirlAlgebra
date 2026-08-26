@@ -1349,6 +1349,9 @@ html, body {
   box-shadow: 0 0 0 .12em var(--sga-accent);
 }
 
+/* Tappable, but not flagged as hard - no underline, just a live word. */
+.sga-tapword--plain { text-decoration: none; }
+
 .sga-tapword--demo { cursor: default; }
 
 .sga-tap__hint {

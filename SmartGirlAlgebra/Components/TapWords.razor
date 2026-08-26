@@ -3,11 +3,17 @@
 @inject IJSRuntime JS
 @implements IAsyncDisposable
 
-@* Shows the text normally, but any word above a second-grade reading level is
-   underlined and can be tapped to hear it said slowly.
+@* Touch a word, hear the word.
 
-   Only the hard words are tappable. Underlining everything would make the page
-   look like a puzzle and hide the words she actually needs. *@
+   EVERY word can be tapped - a child stuck on a word does not first check
+   whether we predicted she would be. The dotted underline marks the words above
+   her reading level, so the page still points at the likely ones, but a tap
+   anywhere always says something. Making only the predicted words tappable
+   meant three of the five levels had nothing to tap at all, which reads exactly
+   like a broken feature.
+
+   Keyboard focus still stops only at the dotted words, so tabbing through a
+   sentence does not mean forty stops. *@
 
 <div class="sga-tap">
 
@@ -19,10 +25,11 @@
             {
                 var t = tok;
 
-                if (t.Hard)
+                if (t.Key >= 0)
                 {
                     <button type="button"
-                            class="sga-tapword @(t.Key == _saying ? "sga-tapword--on" : "")"
+                            class="sga-tapword @(t.Hard ? "" : "sga-tapword--plain") @(t.Key == _saying ? "sga-tapword--on" : "")"
+                            tabindex="@(t.Hard ? 0 : -1)"
                             aria-label="Hear the word @t.Text"
                             @onclick="@(() => Say(t))">@t.Text</button>
                 }
@@ -36,11 +43,12 @@
         </p>
     }
 
-    @if (_hasHard)
+    @if (_anyWords)
     {
         <p class="sga-tap__hint">
             <span aria-hidden="true">👆</span>
-            Tap a <span class="sga-tapword sga-tapword--demo">dotted</span> word to hear it.
+            Tap any word to hear it. The
+            <span class="sga-tapword sga-tapword--demo">dotted</span> ones are the tricky ones.
         </p>
     }
 
@@ -58,7 +66,7 @@
     private sealed record Tok(int Line, int Key, string Text, string Sep, bool Hard, string Say);
 
     private List<Tok> _tokens = [];
-    private bool _hasHard;
+    private bool _anyWords;
     private string _signature = "";
     private int _saying = -1;
 
@@ -102,12 +110,17 @@
                     continue;
                 }
 
+                var say = ReadingLevel.Strip(word);
                 var hard = ReadingLevel.IsHard(word);
-                _tokens.Add(new Tok(li, hard ? key++ : -1, word, sep, hard, ReadingLevel.Strip(word)));
+
+                // Punctuation on its own has nothing to say, so it stays plain text.
+                _tokens.Add(say.Length > 0
+                    ? new Tok(li, key++, word, sep, hard, say)
+                    : new Tok(li, -1, word, sep, false, ""));
             }
         }
 
-        _hasHard = _tokens.Any(t => t.Hard);
+        _anyWords = _tokens.Any(t => t.Key >= 0);
     }
 
     private async Task Say(Tok tok)
@@ -117,7 +130,17 @@
         _self ??= DotNetObjectReference.Create(this);
         _saying = tok.Key;
 
-        try { await JS.InvokeVoidAsync("sgaSpeech.say", tok.Say, Rate, _self); }
+        try
+        {
+            if (JS is IJSInProcessRuntime inProcess)
+            {
+                inProcess.InvokeVoid("sgaSpeech.say", tok.Say, Rate, _self);
+            }
+            else
+            {
+                await JS.InvokeVoidAsync("sgaSpeech.say", tok.Say, Rate, _self);
+            }
+        }
         catch { _saying = -1; }
     }
 
