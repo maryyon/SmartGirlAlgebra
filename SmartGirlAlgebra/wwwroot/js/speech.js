@@ -139,9 +139,53 @@ window.sgaSpeech = (function () {
     window.setTimeout(done, Math.max(1400, word.length * 240 / rate));
   }
 
+  // A short run of utterances at different speeds, with pauses between - used to
+  // say a sentence, slow down, and then repeat the word he missed.
+  function sequence(items, dotNetRef) {
+    try { window.speechSynthesis.cancel(); } catch (e) { }
+
+    var i = 0;
+
+    function next() {
+      if (i >= items.length) {
+        if (dotNetRef) {
+          try { dotNetRef.invokeMethodAsync('OnSequenceDone'); } catch (e) { }
+        }
+        return;
+      }
+
+      var it = items[i++];
+      var moved = false;
+
+      function go() {
+        if (moved) return;
+        moved = true;
+        window.setTimeout(next, it.pause || 0);
+      }
+
+      var u = new SpeechSynthesisUtterance(it.text);
+      u.rate = it.rate;
+      u.pitch = 1.05;
+
+      var v = pickVoice();
+      if (v) { u.voice = v; u.lang = v.lang; }
+
+      u.onend = go;
+      u.onerror = go;
+
+      window.speechSynthesis.speak(u);
+
+      // Safety net for browsers that fire neither event.
+      window.setTimeout(go, Math.max(1600, it.text.length * 200 / it.rate));
+    }
+
+    next();
+  }
+
   return {
     speak: speak,
     say: say,
+    sequence: sequence,
     stop: stop,
     supported: function () { return 'speechSynthesis' in window; }
   };

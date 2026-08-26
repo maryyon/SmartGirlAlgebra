@@ -80,6 +80,12 @@ public class Profile
     /// </summary>
     public bool TapToRead { get; set; }
 
+    /// <summary>
+    /// Whether the read-along leaves the last word for the child to read out
+    /// loud, and listens for him saying it. Needs <see cref="ReadAloud"/> on.
+    /// </summary>
+    public bool ListenBack { get; set; }
+
     public List<Level> Levels { get; set; } = [];
 
     public Level? LevelById(int id) => Levels.FirstOrDefault(l => l.Id == id);

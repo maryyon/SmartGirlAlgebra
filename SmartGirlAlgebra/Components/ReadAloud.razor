@@ -1,16 +1,23 @@
 @namespace SmartGirlAlgebra.Components
 @using System.Text
 @using System.Globalization
+@using SmartGirlAlgebra.Services
 @inject IJSRuntime JS
 @implements IAsyncDisposable
 
 @* Reads the instructions out loud and lights up each word as it is said, for a
-   child who cannot read them yet. The text is shown once and highlighted in
-   place — never repeated in a separate strip — so she is following the same
-   words she is being read.
+   child who cannot read them yet.
 
-   Emoji are shown but not spoken: a screen reader voice announcing "dog face
-   dog face dog face" is noise, and the pictures are doing their own work. *@
+   When Listen is on, the last word is left out. It flashes on screen, he says
+   it, and we tell him whether he got it - the difference between being read to
+   and being taught to read. If he misses it, or the microphone isn't available,
+   he hears the sentence again with the word said slowly and then repeated. He
+   is never left stuck and never told he was wrong.
+
+   Any word can also be tapped on its own to hear it.
+
+   Emoji are shown but not spoken: a voice announcing "dog face dog face dog
+   face" is noise, and the pictures are doing their own work. *@
 
 <div class="sga-read">
 
@@ -21,20 +28,55 @@
             @foreach (var tok in _tokens.Where(t => t.Line == line))
             {
                 var t = tok;
-                <span class="sga-read__w @(t.Spoken >= 0 && t.Spoken == _at ? "sga-read__w--now" : "")">@t.Text</span>@t.Sep
+
+                if (t.Spoken >= 0)
+                {
+                    <button type="button"
+                            class="sga-read__w @WordClass(t)"
+                            aria-label="Hear the word @t.Text"
+                            @onclick="@(() => Say(t))">@t.Text</button>
+                }
+                else
+                {
+                    @t.Text
+                }
+
+                @t.Sep
             }
         </p>
     }
 
+    @if (_step == Step.Listening)
+    {
+        <p class="sga-read__turn" aria-live="polite">
+            <span class="sga-read__mic" aria-hidden="true">🎤</span>
+            Your turn — say the flashing word!
+        </p>
+    }
+    else if (_step == Step.Praise)
+    {
+        <p class="sga-read__turn sga-read__turn--yes" aria-live="polite">
+            <span aria-hidden="true">🌟</span> You read it!
+        </p>
+    }
+    else if (_step == Step.Correct)
+    {
+        <p class="sga-read__turn" aria-live="polite">
+            <span aria-hidden="true">👂</span> Listen — I'll say it for you.
+        </p>
+    }
+
     <button type="button"
-            class="sga-readbtn @(_speaking ? "sga-readbtn--on" : "")"
-            aria-label="@(_speaking ? "Stop reading" : "Read the instructions out loud")"
+            class="sga-readbtn @(_busy ? "sga-readbtn--on" : "")"
+            aria-label="@(_busy ? "Stop reading" : "Read the instructions out loud")"
             @onclick="Toggle">
-        <span class="sga-readbtn__icon @(_speaking ? "sga-readbtn__icon--on" : "")" aria-hidden="true">
-            @(_speaking ? "⏹️" : "🔊")
+        <span class="sga-readbtn__icon @(_busy ? "sga-readbtn__icon--on" : "")" aria-hidden="true">
+            @(_busy ? "⏹️" : "🔊")
         </span>
-        <span>@(_speaking ? "Stop" : "Read it to me")</span>
+        <span>@ButtonLabel</span>
     </button>
+
+    <p class="sga-read__nudge">👆 You can tap any word to hear it.</p>
 
     @if (_unsupported)
     {
@@ -52,16 +94,35 @@
     /// <summary>Slower than an adult would read it. Kindergarten pace.</summary>
     [Parameter] public double Rate { get; set; } = 0.75;
 
-    private sealed record Tok(int Line, string Text, string Sep, int Spoken);
+    /// <summary>Leave the last word out and listen for him to read it.</summary>
+    [Parameter] public bool Listen { get; set; }
+
+    private enum Step { Idle, Clue, Listening, Praise, Correct, Reading }
+
+    private sealed record Tok(int Line, string Text, string Sep, int Spoken, string Say);
 
     private List<Tok> _tokens = [];
-    private string _spoken = "";
-    private int[] _starts = [];
+    private string _clue = "";
+    private int[] _clueStarts = [];
+    private int _target = -1;          // index into the spoken words
+    private string _targetWord = "";
     private string _signature = "";
 
+    private Step _step = Step.Idle;
     private int _at = -1;
-    private bool _speaking;
+    private int _tapped = -1;
     private bool _unsupported;
+    private bool _micRefused;
+
+    private bool _busy => _step is not Step.Idle;
+
+    private string ButtonLabel => _step switch
+    {
+        Step.Clue or Step.Reading => "Stop",
+        Step.Listening => "Listening…",
+        Step.Praise or Step.Correct => "Stop",
+        _ => Listen ? "Read it with me" : "Read it to me"
+    };
 
     private DotNetObjectReference<ReadAloud>? _self;
 
@@ -69,12 +130,27 @@
     {
         // Only re-tokenise when the words actually change, or every re-render
         // during speech would rebuild the map underneath the highlight.
-        var sig = string.Join("", Lines.Select(l => l.Text));
+        var sig = string.Join("", Lines.Select(l => l.Text));
         if (sig == _signature) return;
 
         _signature = sig;
+        _step = Step.Idle;
         _at = -1;
+        _tapped = -1;
         Build();
+    }
+
+    private string WordClass(Tok t)
+    {
+        if (t.Spoken == _tapped) return "sga-read__w--now";
+        if (t.Spoken == _at && _step is Step.Clue or Step.Reading) return "sga-read__w--now";
+
+        // The word he has to read flashes while we wait for him.
+        if (t.Spoken == _target && _step is Step.Listening) return "sga-read__w--flash";
+        if (t.Spoken == _target && _step is Step.Praise) return "sga-read__w--got";
+        if (t.Spoken == _target && _step is Step.Correct) return "sga-read__w--now";
+
+        return "";
     }
 
     private void Build()
@@ -82,6 +158,7 @@
         _tokens = [];
         var speech = new StringBuilder();
         var starts = new List<int>();
+        var words = new List<string>();
 
         for (var li = 0; li < Lines.Count; li++)
         {
@@ -102,7 +179,7 @@
 
                 if (word.Length == 0)
                 {
-                    if (sep.Length > 0) _tokens.Add(new Tok(li, "", sep, -1));
+                    if (sep.Length > 0) _tokens.Add(new Tok(li, "", sep, -1, ""));
                     continue;
                 }
 
@@ -114,23 +191,59 @@
                     if (speech.Length > 0) speech.Append(' ');
                     starts.Add(speech.Length);
                     speech.Append(say);
+                    words.Add(say);
                     spokenIndex = starts.Count - 1;
                 }
 
-                _tokens.Add(new Tok(li, word, sep, spokenIndex));
+                _tokens.Add(new Tok(li, word, sep, spokenIndex, say));
             }
 
-            // A pause between the instruction and the question — but only if the
+            // A pause between the instruction and the question - but only if the
             // line didn't already end in something the voice will pause on.
-            if (li < Lines.Count - 1 && speech.Length > 0 &&
-                !".!?:;".Contains(speech[^1]))
+            if (li < Lines.Count - 1 && speech.Length > 0 && !".!?:;".Contains(speech[^1]))
             {
                 speech.Append('.');
             }
         }
 
-        _spoken = speech.ToString();
-        _starts = starts.ToArray();
+        _target = -1;
+        _targetWord = "";
+
+        if (Listen)
+        {
+            // The last real word he can be asked to read. "Up" or "a" is no test,
+            // so walk back to something with letters worth sounding out.
+            for (var k = words.Count - 1; k >= 0; k--)
+            {
+                if (words[k].Count(char.IsLetter) < 3) continue;
+                _target = k;
+                _targetWord = words[k];
+                break;
+            }
+        }
+
+        if (_target >= 0)
+        {
+            // Everything except the word he has to read.
+            var clue = new StringBuilder();
+            var clueStarts = new List<int>();
+
+            for (var k = 0; k < words.Count; k++)
+            {
+                if (k == _target) continue;
+                if (clue.Length > 0) clue.Append(' ');
+                clueStarts.Add(clue.Length);
+                clue.Append(words[k]);
+            }
+
+            _clue = clue.ToString();
+            _clueStarts = clueStarts.ToArray();
+        }
+        else
+        {
+            _clue = speech.ToString();
+            _clueStarts = starts.ToArray();
+        }
     }
 
     /// <summary>Drops emoji and other pictographs, keeping what a voice can read.</summary>
@@ -142,13 +255,8 @@
         {
             var c = word[i];
 
-            // Emoji are surrogate pairs — skip both halves together.
-            if (char.IsHighSurrogate(c))
-            {
-                i++;
-                continue;
-            }
-
+            // Emoji are surrogate pairs - skip both halves together.
+            if (char.IsHighSurrogate(c)) { i++; continue; }
             if (char.IsLowSurrogate(c)) continue;
 
             var cat = CharUnicodeInfo.GetUnicodeCategory(c);
@@ -158,44 +266,75 @@
         }
 
         var result = sb.ToString().Trim();
-
-        // Punctuation on its own says nothing.
         return result.Any(char.IsLetterOrDigit) ? result : "";
     }
 
+    // ---------------------------------------------------------------- actions
+
     private async Task Toggle()
     {
-        if (_speaking)
+        if (_busy)
         {
-            await Stop();
+            await StopAll();
             return;
         }
 
-        if (_starts.Length == 0) return;
+        if (_clueStarts.Length == 0) return;
 
         _self ??= DotNetObjectReference.Create(this);
-        _speaking = true;
+        _step = Listen && _target >= 0 ? Step.Clue : Step.Reading;
         _at = -1;
 
-        try
-        {
-            await JS.InvokeVoidAsync("sgaSpeech.speak", _spoken, _starts, _self, Rate);
-        }
+        await Speak(_clue, _clueStarts);
+    }
+
+    private async Task Speak(string text, int[] starts)
+    {
+        try { await Invoke("sgaSpeech.speak", text, starts, _self, Rate); }
         catch
         {
-            _speaking = false;
+            _step = Step.Idle;
             _unsupported = true;
         }
     }
 
-    private async Task Stop()
+    /// <summary>
+    /// Touch browsers only allow speech from inside the gesture, and an awaited
+    /// interop call can land after it has expired. Use the synchronous path when
+    /// the runtime offers one.
+    /// </summary>
+    private async Task Invoke(string fn, params object?[] args)
     {
-        _speaking = false;
-        _at = -1;
-
-        try { await JS.InvokeVoidAsync("sgaSpeech.stop"); }
-        catch { /* nothing was speaking */ }
+        if (JS is IJSInProcessRuntime inProcess) inProcess.InvokeVoid(fn, args);
+        else await JS.InvokeVoidAsync(fn, args);
     }
+
+    private async Task Say(Tok tok)
+    {
+        if (tok.Say.Length == 0) return;
+
+        _self ??= DotNetObjectReference.Create(this);
+
+        // A tapped word interrupts whatever was happening, including his turn.
+        if (_busy) await StopAll();
+
+        _tapped = tok.Spoken;
+
+        try { await Invoke("sgaSpeech.say", tok.Say, 0.5, _self); }
+        catch { _tapped = -1; }
+    }
+
+    private async Task StopAll()
+    {
+        _step = Step.Idle;
+        _at = -1;
+        _tapped = -1;
+
+        try { await JS.InvokeVoidAsync("sgaSpeech.stop"); } catch { }
+        try { await JS.InvokeVoidAsync("sgaListen.stop"); } catch { }
+    }
+
+    // ---------------------------------------------------------- from the page
 
     [JSInvokable]
     public void OnWord(int index)
@@ -204,27 +343,180 @@
         StateHasChanged();
     }
 
+    /// <summary>A single tapped word finished.</summary>
     [JSInvokable]
-    public void OnDone()
+    public void OnSaid()
     {
-        _speaking = false;
-        _at = -1;
+        _tapped = -1;
         StateHasChanged();
+    }
+
+    /// <summary>The read-along finished. If it was the clue, it's his turn now.</summary>
+    [JSInvokable]
+    public async Task OnDone()
+    {
+        _at = -1;
+
+        if (_step != Step.Clue)
+        {
+            if (_step == Step.Reading) _step = Step.Idle;
+            StateHasChanged();
+            return;
+        }
+
+        if (_micRefused || !await Supported())
+        {
+            // No microphone to listen with, so just teach him the word.
+            await Correct();
+            return;
+        }
+
+        _step = Step.Listening;
+        StateHasChanged();
+
+        try { await JS.InvokeVoidAsync("sgaListen.start", _self, 6); }
+        catch { await Correct(); }
+    }
+
+    private async Task<bool> Supported()
+    {
+        try { return await JS.InvokeAsync<bool>("sgaListen.supported"); }
+        catch { return false; }
+    }
+
+    [JSInvokable]
+    public async Task OnHeard(string heard, string problem)
+    {
+        if (_step != Step.Listening) return;
+
+        // Refused once means refused for the rest of the session; asking a
+        // five-year-old to grant a microphone permission twice helps nobody.
+        if (problem is "not-allowed" or "service-not-allowed") _micRefused = true;
+
+        if (Matches(heard, _targetWord))
+        {
+            _step = Step.Praise;
+            StateHasChanged();
+
+            var praise = Praises[Random.Shared.Next(Praises.Length)];
+            try
+            {
+                await JS.InvokeVoidAsync("sgaSpeech.sequence",
+                    new object[] { new { text = praise, rate = 0.8, pause = 0 } }, _self);
+            }
+            catch { _step = Step.Idle; }
+
+            return;
+        }
+
+        await Correct();
+    }
+
+    /// <summary>
+    /// Say the sentence again, slow down before the word, say it slowly, then
+    /// say it once more. Never phrased as a miss.
+    /// </summary>
+    private async Task Correct()
+    {
+        _step = Step.Correct;
+        StateHasChanged();
+
+        var slow = Math.Max(0.35, Rate - 0.35);
+
+        try
+        {
+            await JS.InvokeVoidAsync("sgaSpeech.sequence", new object[]
+            {
+                new { text = _clue,       rate = Rate, pause = 700 },
+                new { text = _targetWord, rate = slow, pause = 550 },
+                new { text = _targetWord, rate = slow, pause = 0   }
+            }, _self);
+        }
+        catch { _step = Step.Idle; }
+    }
+
+    [JSInvokable]
+    public void OnSequenceDone()
+    {
+        _step = Step.Idle;
+        StateHasChanged();
+    }
+
+    private static readonly string[] Praises =
+    [
+        "That's it! Great reading.",
+        "Yes! You read it.",
+        "Perfect. Nice job.",
+        "That's the word! Well done."
+    ];
+
+    /// <summary>
+    /// A five-year-old's voice through a laptop microphone is not crisp, and the
+    /// engine returns several guesses. Any of them containing the word counts,
+    /// and one wrong letter still counts - the point is whether he read it, not
+    /// whether the microphone heard it perfectly.
+    /// </summary>
+    private static bool Matches(string heard, string want)
+    {
+        if (string.IsNullOrWhiteSpace(heard) || string.IsNullOrWhiteSpace(want)) return false;
+
+        var target = ReadingLevel.Strip(want);
+        if (target.Length == 0) return false;
+
+        foreach (var guess in heard.Split('|', StringSplitOptions.RemoveEmptyEntries))
+        {
+            foreach (var word in guess.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries))
+            {
+                var w = ReadingLevel.Strip(word);
+                if (w.Length == 0) continue;
+
+                if (w == target) return true;
+                if (target.Length >= 4 && Distance(w, target) <= 1) return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static int Distance(string a, string b)
+    {
+        if (Math.Abs(a.Length - b.Length) > 1) return 99;
+
+        var prev = new int[b.Length + 1];
+        var cur = new int[b.Length + 1];
+
+        for (var j = 0; j <= b.Length; j++) prev[j] = j;
+
+        for (var i = 1; i <= a.Length; i++)
+        {
+            cur[0] = i;
+
+            for (var j = 1; j <= b.Length; j++)
+            {
+                var cost = a[i - 1] == b[j - 1] ? 0 : 1;
+                cur[j] = Math.Min(Math.Min(cur[j - 1] + 1, prev[j] + 1), prev[j - 1] + cost);
+            }
+
+            (prev, cur) = (cur, prev);
+        }
+
+        return prev[b.Length];
     }
 
     [JSInvokable]
     public void OnUnsupported()
     {
-        _speaking = false;
+        _step = Step.Idle;
         _unsupported = true;
         StateHasChanged();
     }
 
     public async ValueTask DisposeAsync()
     {
-        // Leaving the page must not leave a voice talking to an empty room.
-        try { await JS.InvokeVoidAsync("sgaSpeech.stop"); }
-        catch { /* the page is already going */ }
+        // Leaving the page must not leave a voice talking to an empty room, or
+        // the microphone open.
+        try { await JS.InvokeVoidAsync("sgaSpeech.stop"); } catch { }
+        try { await JS.InvokeVoidAsync("sgaListen.stop"); } catch { }
 
         _self?.Dispose();
     }

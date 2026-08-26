@@ -33,7 +33,7 @@
                 <div class="sga-problem__eyebrow">📖 @(_teachIndex + 1) of @Lesson.Teach.Length</div>
                 @if (Profile.ReadAloud)
                 {
-                    <ReadAloud Lines="@(new List<ReadAloud.Line> {
+                    <ReadAloud Listen="Profile.ListenBack" Lines="@(new List<ReadAloud.Line> {
                         new(step.Heading, "sga-teach__heading"),
                         new(step.Body, "sga-problem__cheer") })" />
                 }
@@ -61,7 +61,7 @@
             <section class="sga-problem" aria-label="Question">
                 @if (Profile.ReadAloud)
                 {
-                    <ReadAloud Lines="@(new List<ReadAloud.Line> {
+                    <ReadAloud Listen="Profile.ListenBack" Lines="@(new List<ReadAloud.Line> {
                         new(_current.Prompt, "sga-problem__cheer sga-problem__cheer--big"),
                         new(_current.Question, "sga-ask") })" />
                 }
@@ -76,6 +76,13 @@
                     <p class="sga-problem__cheer sga-problem__cheer--big sga-prewrap">@_current.Prompt</p>
                     <div class="sga-ask">@_current.Question</div>
                 }
+            </section>
+
+            @* Above the answers, not below them. Under a question plus four
+               stacked choices it sat off the bottom of a phone screen, so the
+               child who most needed to work something out never saw it. *@
+            <section aria-label="Whiteboard">
+                <ScratchPad />
             </section>
 
             <section class="sga-choices sga-choices--stack" aria-label="Answers">
@@ -98,12 +105,6 @@
                     <span>@_current.Explain</span>
                 </div>
             }
-
-            @* Somewhere to work it out before committing to an answer. Working
-               it out on paper is most of how this maths is actually done. *@
-            <section aria-label="Whiteboard">
-                <ScratchPad />
-            </section>
         }
         else if (_phase == Phase.Regroup)
         {

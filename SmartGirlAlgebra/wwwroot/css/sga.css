@@ -1310,6 +1310,70 @@ html, body {
   50%      { transform: scale(1.18); }
 }
 
+/* Words in a read-along are tappable too, so they are buttons - but they have
+   to sit in the sentence as if they were plain text. */
+.sga-read__w {
+  display: inline;
+  border: none;
+  background: none;
+  padding: .05em .15em;
+  margin: 0 -.15em;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+/* The word he has to read, waiting for him to say it. */
+.sga-read__w--flash {
+  border-radius: .5rem;
+  background: var(--sga-accent);
+  color: var(--sga-accent-fg, #fff);
+  box-shadow: 0 0 0 .12em var(--sga-accent);
+  animation: sga-flash 1s ease-in-out infinite;
+}
+
+.sga-read__w--got {
+  border-radius: .5rem;
+  background: var(--sga-accent);
+  color: var(--sga-accent-fg, #fff);
+  box-shadow: 0 0 0 .12em var(--sga-accent);
+  animation: sga-pop-in .45s ease;
+}
+
+@keyframes sga-flash {
+  0%, 100% { transform: scale(1);    filter: brightness(1); }
+  50%      { transform: scale(1.09); filter: brightness(1.18); }
+}
+
+@keyframes sga-pop-in {
+  0%   { transform: scale(.7); }
+  60%  { transform: scale(1.16); }
+  100% { transform: scale(1); }
+}
+
+.sga-read__turn {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--sga-primary);
+}
+
+.sga-read__turn--yes { color: var(--sga-accent); }
+
+.sga-read__mic { font-size: 1.3rem; animation: sga-pulse 1s ease-in-out infinite; }
+
+.sga-read__nudge {
+  margin: 0;
+  font-size: .8125rem;
+  font-weight: 700;
+  color: inherit;
+  opacity: .75;
+}
+
 .sga-read__nope {
   margin: 0;
   font-size: .8125rem;
@@ -1318,7 +1382,10 @@ html, body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sga-readbtn__icon--on { animation: none; }
+  .sga-readbtn__icon--on,
+  .sga-read__mic,
+  .sga-read__w--flash,
+  .sga-read__w--got { animation: none; }
 }
 
 /* ---------- tap a hard word to hear it ---------- */

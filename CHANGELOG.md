@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-08-25 — Reading help across /kt, /jd, /sl, and RZ's whiteboard
+
+- **/kt now reads *with* him, not just to him.** The read-along stops one word
+  short. That word flashes, he says it, and the app listens. Right → it says so
+  out loud. Wrong, quiet, or no microphone → it reads the sentence again, slows
+  down before the word, says it slowly, and repeats it. Never phrased as a miss.
+- Any word in /kt can also be tapped to hear it on its own.
+- The microphone opens only on his button press and closes as soon as a word
+  comes back or ~6s pass. Refused permission is remembered for the session and
+  it falls back to teaching him the word.
+- **/jd** now reads like /sl — tap any word to hear it.
+- **RZ's lesson whiteboard moved above the answers**; under a question plus four
+  stacked choices it sat off the bottom of a phone screen.
+
 ## 2026-08-25 — Tap-to-hear hard words in /sl
 
 - In `/sl`, any word above a 2nd-grade reading level is now **underlined with a
