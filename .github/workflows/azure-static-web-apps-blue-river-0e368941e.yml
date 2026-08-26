@@ -1,6 +1,11 @@
 name: Azure Static Web Apps CI/CD
 
 on:
+  # Lets a deploy be re-run by hand. On 26 Aug 2026 a push to main landed on
+  # GitHub but no workflow run was ever created for it, leaving the site a
+  # commit behind with nothing to click. Without this the only remedy is to
+  # invent another commit.
+  workflow_dispatch:
   push:
     branches:
       - main
