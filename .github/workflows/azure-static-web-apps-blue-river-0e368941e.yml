@@ -35,11 +35,12 @@ jobs:
       - name: Stamp the build
         run: |
           mkdir -p ./output/wwwroot
-          printf '%s
-' "${GITHUB_SHA:0:7}" > ./output/wwwroot/version.txt
-          printf '{"commit":"%s","commitShort":"%s","built":"%s","ref":"%s"}
-'             "$GITHUB_SHA" "${GITHUB_SHA:0:7}" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$GITHUB_REF_NAME"             > ./output/wwwroot/buildinfo.json
-          cat ./output/wwwroot/version.txt ./output/wwwroot/buildinfo.json
+          SHORT=$(echo "$GITHUB_SHA" | cut -c1-7)
+          BUILT=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          echo "$SHORT" > ./output/wwwroot/version.txt
+          echo "{\"commit\":\"$GITHUB_SHA\",\"commitShort\":\"$SHORT\",\"built\":\"$BUILT\",\"ref\":\"$GITHUB_REF_NAME\"}" > ./output/wwwroot/buildinfo.json
+          cat ./output/wwwroot/version.txt
+          cat ./output/wwwroot/buildinfo.json
 
       - name: Build And Deploy
         id: builddeploy
