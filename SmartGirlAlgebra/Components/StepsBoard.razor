@@ -10,6 +10,12 @@
         <div class="sga-header__left">
             <button type="button" class="sga-iconbtn" aria-label="Back to level select"
                     @onclick="@(() => Nav.NavigateTo(Profile.Id))">🏠</button>
+            @if (Profile.Lessons.Count > 0)
+            {
+                @* Straight to the lessons without going home first. *@
+                <button type="button" class="sga-iconbtn" aria-label="Go to the lessons"
+                        @onclick="@(() => Nav.NavigateTo($"{Profile.Id}/learn"))">💡</button>
+            }
             <div>
                 <div style="display:flex; align-items:center; gap:.375rem;">
                     <span class="sga-levelbadge" style="background-color:@Level.Color" aria-hidden="true">@Level.Id</span>
