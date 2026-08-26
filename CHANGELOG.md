@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-08-26 — /sl lessons are walked through, not guessed at
+
+- Every /sl lesson is now **worked step by step**. The story types itself out
+  where she can watch it being set up, and nothing is asked until it's done.
+- **She cannot move on until the current step is right.** The next button stays
+  disabled. No guessing past anything.
+- A wrong answer offers **"Do you want a hint?"** rather than the answer. Hints
+  come one at a time, gentlest first; the last one gives it away, because being
+  stuck teaches nothing either.
+- **The groups are drawn.** "5 groups of 2" shows five boxes with two things in
+  each, filling in one group at a time as the working goes along; groups still
+  to come are dashed outlines so she can see how many are left.
+- 5 lessons, 10 worked problems, 30 steps, every step with three hints.
+- Points only count fully for a step solved without a hint.
+- **Nav buttons**: every page in every version now has both a way back and a way
+  home. The lesson boards previously had no way home at all.
+
 ## 2026-08-26 — KT's microphone stays on the machine where it can
 
 - The read-back now asks the browser to recognise his voice **on the device**,

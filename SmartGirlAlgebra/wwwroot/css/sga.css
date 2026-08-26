@@ -1489,3 +1489,110 @@ html, body {
   font-weight: 800;
   cursor: pointer;
 }
+
+/* ---------- worked-through lessons ---------- */
+
+.sga-guide {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  border-radius: 1rem;
+  border: 2px solid var(--sga-border);
+  background: var(--sga-card);
+  padding: .9rem 1rem;
+}
+
+.sga-guide__num {
+  font-family: inherit;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--sga-muted-fg);
+}
+
+.sga-guide__say { margin: 0; font-size: 1.0625rem; font-weight: 600; }
+
+.sga-guide__nudge {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  align-items: flex-start;
+  border-radius: 1rem;
+  background: var(--sga-muted);
+  padding: .75rem .9rem;
+}
+
+.sga-guide__nudge p { margin: 0; font-size: .9375rem; font-weight: 700; }
+
+.sga-guide__hintbtn {
+  border: 2px solid var(--sga-accent);
+  border-radius: 999px;
+  background: var(--sga-card);
+  color: var(--sga-foreground);
+  padding: .5rem 1rem;
+  font-family: inherit;
+  font-size: .9375rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* ---------- the picture of the groups ---------- */
+
+.sga-pic {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  align-items: center;
+}
+
+.sga-pic__row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .6rem;
+  width: 100%;
+}
+
+.sga-pic__group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  gap: .25rem;
+  min-width: 4.25rem;
+  min-height: 4.25rem;
+  padding: .55rem;
+  border-radius: 1rem;
+  border: 3px solid var(--sga-primary);
+  background: var(--sga-card);
+  animation: sga-pop-in .35s ease;
+}
+
+/* Groups not yet counted: outlined, so she can see how many are still coming. */
+.sga-pic__group--waiting {
+  border-style: dashed;
+  border-color: var(--sga-border);
+  background: transparent;
+  animation: none;
+}
+
+.sga-pic__thing { font-size: 1.5rem; line-height: 1.1; }
+
+.sga-pic__hole {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--sga-muted);
+}
+
+.sga-pic__cap {
+  font-size: .8125rem;
+  font-weight: 700;
+  color: var(--sga-muted-fg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sga-pic__group { animation: none; }
+}

@@ -1,0 +1,302 @@
+@namespace SmartGirlAlgebra.Components
+@inject NavigationManager Nav
+@inject LessonProgress Progress
+@inject PlayerService Player
+@implements IDisposable
+
+@* Worked through, one step at a time.
+
+   The rule this board exists to enforce: she does not move on until she has the
+   current step right. Four choices and a shrug is guessing, and guessing teaches
+   the wrong lesson - that maths is something that happens to you.
+
+   So: nothing is asked before the setup has been typed out where she can watch
+   it. Every step shows the picture it is talking about, filling in group by
+   group. A wrong answer offers a hint instead of the answer, and she tries
+   again, as many times as it takes. The last hint is allowed to give it away,
+   because being stuck is not a lesson either. *@
+
+<div class="sga">
+
+    <header class="sga-header">
+        <div class="sga-header__left">
+            @* Both ways out on every screen: back a step, and all the way home. *@
+            <button type="button" class="sga-iconbtn" aria-label="Back to lessons"
+                    @onclick="@(() => Nav.NavigateTo($"{Profile.Id}/learn"))">←</button>
+            <button type="button" class="sga-iconbtn" aria-label="Home"
+                    @onclick="@(() => Nav.NavigateTo(Profile.Id))">🏠</button>
+            <div>
+                <h1 class="sga-title">@Lesson.Title</h1>
+                <p class="sga-subtitle">Problem @(_problemIndex + 1) of @Lesson.Walk.Length</p>
+            </div>
+        </div>
+        <span class="sga-wiggle" style="font-size:1.4rem;" aria-hidden="true">✏️</span>
+    </header>
+
+    <div class="sga-body">
+
+        @if (_problem is not null)
+        {
+            @* The story, typed out. Tapping it finishes the typing at once, so a
+               child who reads faster than the animation is never held up. *@
+            <section class="sga-problem" aria-label="The problem" @onclick="FinishTyping">
+                <p class="sga-problem__cheer sga-problem__cheer--big sga-prewrap">@_typed@(_typing ? "▌" : "")</p>
+            </section>
+
+            @if (!_typing)
+            {
+                @if (_picture is not null)
+                {
+                    <GroupPicture Picture="_picture" />
+                }
+
+                @if (_done)
+                {
+                    <section class="sga-problem sga-pop" aria-label="Finished">
+                        <div class="sga-problem__eyebrow">✅ You worked it out</div>
+                        <p class="sga-problem__cheer sga-prewrap">@_problem.Recap</p>
+                    </section>
+                }
+                else if (_step is not null)
+                {
+                    <section class="sga-guide" aria-label="This step">
+                        <div class="sga-guide__num" aria-hidden="true">Step @(_stepIndex + 1) of @_problem.Steps.Length</div>
+                        <p class="sga-guide__say sga-prewrap">@_step.Say</p>
+                        <p class="sga-ask">@_step.Ask</p>
+                    </section>
+
+                    <section class="sga-choices sga-choices--stack" aria-label="Answers">
+                        @foreach (var choice in _step.Choices)
+                        {
+                            var c = choice;
+                            <button type="button"
+                                    class="sga-choice sga-choice--wide @ChoiceState(c)"
+                                    disabled="@_gotIt"
+                                    @onclick="@(() => Answer(c))">
+                                @c
+                            </button>
+                        }
+                    </section>
+
+                    @if (_gotIt)
+                    {
+                        <div class="sga-step__msg sga-step__msg--ok sga-pop">
+                            <span aria-hidden="true">👏</span>
+                            <span>@(string.IsNullOrWhiteSpace(_step.Yes) ? "That's right." : _step.Yes)</span>
+                        </div>
+                    }
+                    else if (_wrong)
+                    {
+                        @* Never "wrong". The offer of help is the response. *@
+                        <div class="sga-guide__nudge sga-pop">
+                            <p>Not that one — have another go.</p>
+                            @if (_hintsShown < _step.Hints.Length)
+                            {
+                                <button type="button" class="sga-guide__hintbtn" @onclick="ShowHint">
+                                    💡 @(_hintsShown == 0 ? "Do you want a hint?" : "Another hint, please")
+                                </button>
+                            }
+                        </div>
+                    }
+
+                    @if (_hintsShown > 0)
+                    {
+                        <section class="sga-hints" aria-label="Hints">
+                            <div class="sga-hints__eyebrow">💡 Here's a hint</div>
+                            @foreach (var hint in _step.Hints.Take(_hintsShown))
+                            {
+                                <p>@hint</p>
+                            }
+                        </section>
+                    }
+                }
+            }
+        }
+
+    </div>
+
+    <div class="sga-dock">
+        @if (_typing)
+        {
+            <button type="button" class="sga-bigbtn" style="margin-top:0;" @onclick="FinishTyping">
+                Show me the whole thing
+            </button>
+        }
+        else if (_done)
+        {
+            <button type="button" class="sga-bigbtn" style="margin-top:0;" @onclick="NextProblem">
+                @(_problemIndex < Lesson.Walk.Length - 1 ? "Next problem" : "Finish")
+            </button>
+        }
+        else
+        {
+            @* Deliberately disabled until she has it. There is no way past. *@
+            <button type="button" class="sga-bigbtn" style="margin-top:0;"
+                    disabled="@(!_gotIt)" @onclick="NextStep">
+                @(_stepIndex < (_problem?.Steps.Length ?? 0) - 1 ? "Next step" : "Done")
+            </button>
+        }
+    </div>
+
+</div>
+
+@code {
+    [Parameter, EditorRequired] public Profile Profile { get; set; } = default!;
+    [Parameter, EditorRequired] public Lesson Lesson { get; set; } = default!;
+
+    private int _problemIndex;
+    private int _stepIndex;
+    private int _hintsShown;
+    private bool _gotIt;
+    private bool _wrong;
+    private bool _done;
+    private string? _chosen;
+    private int _startedLesson = -1;
+
+    private string _typed = "";
+    private bool _typing;
+    private Timer? _timer;
+    private string _target = "";
+
+    private GuideProblem? _problem =>
+        _problemIndex >= 0 && _problemIndex < Lesson.Walk.Length ? Lesson.Walk[_problemIndex] : null;
+
+    private GuideStep? _step =>
+        _problem is not null && _stepIndex >= 0 && _stepIndex < _problem.Steps.Length
+            ? _problem.Steps[_stepIndex]
+            : null;
+
+    private Picture? _picture => _done ? _problem?.Steps.LastOrDefault()?.Picture : _step?.Picture;
+
+    protected override void OnParametersSet()
+    {
+        if (_startedLesson == Lesson.Id) return;
+        _startedLesson = Lesson.Id;
+
+        _problemIndex = 0;
+        StartProblem();
+    }
+
+    private void StartProblem()
+    {
+        _stepIndex = 0;
+        _hintsShown = 0;
+        _gotIt = false;
+        _wrong = false;
+        _done = false;
+        _chosen = null;
+
+        StartTyping(_problem?.Setup ?? "");
+    }
+
+    // ------------------------------------------------------------- the typing
+
+    private void StartTyping(string text)
+    {
+        _timer?.Dispose();
+
+        _target = text;
+        _typed = "";
+        _typing = text.Length > 0;
+
+        if (!_typing) return;
+
+        // Slow enough to follow, fast enough not to be a wait. Tapping skips it.
+        _timer = new Timer(_ =>
+        {
+            if (_typed.Length >= _target.Length)
+            {
+                StopTyping();
+                return;
+            }
+
+            _typed = _target[.. (_typed.Length + 1)];
+            InvokeAsync(StateHasChanged);
+        }, null, 260, 38);
+    }
+
+    private void FinishTyping()
+    {
+        if (!_typing) return;
+        _typed = _target;
+        StopTyping();
+    }
+
+    private void StopTyping()
+    {
+        _timer?.Dispose();
+        _timer = null;
+        _typing = false;
+        InvokeAsync(StateHasChanged);
+    }
+
+    // ------------------------------------------------------------ the working
+
+    private string ChoiceState(string choice)
+    {
+        if (_gotIt && choice == _step?.Correct) return "sga-choice--right";
+        if (!_gotIt && _wrong && choice == _chosen) return "sga-choice--wrong";
+        return "";
+    }
+
+    private async Task Answer(string choice)
+    {
+        if (_gotIt || _step is null) return;
+
+        _chosen = choice;
+
+        if (choice == _step.Correct)
+        {
+            _gotIt = true;
+            _wrong = false;
+
+            // Points only for a step she got without being told the answer.
+            _ = Player.RecordAttemptAsync(correct: true, pointsEarned: _hintsShown == 0 ? 10 : 4);
+            await Task.CompletedTask;
+            return;
+        }
+
+        _wrong = true;
+        await Task.CompletedTask;
+    }
+
+    private void ShowHint()
+    {
+        if (_step is null) return;
+        if (_hintsShown < _step.Hints.Length) _hintsShown++;
+    }
+
+    private void NextStep()
+    {
+        if (_problem is null || !_gotIt) return;
+
+        if (_stepIndex < _problem.Steps.Length - 1)
+        {
+            _stepIndex++;
+            _hintsShown = 0;
+            _gotIt = false;
+            _wrong = false;
+            _chosen = null;
+            StartTyping(_step?.Say ?? "");
+            return;
+        }
+
+        _done = true;
+    }
+
+    private async Task NextProblem()
+    {
+        if (_problemIndex < Lesson.Walk.Length - 1)
+        {
+            _problemIndex++;
+            StartProblem();
+            return;
+        }
+
+        // She worked every problem to the end, which is the only way to get here.
+        await Progress.MarkMasteredAsync(Lesson.Id);
+        Nav.NavigateTo($"{Profile.Id}/learn");
+    }
+
+    public void Dispose() => _timer?.Dispose();
+}

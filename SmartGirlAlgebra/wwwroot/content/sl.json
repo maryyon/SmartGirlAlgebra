@@ -300,6 +300,158 @@
           "correct": "4",
           "explain": "Count the 2s. There are four. 4 groups of 2 makes 8."
         }
+      ],
+      "walk": [
+        {
+          "setup": "3 dancers are getting ready.\nEach dancer holds 4 ribbons. 🎀",
+          "steps": [
+            {
+              "say": "Let's look at just ONE dancer first.",
+              "ask": "How many ribbons does one dancer hold?",
+              "choices": [
+                "3",
+                "4",
+                "5"
+              ],
+              "correct": "4",
+              "hints": [
+                "Look at the box on the left. Count what is inside it.",
+                "Point at each ribbon and say a number: 1, 2, 3, 4.",
+                "There are 4 ribbons in the box. One dancer holds 4."
+              ],
+              "yes": "Yes. Four in one group.",
+              "picture": {
+                "groups": 3,
+                "each": 4,
+                "icon": "🎀",
+                "show": 1,
+                "caption": "1 dancer"
+              }
+            },
+            {
+              "say": "Now the second dancer comes out. She holds the same amount.",
+              "ask": "How many ribbons do TWO dancers hold?",
+              "choices": [
+                "6",
+                "7",
+                "8"
+              ],
+              "correct": "8",
+              "hints": [
+                "You have 4, and now 4 more.",
+                "Count every ribbon you can see: 1, 2, 3, 4 ... 5, 6, 7, 8.",
+                "4 + 4 = 8."
+              ],
+              "yes": "Eight so far.",
+              "picture": {
+                "groups": 3,
+                "each": 4,
+                "icon": "🎀",
+                "show": 2,
+                "caption": "2 dancers"
+              }
+            },
+            {
+              "say": "Here comes the third dancer.",
+              "ask": "How many ribbons altogether?",
+              "choices": [
+                "10",
+                "12",
+                "14"
+              ],
+              "correct": "12",
+              "hints": [
+                "You had 8. Now there are 4 more.",
+                "Keep counting from 8: 9, 10, 11, 12.",
+                "4 + 4 + 4 = 12."
+              ],
+              "yes": "Twelve. You worked it out.",
+              "picture": {
+                "groups": 3,
+                "each": 4,
+                "icon": "🎀",
+                "show": 3,
+                "caption": "3 dancers"
+              }
+            }
+          ],
+          "recap": "3 dancers, 4 ribbons each.\n4 + 4 + 4 = 12.\nThat is 3 groups of 4."
+        },
+        {
+          "setup": "5 singers line up for the show.\nEach one holds 2 song sheets. 📄",
+          "steps": [
+            {
+              "say": "Start with one singer.",
+              "ask": "How many sheets does one singer hold?",
+              "choices": [
+                "1",
+                "2",
+                "3"
+              ],
+              "correct": "2",
+              "hints": [
+                "Count what is in the first box.",
+                "Just two things: 1, 2.",
+                "One singer holds 2 sheets."
+              ],
+              "yes": "Two in one group.",
+              "picture": {
+                "groups": 5,
+                "each": 2,
+                "icon": "📄",
+                "show": 1,
+                "caption": "1 singer"
+              }
+            },
+            {
+              "say": "Two more singers join her. Every singer holds 2.",
+              "ask": "How many sheets do THREE singers hold?",
+              "choices": [
+                "5",
+                "6",
+                "8"
+              ],
+              "correct": "6",
+              "hints": [
+                "That is 2, and 2, and 2.",
+                "Count them: 1, 2 ... 3, 4 ... 5, 6.",
+                "2 + 2 + 2 = 6."
+              ],
+              "yes": "Six. Keep going.",
+              "picture": {
+                "groups": 5,
+                "each": 2,
+                "icon": "📄",
+                "show": 3,
+                "caption": "3 singers"
+              }
+            },
+            {
+              "say": "The last two singers come out.",
+              "ask": "How many sheets do all FIVE singers hold?",
+              "choices": [
+                "7",
+                "10",
+                "12"
+              ],
+              "correct": "10",
+              "hints": [
+                "You had 6. Two more singers means 2 more, then 2 more.",
+                "Jump by 2: 2, 4, 6, 8, 10.",
+                "2 + 2 + 2 + 2 + 2 = 10."
+              ],
+              "yes": "Ten. Nicely done.",
+              "picture": {
+                "groups": 5,
+                "each": 2,
+                "icon": "📄",
+                "show": 5,
+                "caption": "5 singers"
+              }
+            }
+          ],
+          "recap": "5 singers, 2 sheets each.\nJump by 2 five times: 2, 4, 6, 8, 10."
+        }
       ]
     },
     {
@@ -422,6 +574,158 @@
           ],
           "correct": "30",
           "explain": "10, 20, 30."
+        }
+      ],
+      "walk": [
+        {
+          "setup": "4 teams walk onto the floor.\nThere are 5 girls on every team. 👧",
+          "steps": [
+            {
+              "say": "Look at the first team on its own.",
+              "ask": "How many girls are on one team?",
+              "choices": [
+                "4",
+                "5",
+                "6"
+              ],
+              "correct": "5",
+              "hints": [
+                "Count the girls inside the first box.",
+                "Touch each one: 1, 2, 3, 4, 5.",
+                "One team has 5 girls."
+              ],
+              "yes": "Five on one team.",
+              "picture": {
+                "groups": 4,
+                "each": 5,
+                "icon": "👧",
+                "show": 1,
+                "caption": "1 team"
+              }
+            },
+            {
+              "say": "The second team comes out. Instead of counting all over again, JUMP by 5.",
+              "ask": "You jump by 5 two times. Where do you land?",
+              "choices": [
+                "7",
+                "10",
+                "15"
+              ],
+              "correct": "10",
+              "hints": [
+                "Start at 5. One more jump of 5.",
+                "5 ... then 10.",
+                "5, 10. Two teams is 10 girls."
+              ],
+              "yes": "Ten. That is two jumps.",
+              "picture": {
+                "groups": 4,
+                "each": 5,
+                "icon": "👧",
+                "show": 2,
+                "caption": "2 teams"
+              }
+            },
+            {
+              "say": "Now all four teams are out. Keep jumping by 5.",
+              "ask": "How many girls on all four teams?",
+              "choices": [
+                "15",
+                "20",
+                "25"
+              ],
+              "correct": "20",
+              "hints": [
+                "You are at 10. Two more jumps to go.",
+                "5, 10, 15 ... and one more.",
+                "5, 10, 15, 20. Four jumps lands on 20."
+              ],
+              "yes": "Twenty. You jumped it.",
+              "picture": {
+                "groups": 4,
+                "each": 5,
+                "icon": "👧",
+                "show": 4,
+                "caption": "4 teams"
+              }
+            }
+          ],
+          "recap": "5, 10, 15, 20.\nFour teams of 5 is 20 girls.\nJumping is faster than counting every one."
+        },
+        {
+          "setup": "6 dancers are putting on their shoes.\nEvery dancer needs 2 shoes. 🩰",
+          "steps": [
+            {
+              "say": "One dancer first.",
+              "ask": "How many shoes does one dancer need?",
+              "choices": [
+                "1",
+                "2",
+                "3"
+              ],
+              "correct": "2",
+              "hints": [
+                "Look in the first box.",
+                "One for each foot.",
+                "Two shoes for one dancer."
+              ],
+              "yes": "Two. One pair.",
+              "picture": {
+                "groups": 6,
+                "each": 2,
+                "icon": "🩰",
+                "show": 1,
+                "caption": "1 dancer"
+              }
+            },
+            {
+              "say": "Two more dancers sit down. Jump by 2 this time.",
+              "ask": "Three dancers now. Where does jumping by 2 land you?",
+              "choices": [
+                "5",
+                "6",
+                "8"
+              ],
+              "correct": "6",
+              "hints": [
+                "Start at 2, then jump twice more.",
+                "2, 4 ... then one more jump.",
+                "2, 4, 6. Three dancers need 6 shoes."
+              ],
+              "yes": "Six shoes.",
+              "picture": {
+                "groups": 6,
+                "each": 2,
+                "icon": "🩰",
+                "show": 3,
+                "caption": "3 dancers"
+              }
+            },
+            {
+              "say": "All six dancers are ready.",
+              "ask": "How many shoes altogether?",
+              "choices": [
+                "8",
+                "10",
+                "12"
+              ],
+              "correct": "12",
+              "hints": [
+                "You are at 6. Three more dancers to go.",
+                "2, 4, 6, 8, 10 ... one more jump.",
+                "2, 4, 6, 8, 10, 12. Six jumps of 2."
+              ],
+              "yes": "Twelve shoes. Everybody is ready.",
+              "picture": {
+                "groups": 6,
+                "each": 2,
+                "icon": "🩰",
+                "show": 6,
+                "caption": "6 dancers"
+              }
+            }
+          ],
+          "recap": "2, 4, 6, 8, 10, 12.\nSix dancers need 12 shoes."
         }
       ]
     },
@@ -546,6 +850,158 @@
           "correct": "The same. Both are 12",
           "explain": "Rows or columns, you land on 12 either way."
         }
+      ],
+      "walk": [
+        {
+          "setup": "The squad lines up in 3 rows.\nThere are 5 girls in every row. ⭐",
+          "steps": [
+            {
+              "say": "Here is the front row on its own.",
+              "ask": "How many girls are in one row?",
+              "choices": [
+                "3",
+                "4",
+                "5"
+              ],
+              "correct": "5",
+              "hints": [
+                "Count along the first row only.",
+                "1, 2, 3, 4, 5.",
+                "One row has 5 girls."
+              ],
+              "yes": "Five in a row.",
+              "picture": {
+                "groups": 3,
+                "each": 5,
+                "icon": "⭐",
+                "show": 1,
+                "caption": "1 row"
+              }
+            },
+            {
+              "say": "The second row lines up behind them. Rows always match.",
+              "ask": "How many girls are in two rows?",
+              "choices": [
+                "7",
+                "10",
+                "12"
+              ],
+              "correct": "10",
+              "hints": [
+                "That is 5, and 5 more.",
+                "Jump by 5: 5, then 10.",
+                "5 + 5 = 10."
+              ],
+              "yes": "Ten in two rows.",
+              "picture": {
+                "groups": 3,
+                "each": 5,
+                "icon": "⭐",
+                "show": 2,
+                "caption": "2 rows"
+              }
+            },
+            {
+              "say": "And the back row lines up.",
+              "ask": "How many girls in all three rows?",
+              "choices": [
+                "12",
+                "15",
+                "18"
+              ],
+              "correct": "15",
+              "hints": [
+                "You are at 10, with one row of 5 to add.",
+                "5, 10, 15.",
+                "5 + 5 + 5 = 15."
+              ],
+              "yes": "Fifteen. That is the whole squad.",
+              "picture": {
+                "groups": 3,
+                "each": 5,
+                "icon": "⭐",
+                "show": 3,
+                "caption": "3 rows"
+              }
+            }
+          ],
+          "recap": "3 rows with 5 in each.\n5, 10, 15. The squad is 15 girls."
+        },
+        {
+          "setup": "Same girls, new formation.\nNow they stand in 5 rows with 3 in each. ⭐",
+          "steps": [
+            {
+              "say": "Look at the front row of the new shape.",
+              "ask": "How many girls in one row now?",
+              "choices": [
+                "2",
+                "3",
+                "4"
+              ],
+              "correct": "3",
+              "hints": [
+                "Count the first box only.",
+                "1, 2, 3.",
+                "Three in a row this time."
+              ],
+              "yes": "Three in a row.",
+              "picture": {
+                "groups": 5,
+                "each": 3,
+                "icon": "⭐",
+                "show": 1,
+                "caption": "1 row"
+              }
+            },
+            {
+              "say": "Everybody lines up. Five rows, 3 in each.",
+              "ask": "How many girls altogether?",
+              "choices": [
+                "12",
+                "15",
+                "18"
+              ],
+              "correct": "15",
+              "hints": [
+                "Jump by 3, once for each row.",
+                "3, 6, 9 ... two more jumps.",
+                "3, 6, 9, 12, 15."
+              ],
+              "yes": "Fifteen again.",
+              "picture": {
+                "groups": 5,
+                "each": 3,
+                "icon": "⭐",
+                "show": 5,
+                "caption": "5 rows"
+              }
+            },
+            {
+              "say": "3 rows of 5 was 15. And 5 rows of 3 is also 15.",
+              "ask": "So what happens when you turn it around?",
+              "choices": [
+                "You get the same total",
+                "You get a bigger total",
+                "You get a smaller total"
+              ],
+              "correct": "You get the same total",
+              "hints": [
+                "Look at both answers you worked out.",
+                "The first way gave 15. The second way gave 15.",
+                "Same girls, same total. Turning it around changes nothing."
+              ],
+              "yes": "Exactly the same. That is a handy trick.",
+              "picture": {
+                "groups": 5,
+                "each": 3,
+                "icon": "⭐",
+                "show": 5,
+                "caption": "still 15"
+              }
+            }
+          ],
+          "recap": "3 rows of 5 = 15.\n5 rows of 3 = 15.\nTurn it around and the total stays put."
+        }
       ]
     },
     {
@@ -669,6 +1125,157 @@
           "correct": "2",
           "explain": "2 each. Check it: 2, 4, 6, 8, 10."
         }
+      ],
+      "walk": [
+        {
+          "setup": "There are 12 ribbons in the box.\n2 friends want to share them. 🎀",
+          "steps": [
+            {
+              "say": "Sharing fairly means nobody gets more than anybody else.",
+              "ask": "If they share fairly, do both girls end up with the same?",
+              "choices": [
+                "Yes, exactly the same",
+                "No, one gets more"
+              ],
+              "correct": "Yes, exactly the same",
+              "hints": [
+                "Think about what the word fair means.",
+                "If one girl got more, would that be fair?",
+                "Fair sharing means both piles match."
+              ],
+              "yes": "Right. Both piles have to match.",
+              "picture": {
+                "groups": 2,
+                "each": 6,
+                "icon": "🎀",
+                "show": 0,
+                "caption": "2 piles, nothing shared yet"
+              }
+            },
+            {
+              "say": "Hand them out one at a time. One for her, one for her, and keep going until the box is empty.",
+              "ask": "How many ribbons ended up in the first pile?",
+              "choices": [
+                "4",
+                "6",
+                "8"
+              ],
+              "correct": "6",
+              "hints": [
+                "Count what is in the first box now.",
+                "Touch each one: 1, 2, 3, 4, 5, 6.",
+                "The first pile has 6 ribbons."
+              ],
+              "yes": "Six in the first pile.",
+              "picture": {
+                "groups": 2,
+                "each": 6,
+                "icon": "🎀",
+                "show": 1,
+                "caption": "1 pile done"
+              }
+            },
+            {
+              "say": "The other pile is the same, because you shared fairly.",
+              "ask": "How many ribbons does each girl get?",
+              "choices": [
+                "4",
+                "6",
+                "12"
+              ],
+              "correct": "6",
+              "hints": [
+                "Both piles are the same size.",
+                "You already counted one pile.",
+                "6 and 6. Each girl gets 6."
+              ],
+              "yes": "Six each. Check it: 6 + 6 = 12.",
+              "picture": {
+                "groups": 2,
+                "each": 6,
+                "icon": "🎀",
+                "show": 2,
+                "caption": "6 and 6"
+              }
+            }
+          ],
+          "recap": "12 ribbons shared by 2 girls is 6 each.\nCheck it by adding back: 6 + 6 = 12."
+        },
+        {
+          "setup": "10 medals to hand out.\n5 gymnasts are waiting. 🏅",
+          "steps": [
+            {
+              "say": "Give the first gymnast her fair share.",
+              "ask": "How many medals are in the first pile?",
+              "choices": [
+                "1",
+                "2",
+                "3"
+              ],
+              "correct": "2",
+              "hints": [
+                "Look inside the first box.",
+                "1, 2.",
+                "Two medals in the first pile."
+              ],
+              "yes": "Two for the first gymnast.",
+              "picture": {
+                "groups": 5,
+                "each": 2,
+                "icon": "🏅",
+                "show": 1,
+                "caption": "1 gymnast"
+              }
+            },
+            {
+              "say": "Two more gymnasts get theirs. Everybody gets the same.",
+              "ask": "How many medals have been handed out now?",
+              "choices": [
+                "4",
+                "6",
+                "8"
+              ],
+              "correct": "6",
+              "hints": [
+                "Three gymnasts, 2 each.",
+                "2, 4, 6.",
+                "2 + 2 + 2 = 6 medals handed out."
+              ],
+              "yes": "Six handed out.",
+              "picture": {
+                "groups": 5,
+                "each": 2,
+                "icon": "🏅",
+                "show": 3,
+                "caption": "3 gymnasts"
+              }
+            },
+            {
+              "say": "The last two gymnasts get theirs and the box is empty.",
+              "ask": "How many medals does each gymnast get?",
+              "choices": [
+                "1",
+                "2",
+                "5"
+              ],
+              "correct": "2",
+              "hints": [
+                "Every pile is the same size.",
+                "You counted one pile already.",
+                "2 each. Check it: 2, 4, 6, 8, 10."
+              ],
+              "yes": "Two each, and none left over.",
+              "picture": {
+                "groups": 5,
+                "each": 2,
+                "icon": "🏅",
+                "show": 5,
+                "caption": "2 each"
+              }
+            }
+          ],
+          "recap": "10 medals shared by 5 gymnasts is 2 each.\nCheck it: 2, 4, 6, 8, 10."
+        }
       ]
     },
     {
@@ -791,6 +1398,156 @@
           ],
           "correct": "Even",
           "explain": "20 ends in 0, so it is even."
+        }
+      ],
+      "walk": [
+        {
+          "setup": "8 cheerleaders need a partner each.\nThey pair up, two by two. 📣",
+          "steps": [
+            {
+              "say": "Two girls holding hands make one pair.",
+              "ask": "How many girls are in one pair?",
+              "choices": [
+                "1",
+                "2",
+                "3"
+              ],
+              "correct": "2",
+              "hints": [
+                "Look at the first box.",
+                "A pair is two.",
+                "Two girls in one pair."
+              ],
+              "yes": "Two. That is what a pair means.",
+              "picture": {
+                "groups": 4,
+                "each": 2,
+                "icon": "📣",
+                "show": 1,
+                "caption": "1 pair"
+              }
+            },
+            {
+              "say": "Everybody finds somebody. Count the pairs, not the girls.",
+              "ask": "How many pairs did 8 girls make?",
+              "choices": [
+                "3",
+                "4",
+                "5"
+              ],
+              "correct": "4",
+              "hints": [
+                "Count the boxes, not what is inside them.",
+                "1 box, 2 boxes, 3 boxes, 4 boxes.",
+                "8 girls made 4 pairs."
+              ],
+              "yes": "Four pairs.",
+              "picture": {
+                "groups": 4,
+                "each": 2,
+                "icon": "📣",
+                "show": 4,
+                "caption": "4 pairs"
+              }
+            },
+            {
+              "say": "Now look carefully at the whole floor.",
+              "ask": "Was anybody left standing on her own?",
+              "choices": [
+                "No, everybody has a partner",
+                "Yes, one girl is alone"
+              ],
+              "correct": "No, everybody has a partner",
+              "hints": [
+                "Look for a girl who is not in a box.",
+                "Count the girls in the pairs: 2, 4, 6, 8. That is all of them.",
+                "All 8 girls are in a pair. Nobody is left out."
+              ],
+              "yes": "Nobody left out. That makes 8 an EVEN number.",
+              "picture": {
+                "groups": 4,
+                "each": 2,
+                "icon": "📣",
+                "show": 4,
+                "caption": "nobody left out"
+              }
+            }
+          ],
+          "recap": "8 girls made 4 pairs with nobody left over.\nA number that pairs up perfectly is EVEN."
+        },
+        {
+          "setup": "The next day, 9 cheerleaders come to practice.\nThey try to pair up again. 📣",
+          "steps": [
+            {
+              "say": "Here are all the pairs they managed to make.",
+              "ask": "How many girls are standing in pairs?",
+              "choices": [
+                "6",
+                "8",
+                "9"
+              ],
+              "correct": "8",
+              "hints": [
+                "Count the girls inside the boxes only.",
+                "2, 4, 6, 8.",
+                "8 girls are in pairs."
+              ],
+              "yes": "Eight of them are paired up.",
+              "picture": {
+                "groups": 4,
+                "each": 2,
+                "icon": "📣",
+                "show": 4,
+                "caption": "4 pairs — and 1 girl with nobody"
+              }
+            },
+            {
+              "say": "But 9 girls came to practice today, not 8.",
+              "ask": "How many girls could not find a partner?",
+              "choices": [
+                "0",
+                "1",
+                "2"
+              ],
+              "correct": "1",
+              "hints": [
+                "You started with 9. You paired up 8.",
+                "9 take away 8.",
+                "One girl is left standing on her own."
+              ],
+              "yes": "One left over.",
+              "picture": {
+                "groups": 4,
+                "each": 2,
+                "icon": "📣",
+                "show": 4,
+                "caption": "1 girl still waiting"
+              }
+            },
+            {
+              "say": "8 pairs up perfectly. 9 leaves one girl out.",
+              "ask": "So what kind of number is 9?",
+              "choices": [
+                "Odd",
+                "Even"
+              ],
+              "correct": "Odd",
+              "hints": [
+                "Even numbers pair up with nobody left over.",
+                "9 left one girl standing.",
+                "A number that leaves somebody out is ODD."
+              ],
+              "yes": "Odd. Nine leaves one out every time.",
+              "picture": {
+                "groups": 4,
+                "each": 2,
+                "icon": "📣",
+                "show": 4,
+                "caption": "9 is odd"
+              }
+            }
+          ],
+          "recap": "9 girls made 4 pairs and left 1 girl over.\nA number that leaves one out is ODD."
         }
       ]
     }

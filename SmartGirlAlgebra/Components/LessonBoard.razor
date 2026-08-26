@@ -14,8 +14,11 @@
 
     <header class="sga-header">
         <div class="sga-header__left">
+            @* Both ways out on every screen: back a step, and all the way home. *@
             <button type="button" class="sga-iconbtn" aria-label="Back to lessons"
                     @onclick="@(() => Nav.NavigateTo($"{Profile.Id}/learn"))">←</button>
+            <button type="button" class="sga-iconbtn" aria-label="Home"
+                    @onclick="@(() => Nav.NavigateTo(Profile.Id))">🏠</button>
             <div>
                 <h1 class="sga-title">@Lesson.Title</h1>
                 <p class="sga-subtitle">@_phaseLabel</p>

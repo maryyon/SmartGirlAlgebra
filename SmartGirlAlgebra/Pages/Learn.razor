@@ -22,7 +22,15 @@ else if (_profile.Lessons.Count == 0)
 }
 else if (LessonId is not null && _lesson is not null)
 {
-    <LessonBoard Profile="_profile" Lesson="_lesson" />
+    @* A lesson with worked problems is walked through, not quizzed. *@
+    @if (_lesson.Walk.Length > 0)
+    {
+        <GuideBoard Profile="_profile" Lesson="_lesson" />
+    }
+    else
+    {
+        <LessonBoard Profile="_profile" Lesson="_lesson" />
+    }
 }
 else
 {

@@ -1,0 +1,56 @@
+@namespace SmartGirlAlgebra.Components
+
+@* "Five groups of two" is a sentence. This is the thing the sentence is about.
+
+   Groups appear one at a time as the working goes along, so when a step says
+   "here is the first group", she is looking at exactly one group and nothing
+   else. The ones still to come are left as empty outlines rather than hidden,
+   so she can see how many are coming. *@
+
+<figure class="sga-pic" aria-label="@Describe()">
+    <div class="sga-pic__row">
+        @for (var g = 0; g < Picture.Groups; g++)
+        {
+            var shown = Visible < 0 || g < Visible;
+
+            <div class="sga-pic__group @(shown ? "" : "sga-pic__group--waiting")">
+                @if (shown)
+                {
+                    @for (var i = 0; i < Picture.Each; i++)
+                    {
+                        <span class="sga-pic__thing" aria-hidden="true">@Picture.Icon</span>
+                    }
+                }
+                else
+                {
+                    @for (var i = 0; i < Picture.Each; i++)
+                    {
+                        <span class="sga-pic__hole" aria-hidden="true"></span>
+                    }
+                }
+            </div>
+        }
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Picture.Caption))
+    {
+        <figcaption class="sga-pic__cap">@Picture.Caption</figcaption>
+    }
+</figure>
+
+@code {
+    [Parameter, EditorRequired] public Picture Picture { get; set; } = default!;
+
+    private int Visible => Picture.Show;
+
+    /// <summary>What a screen reader says instead of a wall of emoji.</summary>
+    private string Describe()
+    {
+        var shown = Visible < 0 ? Picture.Groups : Visible;
+
+        if (shown == 0) return $"{Picture.Groups} empty groups, nothing counted yet";
+        if (shown == 1) return $"1 group of {Picture.Each}";
+
+        return $"{shown} groups of {Picture.Each}";
+    }
+}
