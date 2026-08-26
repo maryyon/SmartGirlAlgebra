@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-08-26 — No moving on until it's right, in every version
+
+- The lesson boards for **/kt, /rz and /vc** used to reveal the answer after a
+  wrong tap and let her carry on. They don't any more: the wrong choice greys
+  out, the question stays open, and **Next stays disabled until she gets it**.
+- A wrong answer offers **"Do you want a hint?"** instead of the answer.
+- Mastery still measures the clean first answer — no wrong turns, no hint — so
+  getting there eventually moves her forward without pretending she had it.
+- /sl already worked this way via the walked lessons. The play boards in every
+  version already did too: a wrong tap dims and she tries again.
+
 ## 2026-08-26 — /sl lessons are walked through, not guessed at
 
 - Every /sl lesson is now **worked step by step**. The story types itself out

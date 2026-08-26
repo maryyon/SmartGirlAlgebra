@@ -94,19 +94,41 @@
                     var c = choice;
                     <button type="button"
                             class="sga-choice sga-choice--wide @ChoiceState(c)"
-                            disabled="@_answered"
+                            disabled="@(_gotIt || _rejected.Contains(c))"
                             @onclick="@(() => Answer(c))">
                         @c
                     </button>
                 }
             </section>
 
-            @if (_answered)
+            @if (_gotIt)
             {
-                <div class="sga-step__msg @(_lastRight ? "sga-step__msg--ok" : "") sga-pop">
-                    <span aria-hidden="true">@(_lastRight ? "👏" : "💡")</span>
+                <div class="sga-step__msg sga-step__msg--ok sga-pop">
+                    <span aria-hidden="true">👏</span>
                     <span>@_current.Explain</span>
                 </div>
+            }
+            else if (_rejected.Count > 0)
+            {
+                @* Never the answer, and never "wrong". An offer of help, and
+                   the question stays open until she gets it. *@
+                <div class="sga-guide__nudge sga-pop">
+                    <p>Not that one — have another go.</p>
+                    @if (!_hintShown && !string.IsNullOrWhiteSpace(_current.Explain))
+                    {
+                        <button type="button" class="sga-guide__hintbtn" @onclick="() => _hintShown = true">
+                            💡 Do you want a hint?
+                        </button>
+                    }
+                </div>
+
+                @if (_hintShown)
+                {
+                    <section class="sga-hints" aria-label="Hint">
+                        <div class="sga-hints__eyebrow">💡 Here's a hint</div>
+                        <p>@_current.Explain</p>
+                    </section>
+                }
             }
         }
         else if (_phase == Phase.Regroup)
@@ -149,8 +171,9 @@
         }
         else if (_phase == Phase.Questions)
         {
+            @* Disabled until she has it right. There is no skipping a question. *@
             <button type="button" class="sga-bigbtn" style="margin-top:0;"
-                    disabled="@(!_answered)" @onclick="NextQuestion">
+                    disabled="@(!_gotIt)" @onclick="NextQuestion">
                 @(_index < _set.Count - 1 ? "Next question" : "Finish")
             </button>
         }
@@ -180,9 +203,9 @@
     private Phase _phase = Phase.Teach;
     private int _teachIndex;
     private int _index;
-    private bool _answered;
-    private bool _lastRight;
-    private string? _chosen;
+    private bool _gotIt;
+    private bool _hintShown;
+    private readonly HashSet<string> _rejected = [];
     private int _firstTryCorrect;
     private bool _onReinforce;
     private int _startedLesson = -1;
@@ -207,8 +230,7 @@
         _phase = Phase.Teach;
         _teachIndex = 0;
         _index = 0;
-        _answered = false;
-        _chosen = null;
+        ClearQuestion();
         _firstTryCorrect = 0;
         _onReinforce = false;
         _set = Lesson.Practice.ToList();
@@ -228,28 +250,44 @@
 
         _phase = Phase.Questions;
         _index = 0;
-        _answered = false;
+        ClearQuestion();
+    }
+
+    private void ClearQuestion()
+    {
+        _gotIt = false;
+        _hintShown = false;
+        _rejected.Clear();
     }
 
     private string ChoiceState(string choice)
     {
-        if (!_answered) return "";
-        if (choice == _current?.Correct) return "sga-choice--right";
-        return choice == _chosen ? "sga-choice--wrong" : "";
+        if (_gotIt && choice == _current?.Correct) return "sga-choice--right";
+        return _rejected.Contains(choice) ? "sga-choice--wrong" : "";
     }
 
     private async Task Answer(string choice)
     {
-        if (_answered || _current is null) return;
+        if (_gotIt || _current is null) return;
 
-        _answered = true;
-        _chosen = choice;
-        _lastRight = choice == _current.Correct;
-        if (_lastRight) _firstTryCorrect++;
+        if (choice != _current.Correct)
+        {
+            // She stays on this question. Mastery already knows she missed it,
+            // because only a clean first answer counts toward it.
+            _rejected.Add(choice);
+            _ = Player.RecordAttemptAsync(correct: false, pointsEarned: 0);
+            await Task.CompletedTask;
+            return;
+        }
 
-        // Counts toward her overall totals like any other answered question, so the
-        // lesson track feeds the same streak as practice.
-        _ = Player.RecordAttemptAsync(correct: _lastRight, pointsEarned: 10);
+        _gotIt = true;
+
+        // First time of asking, with no wrong turns and no hint, is what mastery
+        // is measured on - so getting there eventually still moves her forward
+        // without pretending she had it.
+        if (_rejected.Count == 0 && !_hintShown) _firstTryCorrect++;
+
+        _ = Player.RecordAttemptAsync(correct: true, pointsEarned: _rejected.Count == 0 ? 10 : 4);
         await Task.CompletedTask;
     }
 
@@ -258,8 +296,7 @@
         if (_index < _set.Count - 1)
         {
             _index++;
-            _answered = false;
-            _chosen = null;
+            ClearQuestion();
             return;
         }
 
@@ -288,8 +325,7 @@
         _onReinforce = true;
         _set = Lesson.Reinforce.ToList();
         _index = 0;
-        _answered = false;
-        _chosen = null;
+        ClearQuestion();
         _firstTryCorrect = 0;
         _phase = Phase.Questions;
     }
