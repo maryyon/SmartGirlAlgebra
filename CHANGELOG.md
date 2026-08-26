@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-08-25 — Tap-to-hear hard words in /sl
+
+- In `/sl`, any word above a 2nd-grade reading level is now **underlined with a
+  dotted line**. Tapping it says that word **slowly**.
+- Applies to the problem, the question, the tips, and every lesson screen — a
+  tip she can't read is not a tip.
+- Only hard words are tappable. Underlining everything would hide the ones she
+  actually needs. On her current content that is 6 words across the game and
+  lessons (tumbling, gymnasts, cheerleaders, certified, digit, handy), plus the
+  scripture names.
+
 ## 2026-08-25 — /sl lowered to 2nd-grade math
 
 - Out: times tables to 7 x 8, one-quarter of a group, two-step problems into

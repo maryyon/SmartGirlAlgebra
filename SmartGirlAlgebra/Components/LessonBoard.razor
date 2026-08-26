@@ -37,6 +37,12 @@
                         new(step.Heading, "sga-teach__heading"),
                         new(step.Body, "sga-problem__cheer") })" />
                 }
+                else if (Profile.TapToRead)
+                {
+                    <TapWords Lines="@(new List<TapWords.Line> {
+                        new(step.Heading, "sga-teach__heading"),
+                        new(step.Body, "sga-problem__cheer") })" />
+                }
                 else
                 {
                     <h2 class="sga-teach__heading">@step.Heading</h2>
@@ -56,6 +62,12 @@
                 @if (Profile.ReadAloud)
                 {
                     <ReadAloud Lines="@(new List<ReadAloud.Line> {
+                        new(_current.Prompt, "sga-problem__cheer sga-problem__cheer--big"),
+                        new(_current.Question, "sga-ask") })" />
+                }
+                else if (Profile.TapToRead)
+                {
+                    <TapWords Lines="@(new List<TapWords.Line> {
                         new(_current.Prompt, "sga-problem__cheer sga-problem__cheer--big"),
                         new(_current.Question, "sga-ask") })" />
                 }

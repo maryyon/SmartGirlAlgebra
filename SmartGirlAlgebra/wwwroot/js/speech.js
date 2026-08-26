@@ -106,8 +106,42 @@ window.sgaSpeech = (function () {
     } catch (e) { }
   }
 
+  // One word, said slowly, for a reader who is stuck on it. Kept separate from
+  // speak() so a tapped word never disturbs a read-along in progress.
+  function say(word, rate, dotNetRef) {
+    try { window.speechSynthesis.cancel(); } catch (e) { }
+
+    if (!('speechSynthesis' in window)) {
+      if (dotNetRef) { try { dotNetRef.invokeMethodAsync('OnSaid'); } catch (e) { } }
+      return;
+    }
+
+    var settled = false;
+    function done() {
+      if (settled) return;
+      settled = true;
+      if (dotNetRef) { try { dotNetRef.invokeMethodAsync('OnSaid'); } catch (e) { } }
+    }
+
+    var u = new SpeechSynthesisUtterance(word);
+    u.rate = rate;
+    u.pitch = 1.02;
+
+    var v = pickVoice();
+    if (v) { u.voice = v; u.lang = v.lang; }
+
+    u.onend = done;
+    u.onerror = done;
+
+    window.speechSynthesis.speak(u);
+
+    // Some mobile browsers fire neither event. Release the highlight anyway.
+    window.setTimeout(done, Math.max(1400, word.length * 240 / rate));
+  }
+
   return {
     speak: speak,
+    say: say,
     stop: stop,
     supported: function () { return 'speechSynthesis' in window; }
   };

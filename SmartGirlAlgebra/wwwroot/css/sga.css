@@ -1320,3 +1320,40 @@ html, body {
 @media (prefers-reduced-motion: reduce) {
   .sga-readbtn__icon--on { animation: none; }
 }
+
+/* ---------- tap a hard word to hear it ---------- */
+
+.sga-tap { display: flex; flex-direction: column; gap: .5rem; }
+
+.sga-tapword {
+  /* Sits inside a sentence, so it has to inherit everything about the text
+     and change only the underline. */
+  display: inline;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  text-decoration: underline dotted currentColor;
+  text-underline-offset: .22em;
+  text-decoration-thickness: .12em;
+  cursor: pointer;
+}
+
+.sga-tapword--on {
+  background: var(--sga-accent);
+  color: var(--sga-accent-fg, #fff);
+  border-radius: .35rem;
+  text-decoration: none;
+  box-shadow: 0 0 0 .12em var(--sga-accent);
+}
+
+.sga-tapword--demo { cursor: default; }
+
+.sga-tap__hint {
+  margin: 0;
+  font-size: .8125rem;
+  font-weight: 700;
+  color: var(--sga-muted-fg);
+}

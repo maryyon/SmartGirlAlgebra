@@ -33,6 +33,12 @@
                     new(Level.Cheer, "sga-problem__cheer sga-problem__cheer--big"),
                     new(Level.Question, "sga-ask") })" />
             }
+            else if (Profile.TapToRead)
+            {
+                <TapWords Lines="@(new List<TapWords.Line> {
+                    new(Level.Cheer, "sga-problem__cheer sga-problem__cheer--big"),
+                    new(Level.Question, "sga-ask") })" />
+            }
             else
             {
                 <p class="sga-problem__cheer sga-problem__cheer--big sga-prewrap">@Level.Cheer</p>
@@ -66,9 +72,18 @@
         {
             <section class="sga-hints" aria-label="Hints">
                 <div class="sga-hints__eyebrow">💡 Here's a tip</div>
-                @foreach (var hint in Level.Hints.Take(_hintIndex + 1))
+                @if (Profile.TapToRead)
                 {
-                    <p>@hint</p>
+                    @* A tip she can't read is not a tip. *@
+                    <TapWords Lines="@(Level.Hints.Take(_hintIndex + 1)
+                        .Select(h => new TapWords.Line(h, "")).ToList())" />
+                }
+                else
+                {
+                    @foreach (var hint in Level.Hints.Take(_hintIndex + 1))
+                    {
+                        <p>@hint</p>
+                    }
                 }
             </section>
         }

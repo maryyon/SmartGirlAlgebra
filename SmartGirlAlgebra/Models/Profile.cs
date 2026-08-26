@@ -73,6 +73,13 @@ public class Profile
     /// </summary>
     public bool ReadAloud { get; set; }
 
+    /// <summary>
+    /// Whether words above the version's reading level are underlined and can be
+    /// tapped to hear them said slowly. For readers who can manage most of a
+    /// sentence but get stopped by one word in it.
+    /// </summary>
+    public bool TapToRead { get; set; }
+
     public List<Level> Levels { get; set; } = [];
 
     public Level? LevelById(int id) => Levels.FirstOrDefault(l => l.Id == id);
