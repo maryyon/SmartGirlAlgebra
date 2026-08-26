@@ -86,6 +86,13 @@ public class Profile
     /// </summary>
     public bool ListenBack { get; set; }
 
+    /// <summary>
+    /// The silly lines this version says, once in a great while, when a button
+    /// is tapped. Age-matched per version; the tagline is the same for everyone
+    /// because it is hers.
+    /// </summary>
+    public Tickle Tickle { get; set; } = new();
+
     public List<Level> Levels { get; set; } = [];
 
     public Level? LevelById(int id) => Levels.FirstOrDefault(l => l.Id == id);
@@ -185,4 +192,18 @@ public class Theme
         ["--sga-font-display"] = FontDisplay,
         ["--sga-font-sans"] = FontSans
     };
+}
+
+/// <summary>
+/// A giggle and then the signature. Kept as a pair on purpose: the lines can be
+/// swapped or added to forever without touching the sentence that ends them.
+/// </summary>
+public class Tickle
+{
+    public string[] Lines { get; set; } = [];
+
+    /// <summary>Hers. Changed here, it changes everywhere.</summary>
+    public string Tagline { get; set; } = "Who loves you more than a roadtrip in an RV, sweetheart?";
+
+    public double Rate { get; set; } = 1.0;
 }

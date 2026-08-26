@@ -83,5 +83,8 @@ window.sgaListen = (function () {
     }, (seconds || 6) * 1000);
   }
 
-  return { start: start, stop: stop, supported: supported };
+  // True while the microphone is open, so nothing else may speak.
+  function active() { return !!rec && !settled; }
+
+  return { start: start, stop: stop, supported: supported, active: active };
 })();

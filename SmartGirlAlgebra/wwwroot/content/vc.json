@@ -881,5 +881,15 @@
       ],
       "masteryRequired": 3
     }
-  ]
+  ],
+  "tickle": {
+    "lines": [
+      "Okay, okay, that tickled.",
+      "You're pressing my buttons today.",
+      "Easy! I felt that one.",
+      "Ooh. Right on the funny spot.",
+      "You again? Fine, I'm smiling.",
+      "That tickled. A little."
+    ]
+  }
 }

@@ -174,5 +174,15 @@
       "ref": "1 Corinthians 16:14"
     }
   ],
-  "tapToRead": true
+  "tapToRead": true,
+  "tickle": {
+    "lines": [
+      "Oooooh, that tickles!",
+      "Eeek! You found my funny spot.",
+      "Hey now, I'm ticklish!",
+      "Ooh! Do that again.",
+      "Careful, I giggle!",
+      "Hee hee! That one tickled."
+    ]
+  }
 }

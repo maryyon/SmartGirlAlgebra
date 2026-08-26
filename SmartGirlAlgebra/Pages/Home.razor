@@ -3,6 +3,7 @@
 @inject NavigationManager Nav
 @inject ProfileService Profiles
 @inject PlayerService Player
+@inject IJSRuntime JS
 
 <PageTitle>@(_profile?.Name ?? "Smart Girl Algebra")</PageTitle>
 
@@ -89,6 +90,11 @@ else
         <div class="sga-footnote">
             @_profile.FooterNote
             <a href="@($"{_profile.Id}/mycode")">My code</a>
+            @* Delight that can't be switched off stops being delight. *@
+            <button type="button" class="sga-silly" @onclick="ToggleSilly">
+                <span aria-hidden="true">@(_silly ? "🔊" : "🔇")</span>
+                <span>Silly sounds @(_silly ? "on" : "off")</span>
+            </button>
         </div>
     }
 
@@ -99,6 +105,7 @@ else
     [Parameter] public string? ProfileId { get; set; }
 
     private Profile? _profile;
+    private bool _silly = true;
     private ProfileIndex? _index;
     private ProfileEntry? _suggestion;
     private bool _unknown;
@@ -121,5 +128,23 @@ else
         _suggestion = null;
         _profile = await Profiles.LoadAsync(ProfileId);
         if (_profile is not null) await Player.UseProfileAsync(_profile);
+
+        try { _silly = !await JS.InvokeAsync<bool>("sgaTickle.muted"); }
+        catch { _silly = true; }
+    }
+
+    private async Task ToggleSilly()
+    {
+        _silly = !_silly;
+
+        try
+        {
+            await JS.InvokeVoidAsync("sgaTickle.setMuted", !_silly);
+
+            // Switching it back on plays one, so she knows what she just allowed.
+            if (_silly) await JS.InvokeVoidAsync("sgaTickle.fire");
+            else await JS.InvokeVoidAsync("sgaSpeech.stop");
+        }
+        catch { /* no voice on this device; the setting still sticks */ }
     }
 }

@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-08-25 — The apps giggle back
+
+- About one button tap in twenty-five, and never twice inside a minute, the app
+  says something silly and then Grandma's line: *"Who loves you more than a
+  roadtrip in an RV, sweetheart?"* Always the pair.
+- Lines are age-matched per version: giggly for /kt, /jd, /sl; wry for /rz,
+  /vc, /jq; dry for /layla and /dm. The tagline is identical for everyone.
+- It never fires over an open microphone (KT's read-back), never mid-sentence
+  over the reading voice, and never off the reading controls or whiteboard.
+- **Silly sounds on/off** toggle on every version's home screen; it remembers,
+  and switching it back on plays one so you know what you allowed.
+- Currently in the browser's own voice. Recorded clips drop in later without
+  changing any of the above.
+
 ## 2026-08-25 — Reading help across /kt, /jd, /sl, and RZ's whiteboard
 
 - **/kt now reads *with* him, not just to him.** The read-along stops one word

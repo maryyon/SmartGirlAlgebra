@@ -166,6 +166,7 @@ public class ProfileService
 
             Current = profile;
             await ApplyThemeAsync(profile.Theme);
+            await ConfigureTickleAsync(profile.Tickle);
             Changed?.Invoke();
             return profile;
         }
@@ -194,6 +195,19 @@ public class ProfileService
         }
 
         return index.Default;
+    }
+
+    private async Task ConfigureTickleAsync(Tickle tickle)
+    {
+        try
+        {
+            await _js.InvokeVoidAsync("sgaTickle.configure",
+                new { lines = tickle.Lines, tagline = tickle.Tagline, rate = tickle.Rate });
+        }
+        catch
+        {
+            // A version with no jokes still teaches maths.
+        }
     }
 
     private async Task ApplyThemeAsync(Theme theme)

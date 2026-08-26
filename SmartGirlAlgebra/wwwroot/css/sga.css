@@ -1430,3 +1430,23 @@ html, body {
   color: inherit;
   opacity: .78;
 }
+
+/* ---------- silly sounds toggle ---------- */
+
+.sga-silly {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  margin-left: .6rem;
+  border: 1px solid var(--sga-border);
+  border-radius: 999px;
+  background: var(--sga-card);
+  color: var(--sga-muted-fg);
+  padding: .25rem .6rem;
+  font-family: inherit;
+  font-size: .75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sga-silly:hover { color: var(--sga-primary); border-color: var(--sga-primary); }

@@ -182,8 +182,14 @@ window.sgaSpeech = (function () {
     next();
   }
 
+  function busy() {
+    try { return window.speechSynthesis.speaking || window.speechSynthesis.pending; }
+    catch (e) { return false; }
+  }
+
   return {
     speak: speak,
+    busy: busy,
     say: say,
     sequence: sequence,
     stop: stop,
