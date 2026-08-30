@@ -1102,7 +1102,7 @@ public static class AlgebraFactory
 
         return new WorkedProblem
         {
-            Setup = $"A player runs {t.a} metres up the court, then {t.b} metres across.\n\nHow far is she from where she started?",
+            Setup = $"You run {t.a} metres up the court, then {t.b} metres across.\n\nHow far are you from where you started?",
             Steps =
             [
                 S("That is a right-angled triangle, so a² + b² = c². Square the two short sides.",

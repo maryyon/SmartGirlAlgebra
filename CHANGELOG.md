@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-08-30 — Copy that works for the boys too
+
+- The semester footnote said *"she has to actually work it out"* — shown on the
+  course page of **four boys' versions**. It now speaks to the reader directly.
+- The Pythagoras problem in Algebra 1 asked *"how far is she from where she
+  started?"* on `/ds`, a boy's version. Now second person.
+- `/jdm` is recorded as male on the profile so it needn't be guessed again.
+- `/ds` keeps its placeholder colours, confirmed as fine for now.
+
 ## 2026-08-30 — /jdm and /nm
 
 - **/jdm — "Smart Playbook Math"**, sixth grade in, tenth grade out. Football
