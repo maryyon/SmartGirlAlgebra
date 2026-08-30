@@ -1625,3 +1625,83 @@ html, body {
 }
 
 .sga-mute:focus-visible { outline: 3px solid var(--sga-primary); outline-offset: 2px; }
+
+/* ---------- typing the answer ---------- */
+
+.sga-work { display: flex; gap: .5rem; align-items: stretch; }
+
+.sga-work__box {
+  flex: 1;
+  min-width: 0;
+  border: 3px solid var(--sga-primary);
+  border-radius: .9rem;
+  background: var(--sga-card);
+  color: var(--sga-foreground);
+  padding: .8rem 1rem;
+  font-family: inherit;
+  /* 16px or larger, or iOS zooms the whole page when she taps it. */
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.sga-work__box:focus { outline: 3px solid var(--sga-accent); outline-offset: 2px; }
+
+.sga-work__box--wrong {
+  border-color: var(--sga-accent);
+  animation: sga-shake .3s ease;
+}
+
+.sga-work__go {
+  border: none;
+  border-radius: .9rem;
+  background: var(--sga-primary);
+  color: var(--sga-primary-fg, #fff);
+  padding: .8rem 1.2rem;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.sga-work__go:disabled { opacity: .45; cursor: default; }
+
+@keyframes sga-shake {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-5px); }
+  75%      { transform: translateX(5px); }
+}
+
+/* ---------- the semester map ---------- */
+
+.sga-unit { display: flex; flex-direction: column; gap: .6rem; margin-top: 1.1rem; }
+
+.sga-unit__head { display: flex; align-items: center; gap: .65rem; }
+
+.sga-unit__num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: var(--sga-muted);
+  color: var(--sga-primary);
+  font-weight: 800;
+  font-size: .95rem;
+}
+
+.sga-unit__name { margin: 0; font-size: 1.05rem; font-weight: 800; }
+
+.sga-unit__sub { margin: 0; font-size: .78rem; font-weight: 700; color: var(--sga-muted-fg); }
+
+.sga-unit__note {
+  margin: 1.4rem 0 0;
+  font-size: .8125rem;
+  font-weight: 600;
+  color: var(--sga-muted-fg);
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sga-work__box--wrong { animation: none; }
+}

@@ -4,6 +4,7 @@
 @inject ProfileService Profiles
 @inject PlayerService Player
 @inject LessonProgress Progress
+@inject SkillProgress Skills
 @implements IDisposable
 
 <PageTitle>@(_profile?.Name ?? "Learn")</PageTitle>
@@ -12,13 +13,24 @@
 {
     <div class="sga"><div class="sga-body"><p>Loading…</p></div></div>
 }
-else if (_profile.Lessons.Count == 0)
+else if (_profile.Lessons.Count == 0 && !_profile.Semester)
 {
     <div class="sga">
         <div class="sga-body">
             <p>This one is practice only. <a href="@_profile.Id">Back to the levels</a>.</p>
         </div>
     </div>
+}
+else if (_profile.Semester)
+{
+    @if (LessonId is not null && Curriculum.ById(LessonId.Value) is { } skill)
+    {
+        <WorkBoard Profile="_profile" Skill="skill" />
+    }
+    else
+    {
+        <Semester Profile="_profile" />
+    }
 }
 else if (LessonId is not null && _lesson is not null)
 {
@@ -104,6 +116,7 @@ else
 
         await Player.UseProfileAsync(_profile);
         await Progress.UseProfileAsync(_profile.Id);
+        await Skills.UseProfileAsync(_profile.Id);
 
         _lesson = LessonId is null ? null : _profile.Lessons.FirstOrDefault(l => l.Id == LessonId);
         _mastered = _profile.Lessons.Count(l => Progress.IsMastered(l.Id));

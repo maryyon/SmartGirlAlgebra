@@ -93,6 +93,13 @@ public class Profile
     /// </summary>
     public Tickle Tickle { get; set; } = new();
 
+    /// <summary>
+    /// Use the generated semester instead of the stored lessons. Problems are
+    /// built fresh with new numbers every time and every step is typed, so there
+    /// is nothing to guess at and nothing to memorise.
+    /// </summary>
+    public bool Semester { get; set; }
+
     public List<Level> Levels { get; set; } = [];
 
     public Level? LevelById(int id) => Levels.FirstOrDefault(l => l.Id == id);

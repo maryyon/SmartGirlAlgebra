@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-08-30 — /rz and /vc: a whole semester, and no way to guess
+
+- **The multiple choice is gone.** Every step is now TYPED. Four options can be
+  guessed one time in four, and a fixed list of questions gets memorised — she
+  was remembering which button was green, not doing the maths.
+- **Every problem is generated fresh.** New numbers every time, so there is
+  nothing to memorise. 24 skills, unlimited problems.
+- **A full semester, starting a grade BELOW her.** Six units: place value and
+  carrying (4th) → factors, long division → fractions → decimals → order of
+  operations → one- and two-step equations (pre-algebra).
+- **Every step must be shown.** She types each intermediate value; the Next
+  button stays disabled until it's right; a wrong answer offers a hint, never
+  the answer.
+- Nothing unlocks until the one before it is worked — three problems each, all
+  steps, on different numbers each time.
+- Verified: 9,600 generated problems / 30,400 steps structurally clean, and
+  22,950 displayed equations checked arithmetically.
+
 ## 2026-08-26 — A mute button on every screen, in every version
 
 - The switch that turns off the silly lines and Nana's voice now sits in the

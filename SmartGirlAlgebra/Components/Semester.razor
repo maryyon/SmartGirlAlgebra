@@ -1,0 +1,128 @@
+@namespace SmartGirlAlgebra.Components
+@using SmartGirlAlgebra.Services
+@inject NavigationManager Nav
+@inject SkillProgress Progress
+@implements IDisposable
+
+@* The whole semester, in order, six units of four.
+
+   It starts a year BELOW where she is. That is deliberate, and it is not a
+   judgement: starting on something she can already do means the first thing she
+   meets is a win, and the method - show every step - gets learned on easy
+   numbers before it has to carry hard ones.
+
+   Nothing opens until the one before it has been worked. Not read: worked, with
+   every step typed, the required number of times, on numbers that were
+   different each time. *@
+
+<div class="sga">
+
+    <header class="sga-header">
+        <div class="sga-header__left">
+            <button type="button" class="sga-iconbtn" aria-label="Home"
+                    @onclick="@(() => Nav.NavigateTo(Profile.Id))">🏠</button>
+            <div>
+                <h1 class="sga-title">The semester</h1>
+                <p class="sga-subtitle">@Progress.PassedCount() of @Curriculum.Skills.Length done</p>
+            </div>
+        </div>
+        <div class="sga-header__right">
+            <SillyToggle />
+            <span class="sga-wiggle" style="font-size:1.4rem;" aria-hidden="true">📘</span>
+        </div>
+    </header>
+
+    <div class="sga-body">
+
+        @if (Progress.NextUp() is { } next)
+        {
+            <button type="button" class="sga-learnbtn"
+                    @onclick="@(() => Nav.NavigateTo($"{Profile.Id}/learn/{next.Id}"))">
+                <span class="sga-learnbtn__icon" aria-hidden="true">▶️</span>
+                <span class="sga-learnbtn__body">
+                    <span class="sga-learnbtn__title">Carry on where you left off</span>
+                    <span class="sga-learnbtn__sub">@next.Title — @next.Subtitle</span>
+                </span>
+                <span class="sga-levelbtn__chev" aria-hidden="true">›</span>
+            </button>
+        }
+        else
+        {
+            <div class="sga-problem sga-pop">
+                <div class="sga-problem__eyebrow">🏆 The whole semester</div>
+                <p class="sga-problem__cheer">You finished every one. Go back over any of them whenever you like.</p>
+            </div>
+        }
+
+        @foreach (var unit in Curriculum.Units)
+        {
+            var skills = Curriculum.InUnit(unit);
+            var doneHere = skills.Count(Progress.IsPassed);
+
+            <section class="sga-unit" aria-label="@Curriculum.UnitName(unit)">
+                <div class="sga-unit__head">
+                    <span class="sga-unit__num" aria-hidden="true">@unit</span>
+                    <div>
+                        <h2 class="sga-unit__name">@Curriculum.UnitName(unit)</h2>
+                        <p class="sga-unit__sub">@doneHere of @skills.Length done</p>
+                    </div>
+                </div>
+
+                <div class="sga-levels">
+                    @foreach (var s in skills)
+                    {
+                        var skill = s;
+                        var passed = Progress.IsPassed(skill);
+                        var open = Progress.IsUnlocked(skill.Id);
+                        var worked = Progress.Worked(skill.Id);
+
+                        <button type="button"
+                                class="sga-levelbtn @(open ? "" : "sga-levelbtn--locked")"
+                                style="background-color:@ColourFor(skill)"
+                                disabled="@(!open)"
+                                @onclick="@(() => Nav.NavigateTo($"{Profile.Id}/learn/{skill.Id}"))">
+                            <span class="sga-levelbtn__num" aria-hidden="true">@(passed ? "✓" : "")</span>
+                            <span class="sga-levelbtn__body">
+                                <span class="sga-levelbtn__line">
+                                    <span class="sga-levelbtn__name">@skill.Title</span>
+                                    <span class="sga-levelbtn__diff">
+                                        @(passed ? "done" : open ? $"{worked}/{skill.ToPass}" : "")
+                                    </span>
+                                </span>
+                                <span class="sga-levelbtn__tag">
+                                    @(open ? skill.Subtitle : "Finish the one before this")
+                                </span>
+                            </span>
+                            <span class="sga-levelbtn__chev" aria-hidden="true">@(open ? "›" : "🔒")</span>
+                        </button>
+                    }
+                </div>
+            </section>
+        }
+
+        <p class="sga-unit__note">
+            Every problem is made up fresh, so the numbers are never the same twice.
+            There is nothing to memorise — she has to actually work it out.
+        </p>
+
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public Profile Profile { get; set; } = default!;
+
+    protected override void OnInitialized() => Progress.Changed += OnChanged;
+
+    private string ColourFor(SkillDef skill)
+    {
+        var swatches = Profile.Theme.Palette;
+        if (swatches.Count == 0) return Profile.Theme.Primary;
+
+        var index = Array.FindIndex(Curriculum.Skills, s => s.Id == skill.Id);
+        return swatches[Math.Max(0, index) % swatches.Count];
+    }
+
+    private void OnChanged() => InvokeAsync(StateHasChanged);
+
+    public void Dispose() => Progress.Changed -= OnChanged;
+}

@@ -18,6 +18,7 @@ builder.Services.AddScoped(sp => new ProfileService(
 
 builder.Services.AddScoped<PlayerService>();
 builder.Services.AddScoped<LessonProgress>();
+builder.Services.AddScoped<SkillProgress>();
 
 // Algebra engine
 builder.Services.AddSingleton<ExpressionParser>();

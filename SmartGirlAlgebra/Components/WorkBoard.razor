@@ -1,0 +1,330 @@
+@namespace SmartGirlAlgebra.Components
+@using SmartGirlAlgebra.Services
+@inject NavigationManager Nav
+@inject SkillProgress Progress
+@inject PlayerService Player
+@inject IJSRuntime JS
+@implements IDisposable
+
+@* Every step typed, every problem new.
+
+   Two things were wrong with what this replaced, and they were the same thing
+   wearing different hats. Four choices can be guessed at one in four. And a
+   fixed list of questions gets MEMORISED - she was not doing the maths, she was
+   remembering which button was green last time.
+
+   So there are no buttons to press here. She has to produce the number. And the
+   numbers are generated fresh for every problem, so there is nothing to
+   remember. If she gets it right, she worked it out.
+
+   She cannot move on until the step is right. A wrong answer offers a hint,
+   never the answer, and she tries again as many times as it takes. *@
+
+<div class="sga">
+
+    <header class="sga-header">
+        <div class="sga-header__left">
+            <button type="button" class="sga-iconbtn" aria-label="Back to the semester"
+                    @onclick="@(() => Nav.NavigateTo($"{Profile.Id}/learn"))">←</button>
+            <button type="button" class="sga-iconbtn" aria-label="Home"
+                    @onclick="@(() => Nav.NavigateTo(Profile.Id))">🏠</button>
+            <div>
+                <h1 class="sga-title">@Skill.Title</h1>
+                <p class="sga-subtitle">@_solved of @Skill.ToPass worked · @Skill.Subtitle</p>
+            </div>
+        </div>
+        <div class="sga-header__right">
+            <SillyToggle />
+            <span class="sga-wiggle" style="font-size:1.4rem;" aria-hidden="true">✏️</span>
+        </div>
+    </header>
+
+    <div class="sga-body">
+
+        @if (_problem is not null)
+        {
+            <section class="sga-problem" aria-label="The problem" @onclick="FinishTyping">
+                <p class="sga-problem__cheer sga-problem__cheer--big sga-prewrap">@_typed@(_typing ? "▌" : "")</p>
+            </section>
+
+            @if (!_typing)
+            {
+                @* Somewhere to do the working. This maths needs paper. *@
+                <section aria-label="Whiteboard">
+                    <ScratchPad />
+                </section>
+
+                @if (_done)
+                {
+                    <section class="sga-problem sga-pop" aria-label="Finished">
+                        <div class="sga-problem__eyebrow">✅ You worked it out</div>
+                        <p class="sga-problem__cheer sga-prewrap">@_problem.Recap</p>
+                    </section>
+                }
+                else if (_step is not null)
+                {
+                    <section class="sga-guide" aria-label="This step">
+                        <div class="sga-guide__num" aria-hidden="true">
+                            Step @(_stepIndex + 1) of @_problem.Steps.Count
+                        </div>
+                        <p class="sga-guide__say sga-prewrap">@_step.Say</p>
+                        <p class="sga-ask">@_step.Ask</p>
+                    </section>
+
+                    <section class="sga-work" aria-label="Your answer">
+                        <input class="sga-work__box @(_wrong ? "sga-work__box--wrong" : "")"
+                               @ref="_box"
+                               @bind="_entry"
+                               @bind:event="oninput"
+                               @onkeydown="OnKey"
+                               disabled="@_gotIt"
+                               placeholder="@_step.Placeholder"
+                               aria-label="@_step.Ask"
+                               autocomplete="off"
+                               autocapitalize="off"
+                               spellcheck="false" />
+
+                        <button type="button" class="sga-work__go"
+                                disabled="@(_gotIt || string.IsNullOrWhiteSpace(_entry))"
+                                @onclick="Check">
+                            Check
+                        </button>
+                    </section>
+
+                    @if (_gotIt)
+                    {
+                        <div class="sga-step__msg sga-step__msg--ok sga-pop">
+                            <span aria-hidden="true">👏</span>
+                            <span>@(string.IsNullOrWhiteSpace(_step.Yes) ? "That's right." : _step.Yes)</span>
+                        </div>
+                    }
+                    else if (_wrong)
+                    {
+                        <div class="sga-guide__nudge sga-pop">
+                            <p>Not quite — try again.</p>
+                            @if (_hintsShown < _step.Hints.Length)
+                            {
+                                <button type="button" class="sga-guide__hintbtn" @onclick="ShowHint">
+                                    💡 @(_hintsShown == 0 ? "Do you want a hint?" : "Another hint, please")
+                                </button>
+                            }
+                        </div>
+                    }
+
+                    @if (_hintsShown > 0)
+                    {
+                        <section class="sga-hints" aria-label="Hints">
+                            <div class="sga-hints__eyebrow">💡 Here's a hint</div>
+                            @foreach (var hint in _step.Hints.Take(_hintsShown))
+                            {
+                                <p>@hint</p>
+                            }
+                        </section>
+                    }
+                }
+            }
+        }
+
+    </div>
+
+    <div class="sga-dock">
+        @if (_typing)
+        {
+            <button type="button" class="sga-bigbtn" style="margin-top:0;" @onclick="FinishTyping">
+                Show me the whole thing
+            </button>
+        }
+        else if (_done)
+        {
+            <button type="button" class="sga-bigbtn" style="margin-top:0;" @onclick="NextProblem">
+                @(_solved >= Skill.ToPass ? "Finish" : "Next problem")
+            </button>
+        }
+        else
+        {
+            @* Disabled until the step is right. There is no way past. *@
+            <button type="button" class="sga-bigbtn" style="margin-top:0;"
+                    disabled="@(!_gotIt)" @onclick="NextStep">
+                @(_stepIndex < (_problem?.Steps.Count ?? 0) - 1 ? "Next step" : "Done")
+            </button>
+        }
+    </div>
+
+</div>
+
+@code {
+    [Parameter, EditorRequired] public Profile Profile { get; set; } = default!;
+    [Parameter, EditorRequired] public SkillDef Skill { get; set; } = default!;
+
+    private WorkedProblem? _problem;
+    private int _stepIndex;
+    private int _hintsShown;
+    private bool _gotIt;
+    private bool _wrong;
+    private bool _done;
+    private string _entry = "";
+    private int _solved;
+    private int _startedSkill = -1;
+
+    private ElementReference _box;
+    private bool _focusWanted;
+
+    private string _typed = "";
+    private bool _typing;
+    private Timer? _timer;
+    private string _target = "";
+
+    private readonly Random _rng = new();
+
+    private TypedStep? _step =>
+        _problem is not null && _stepIndex >= 0 && _stepIndex < _problem.Steps.Count
+            ? _problem.Steps[_stepIndex]
+            : null;
+
+    private Flavor _flavor => Profile.Id == "vc" ? Flavor.Stage : Flavor.Studio;
+
+    protected override void OnParametersSet()
+    {
+        if (_startedSkill == Skill.Id) return;
+        _startedSkill = Skill.Id;
+
+        _solved = Progress.Worked(Skill.Id);
+        NewProblem();
+    }
+
+    private void NewProblem()
+    {
+        _problem = ProblemFactory.Make(Skill.Id, _rng, _flavor);
+        _stepIndex = 0;
+        _hintsShown = 0;
+        _gotIt = false;
+        _wrong = false;
+        _done = false;
+        _entry = "";
+
+        StartTyping(_problem.Setup);
+    }
+
+    // ------------------------------------------------------------- the typing
+
+    private void StartTyping(string text)
+    {
+        _timer?.Dispose();
+
+        _target = text;
+        _typed = "";
+        _typing = text.Length > 0;
+
+        if (!_typing) { _focusWanted = true; return; }
+
+        _timer = new Timer(_ =>
+        {
+            if (_typed.Length >= _target.Length) { StopTyping(); return; }
+
+            _typed = _target[.. (_typed.Length + 1)];
+            InvokeAsync(StateHasChanged);
+        }, null, 240, 26);
+    }
+
+    private void FinishTyping()
+    {
+        if (!_typing) return;
+        _typed = _target;
+        StopTyping();
+    }
+
+    private void StopTyping()
+    {
+        _timer?.Dispose();
+        _timer = null;
+        _typing = false;
+        _focusWanted = true;
+        InvokeAsync(StateHasChanged);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!_focusWanted || _typing || _gotIt || _done) return;
+        _focusWanted = false;
+
+        // The box is where she works, so put the cursor in it rather than making
+        // her reach for it every single step.
+        try { await _box.FocusAsync(); } catch { /* not on screen yet */ }
+    }
+
+    // ------------------------------------------------------------ the working
+
+    private async Task OnKey(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter") await Check();
+    }
+
+    private async Task Check()
+    {
+        if (_gotIt || _step is null || string.IsNullOrWhiteSpace(_entry)) return;
+
+        if (!Answers.Matches(_entry, _step))
+        {
+            _wrong = true;
+            _ = Player.RecordAttemptAsync(correct: false, pointsEarned: 0);
+            await Task.CompletedTask;
+            return;
+        }
+
+        _gotIt = true;
+        _wrong = false;
+
+        // Full marks only for a step she got without being walked to it.
+        _ = Player.RecordAttemptAsync(correct: true, pointsEarned: _hintsShown == 0 ? 10 : 4);
+        await Task.CompletedTask;
+    }
+
+    private void ShowHint()
+    {
+        if (_step is null) return;
+        if (_hintsShown < _step.Hints.Length) _hintsShown++;
+    }
+
+    private async Task NextStep()
+    {
+        if (_problem is null || !_gotIt) return;
+
+        if (_stepIndex < _problem.Steps.Count - 1)
+        {
+            _stepIndex++;
+            _hintsShown = 0;
+            _gotIt = false;
+            _wrong = false;
+            _entry = "";
+            StartTyping(_step?.Say ?? "");
+            await ToTop();
+            return;
+        }
+
+        // A problem only counts when every step of it was worked.
+        _done = true;
+        _solved++;
+        await Progress.RecordWorkedAsync(Skill.Id);
+        await ToTop();
+    }
+
+    private async Task NextProblem()
+    {
+        if (_solved >= Skill.ToPass)
+        {
+            Nav.NavigateTo($"{Profile.Id}/learn");
+            return;
+        }
+
+        NewProblem();
+        await ToTop();
+    }
+
+    private async Task ToTop()
+    {
+        try { await JS.InvokeVoidAsync("sgaUi.toTop"); }
+        catch { /* nothing to scroll */ }
+    }
+
+    public void Dispose() => _timer?.Dispose();
+}

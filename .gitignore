@@ -103,3 +103,6 @@ secrets.json
 
 # local rollback bundles — never pushed
 Backup/
+
+# local arithmetic audit harness, not part of the app
+.mathcheck/
