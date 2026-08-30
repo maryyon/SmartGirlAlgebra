@@ -34,6 +34,10 @@
     {
       "id": "kt",
       "name": "Smart Start Math"
+    },
+    {
+      "id": "ds",
+      "name": "Smart Full-Court Algebra"
     }
   ],
   "hostMap": {

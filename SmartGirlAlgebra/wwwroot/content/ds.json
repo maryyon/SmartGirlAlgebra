@@ -1,0 +1,285 @@
+{
+  "_note": "Ninth grade, basketball, Algebra 1. The semester is generated - see Curriculum/AlgebraFactory.",
+  "id": "ds",
+  "name": "Smart Full-Court Algebra",
+  "tagline": "Algebra 1, played at game speed. 🏀",
+  "howToPlay": "Read the problem, then solve it <strong>one line at a time</strong>. Tap <strong>Check!</strong> after every line. Stuck? Grab a hint or tap <strong>Show me how</strong>. For the real course, tap <strong>Learn it first</strong>.",
+  "codePrefix": "DS",
+  "mode": "Steps",
+  "crest": "images/sport-crest.png",
+  "levelPickerTitle": "Pick your possession",
+  "levelPickerSubtitle": "Level 1 = warm-up. Level 5 = crunch time. 🏆",
+  "footerNote": "No sign-up, no passwords — just you, the numbers, and the work.",
+  "semester": true,
+  "track": "algebra1",
+  "_themeNote": "PLACEHOLDER colours — hardwood/orange/charcoal. Swap when the real brand colours arrive.",
+  "theme": {
+    "primary": "#c8501e",
+    "primaryHi": "#e2661f",
+    "primaryFg": "#ffffff",
+    "accent": "#f2a63b",
+    "accentFg": "#20160e",
+    "background": "#f6f1ea",
+    "foreground": "#20160e",
+    "card": "#ffffff",
+    "secondary": "#ead8c4",
+    "secondaryFg": "#8a3a12",
+    "muted": "#efe4d6",
+    "mutedFg": "#7a6a5a",
+    "border": "#d9c4ab",
+    "palette": [
+      "#c8501e",
+      "#e2661f",
+      "#f2a63b",
+      "#8a3a12",
+      "#3c2a1c",
+      "#a8431a"
+    ],
+    "googleFonts": [
+      "Archivo:wght@600;700;800;900",
+      "Nunito:wght@400;600;700;800"
+    ],
+    "fontDisplay": "\"Archivo\", ui-sans-serif, system-ui, sans-serif",
+    "fontSans": "\"Nunito\", ui-sans-serif, system-ui, -apple-system, sans-serif"
+  },
+  "icons": [
+    "ball",
+    "trophy",
+    "whistle",
+    "star",
+    "sparkle"
+  ],
+  "encouragement": {
+    "correct": [
+      "That's the read.",
+      "Good possession.",
+      "Clean.",
+      "Keep it moving."
+    ],
+    "wrong": [
+      "Off the rim.",
+      "Reset and go again.",
+      "Not that line.",
+      "Run it back."
+    ],
+    "solved": [
+      "THAT'S THE GAME.",
+      "BUZZER BEATER!",
+      "CLEAN SHEET."
+    ]
+  },
+  "verses": [
+    {
+      "text": "Whatever you do, work heartily, as for the Lord…",
+      "ref": "Colossians 3:23"
+    },
+    {
+      "text": "Two are better than one, because they have a good reward for their labor.",
+      "ref": "Ecclesiastes 4:9"
+    },
+    {
+      "text": "The plans of the diligent surely lead to profit…",
+      "ref": "Proverbs 21:5"
+    },
+    {
+      "text": "I can do all things through Christ, who strengthens me.",
+      "ref": "Philippians 4:13"
+    },
+    {
+      "text": "For God didn’t give us a spirit of fear, but of power, love, and self-control.",
+      "ref": "2 Timothy 1:7"
+    }
+  ],
+  "tickle": {
+    "lines": [
+      "That tickled. Slightly.",
+      "Noted. And yes, that tickled.",
+      "You're enjoying this, aren't you.",
+      "Fine. That one got me.",
+      "I felt that. Carry on."
+    ]
+  },
+  "levels": [
+    {
+      "id": 1,
+      "name": "Warm-Up Shots",
+      "tagline": "Two moves, in the right order.",
+      "difficulty": "Warm-up",
+      "cheer": "You scored 3 points on every possession, plus 8 from the line. You finished with 35. 🏀",
+      "question": "How many possessions did you score on?",
+      "equation": "3x + 8 = 35",
+      "variableMeaning": "x = scoring possessions",
+      "answer": "x = 9",
+      "answerValue": 9,
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−",
+        "3"
+      ],
+      "hints": [
+        "Undo the +8 before you touch the 3.",
+        "35 − 8 = 27, so 3x = 27.",
+        "27 ÷ 3 = 9. x = 9."
+      ],
+      "walkthrough": [
+        {
+          "title": "Undo the adding",
+          "body": "Take 8 off both sides. The +8 goes and 35 becomes 27.",
+          "math": "3x = 27"
+        },
+        {
+          "title": "Undo the times",
+          "body": "Divide both sides by 3.",
+          "math": "x = 9"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Both Ends of the Floor",
+      "tagline": "x on both sides.",
+      "difficulty": "Getting warm",
+      "cheer": "Your points: 5 per game plus 12 already banked. Your rival: 3 per game plus 28. Tonight you tie. 🎯",
+      "question": "After how many games are you level?",
+      "equation": "5x + 12 = 3x + 28",
+      "variableMeaning": "x = games played",
+      "answer": "x = 8",
+      "answerValue": 8,
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−",
+        "5",
+        "3"
+      ],
+      "hints": [
+        "Get the x terms on one side — take 3x off both.",
+        "2x + 12 = 28, so 2x = 16.",
+        "16 ÷ 2 = 8. x = 8."
+      ],
+      "walkthrough": [
+        {
+          "title": "Collect the x's",
+          "body": "Take 3x from both sides.",
+          "math": "2x + 12 = 28"
+        },
+        {
+          "title": "Then the numbers",
+          "body": "Take 12 off both sides, then divide by 2.",
+          "math": "x = 8"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Set Play",
+      "tagline": "Brackets. Everything inside gets multiplied.",
+      "difficulty": "Certified tricky",
+      "cheer": "Four identical sets, each worth your score plus 6 bonus points. The whole run was worth 68. 📋",
+      "question": "What was your score in one set?",
+      "equation": "4(x + 6) = 68",
+      "variableMeaning": "x = points in one set",
+      "answer": "x = 11",
+      "answerValue": 11,
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−",
+        "4",
+        "("
+      ],
+      "hints": [
+        "Multiply the 4 by BOTH things inside: 4x + 24.",
+        "4x + 24 = 68, so 4x = 44.",
+        "44 ÷ 4 = 11. x = 11."
+      ],
+      "walkthrough": [
+        {
+          "title": "Expand",
+          "body": "The 4 hits the x AND the 6.",
+          "math": "4x + 24 = 68"
+        },
+        {
+          "title": "Two-step it",
+          "body": "Take 24 off, then divide by 4.",
+          "math": "x = 11"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Reading the Line",
+      "tagline": "Slope, from two possessions.",
+      "difficulty": "Big brain",
+      "cheer": "After 2 games you had 14 points. After 6 games you had 38. Your scoring is a straight line. 📈",
+      "question": "How many points per game is that?",
+      "equation": "m = (38 − 14)/(6 − 2)",
+      "variableMeaning": "m = points per game",
+      "answer": "m = 6",
+      "answerValue": 6,
+      "chips": [
+        "m",
+        "=",
+        "−",
+        "/"
+      ],
+      "hints": [
+        "Slope is rise over run: change in points over change in games.",
+        "Rise = 38 − 14 = 24. Run = 6 − 2 = 4.",
+        "24 ÷ 4 = 6 points per game."
+      ],
+      "walkthrough": [
+        {
+          "title": "Rise over run",
+          "body": "How far up, divided by how far across.",
+          "math": "(38 − 14)/(6 − 2)"
+        },
+        {
+          "title": "Work it out",
+          "body": "24 over 4.",
+          "math": "m = 6"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Crunch Time",
+      "tagline": "A quadratic. Two answers, not one.",
+      "difficulty": "Crunch time",
+      "cheer": "The height of your shot in metres after t seconds is t² − 7t + 12 above the rim. It's level with the rim twice. 🏀",
+      "question": "At what times is it level with the rim? Give the SMALLER one.",
+      "equation": "t² − 7t + 12 = 0",
+      "variableMeaning": "t = seconds",
+      "answer": "t = 3",
+      "answerValue": 3,
+      "chips": [
+        "t",
+        "=",
+        "−",
+        "+",
+        "("
+      ],
+      "hints": [
+        "Factorise: two numbers that multiply to 12 and add to −7.",
+        "−3 and −4. So (t − 3)(t − 4) = 0.",
+        "Either bracket can be zero: t = 3 or t = 4. The smaller is 3."
+      ],
+      "walkthrough": [
+        {
+          "title": "Factorise",
+          "body": "Two numbers multiplying to 12 and adding to −7: −3 and −4.",
+          "math": "(t − 3)(t − 4) = 0"
+        },
+        {
+          "title": "Zero product",
+          "body": "If two things multiply to zero, one of them is zero.",
+          "math": "t = 3 or t = 4"
+        }
+      ]
+    }
+  ]
+}

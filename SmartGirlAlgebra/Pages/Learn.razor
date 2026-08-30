@@ -116,7 +116,7 @@ else
 
         await Player.UseProfileAsync(_profile);
         await Progress.UseProfileAsync(_profile.Id);
-        await Skills.UseProfileAsync(_profile.Id);
+        await Skills.UseProfileAsync(_profile.Id, _profile.Track);
 
         _lesson = LessonId is null ? null : _profile.Lessons.FirstOrDefault(l => l.Id == LessonId);
         _mastered = _profile.Lessons.Count(l => Progress.IsMastered(l.Id));

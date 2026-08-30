@@ -16,7 +16,15 @@ namespace SmartGirlAlgebra.Services;
 /// </summary>
 public static class ProblemFactory
 {
-    public static WorkedProblem Make(int skillId, Random r, Flavor f) => skillId switch
+    public static WorkedProblem Make(int skillId, Random r, Flavor f)
+    {
+        // The ninth-grade course lives in its own file; same rules, harder maths.
+        if (skillId >= 1000) return AlgebraFactory.Make(skillId, r, f);
+
+        return Build(skillId, r, f);
+    }
+
+    private static WorkedProblem Build(int skillId, Random r, Flavor f) => skillId switch
     {
         101 => PlaceValue(r, f),
         102 => BigAddition(r, f),

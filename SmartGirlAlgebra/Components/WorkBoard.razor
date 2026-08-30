@@ -181,7 +181,12 @@
             ? _problem.Steps[_stepIndex]
             : null;
 
-    private Flavor _flavor => Profile.Id == "vc" ? Flavor.Stage : Flavor.Studio;
+    private Flavor _flavor => Profile.Id switch
+    {
+        "vc" => Flavor.Stage,
+        "ds" => Flavor.Court,
+        _ => Flavor.Studio
+    };
 
     protected override void OnParametersSet()
     {

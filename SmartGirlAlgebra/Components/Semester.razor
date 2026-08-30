@@ -23,7 +23,7 @@
                     @onclick="@(() => Nav.NavigateTo(Profile.Id))">🏠</button>
             <div>
                 <h1 class="sga-title">The semester</h1>
-                <p class="sga-subtitle">@Progress.PassedCount() of @Curriculum.Skills.Length done</p>
+                <p class="sga-subtitle">@Progress.PassedCount() of @Progress.TotalCount() done</p>
             </div>
         </div>
         <div class="sga-header__right">
@@ -54,16 +54,16 @@
             </div>
         }
 
-        @foreach (var unit in Curriculum.Units)
+        @foreach (var unit in Curriculum.Units(Profile.Track))
         {
-            var skills = Curriculum.InUnit(unit);
+            var skills = Curriculum.InUnit(Profile.Track, unit);
             var doneHere = skills.Count(Progress.IsPassed);
 
-            <section class="sga-unit" aria-label="@Curriculum.UnitName(unit)">
+            <section class="sga-unit" aria-label="@Curriculum.UnitName(Profile.Track, unit)">
                 <div class="sga-unit__head">
                     <span class="sga-unit__num" aria-hidden="true">@unit</span>
                     <div>
-                        <h2 class="sga-unit__name">@Curriculum.UnitName(unit)</h2>
+                        <h2 class="sga-unit__name">@Curriculum.UnitName(Profile.Track, unit)</h2>
                         <p class="sga-unit__sub">@doneHere of @skills.Length done</p>
                     </div>
                 </div>
@@ -118,7 +118,7 @@
         var swatches = Profile.Theme.Palette;
         if (swatches.Count == 0) return Profile.Theme.Primary;
 
-        var index = Array.FindIndex(Curriculum.Skills, s => s.Id == skill.Id);
+        var index = Array.FindIndex(Curriculum.Skills(Profile.Track), s => s.Id == skill.Id);
         return swatches[Math.Max(0, index) % swatches.Count];
     }
 

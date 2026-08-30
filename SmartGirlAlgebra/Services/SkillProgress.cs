@@ -18,6 +18,7 @@ public class SkillProgress
     private readonly IJSRuntime _js;
 
     private string _profileId = "";
+    private string _track = "core";
     private Dictionary<int, int> _worked = [];
 
     public SkillProgress(IJSRuntime js) => _js = js;
@@ -26,8 +27,9 @@ public class SkillProgress
 
     private string Key => $"sgaSkill:{_profileId}";
 
-    public async Task UseProfileAsync(string profileId)
+    public async Task UseProfileAsync(string profileId, string track = "core")
     {
+        _track = string.IsNullOrWhiteSpace(track) ? "core" : track;
         if (_profileId == profileId) return;
 
         _profileId = profileId;
@@ -47,7 +49,7 @@ public class SkillProgress
     /// </summary>
     public bool IsUnlocked(int skillId)
     {
-        var all = Curriculum.Skills;
+        var all = Curriculum.Skills(_track);
         if (all.Length == 0) return false;
         if (all[0].Id == skillId) return true;
 
@@ -61,7 +63,7 @@ public class SkillProgress
     /// <summary>Where she is up to — the first skill she has not passed.</summary>
     public SkillDef? NextUp()
     {
-        foreach (var s in Curriculum.Skills)
+        foreach (var s in Curriculum.Skills(_track))
         {
             if (!IsPassed(s)) return s;
         }
@@ -69,7 +71,9 @@ public class SkillProgress
         return null;
     }
 
-    public int PassedCount() => Curriculum.Skills.Count(IsPassed);
+    public int PassedCount() => Curriculum.Skills(_track).Count(IsPassed);
+
+    public int TotalCount() => Curriculum.Skills(_track).Length;
 
     public async Task RecordWorkedAsync(int skillId)
     {

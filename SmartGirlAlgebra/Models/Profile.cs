@@ -100,6 +100,9 @@ public class Profile
     /// </summary>
     public bool Semester { get; set; }
 
+    /// <summary>Which course the semester follows: "core", "algebra1".</summary>
+    public string Track { get; set; } = "core";
+
     public List<Level> Levels { get; set; } = [];
 
     public Level? LevelById(int id) => Levels.FirstOrDefault(l => l.Id == id);

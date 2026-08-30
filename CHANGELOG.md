@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-08-30 — /ds: ninth grade, basketball, Algebra 1
+
+- New version at **/ds** — "Smart Full-Court Algebra", ninth grade, basketball.
+- A full **Algebra 1** semester on the same generated, no-guessing engine:
+  signs and powers → solving equations → inequalities and rates → slope and
+  lines → systems and exponents → quadratics and Pythagoras. 24 skills.
+- Five play levels at real Algebra 1 level, not the one-step problems the
+  younger versions use.
+- Colours are a **placeholder** (hardwood/orange/charcoal) until the real brand
+  colours arrive.
+- Audit: 14,400 generated problems / 45,600 steps across all 48 skills, clean.
+
 ## 2026-08-30 — /rz and /vc: a whole semester, and no way to guess
 
 - **The multiple choice is gone.** Every step is now TYPED. Four options can be
