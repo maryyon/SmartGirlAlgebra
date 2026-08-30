@@ -116,6 +116,20 @@ public class Flavor
 
     public static readonly Flavor Studio = new();
 
+    /// <summary>Football, cooking, family gatherings, road trips.</summary>
+    public static readonly Flavor Gridiron = new()
+    {
+        Place = "the kitchen",
+        People = "guests",
+        Person = "guest",
+        Things = "servings",
+        Thing = "serving",
+        Boxes = "trays",
+        Box = "tray",
+        Event = "the family reunion",
+        Money = "a plate"
+    };
+
     public static readonly Flavor Court = new()
     {
         Place = "the gym",
@@ -219,6 +233,37 @@ public static class Curriculum
         new() { Id = 1602, Track = "algebra1", Unit = 6, Grade = "9th", Title = "Factorising",             Subtitle = "Expanding, backwards" },
         new() { Id = 1603, Track = "algebra1", Unit = 6, Grade = "9th", Title = "Solving quadratics",      Subtitle = "Two answers, not one" },
         new() { Id = 1604, Track = "algebra1", Unit = 6, Grade = "9th", Title = "Pythagoras",              Subtitle = "a² + b² = c²" },
+
+        // ========== Accelerated: sixth grade in, tenth grade out ============
+        new() { Id = 2101, Track = "accel", Unit = 1, Grade = "6th",  Title = "Ratios",              Subtitle = "Simplify, then scale" },
+        new() { Id = 2102, Track = "accel", Unit = 1, Grade = "6th",  Title = "Unit rates",          Subtitle = "Per one, both directions" },
+        new() { Id = 2103, Track = "accel", Unit = 1, Grade = "6th",  Title = "Percent",             Subtitle = "Find 1%, then scale" },
+        new() { Id = 2104, Track = "accel", Unit = 1, Grade = "7th",  Title = "Negatives",           Subtitle = "Different rules for + and ×" },
+
+        new() { Id = 2201, Track = "accel", Unit = 2, Grade = "7th",  Title = "Distributing",        Subtitle = "Everything inside gets hit" },
+        new() { Id = 2202, Track = "accel", Unit = 2, Grade = "7th",  Title = "Two-step equations",  Subtitle = "Undo in reverse order" },
+        new() { Id = 2203, Track = "accel", Unit = 2, Grade = "7th",  Title = "Inequalities",        Subtitle = "When the sign flips" },
+        new() { Id = 2204, Track = "accel", Unit = 2, Grade = "8th",  Title = "Rearranging formulas",Subtitle = "Solve before substituting" },
+
+        new() { Id = 2301, Track = "accel", Unit = 3, Grade = "7th",  Title = "Proportions",         Subtitle = "Scale both sides equally" },
+        new() { Id = 2302, Track = "accel", Unit = 3, Grade = "7th",  Title = "Percent change",      Subtitle = "Always over the original" },
+        new() { Id = 2303, Track = "accel", Unit = 3, Grade = "7th",  Title = "Scale",               Subtitle = "Maps, models and plans" },
+        new() { Id = 2304, Track = "accel", Unit = 3, Grade = "7th",  Title = "Probability",         Subtitle = "Wanted over everything" },
+
+        new() { Id = 2401, Track = "accel", Unit = 4, Grade = "8th",  Title = "Slope as a rate",     Subtitle = "How fast it changes" },
+        new() { Id = 2402, Track = "accel", Unit = 4, Grade = "8th",  Title = "y = mx + b",          Subtitle = "Fixed part, growing part" },
+        new() { Id = 2403, Track = "accel", Unit = 4, Grade = "8th",  Title = "Systems",             Subtitle = "Two unknowns, two facts" },
+        new() { Id = 2404, Track = "accel", Unit = 4, Grade = "8th",  Title = "Finding the rule",    Subtitle = "Work out the machine" },
+
+        new() { Id = 2501, Track = "accel", Unit = 5, Grade = "8th",  Title = "Exponent rules",      Subtitle = "Add to multiply, subtract to divide" },
+        new() { Id = 2502, Track = "accel", Unit = 5, Grade = "8th",  Title = "Scientific notation", Subtitle = "Very big, written short" },
+        new() { Id = 2503, Track = "accel", Unit = 5, Grade = "9th",  Title = "Square roots",        Subtitle = "Splitting them up" },
+        new() { Id = 2504, Track = "accel", Unit = 5, Grade = "9th",  Title = "Pythagoras",          Subtitle = "The straight line is shorter" },
+
+        new() { Id = 2601, Track = "accel", Unit = 6, Grade = "9th",  Title = "Expanding brackets",  Subtitle = "Sum in the middle, product on the end" },
+        new() { Id = 2602, Track = "accel", Unit = 6, Grade = "9th",  Title = "Solving quadratics",  Subtitle = "Two answers, not one" },
+        new() { Id = 2603, Track = "accel", Unit = 6, Grade = "10th", Title = "Sequences",           Subtitle = "The n minus one that catches people" },
+        new() { Id = 2604, Track = "accel", Unit = 6, Grade = "10th", Title = "Mean and median",     Subtitle = "Which one a freak result moves" },
     ];
 
     public static SkillDef? ById(int id) => All.FirstOrDefault(s => s.Id == id);
@@ -236,6 +281,16 @@ public static class Curriculum
     /// <summary>What each unit is called on the way through.</summary>
     public static string UnitName(string track, int unit) => track switch
     {
+        "accel" => unit switch
+        {
+            1 => "Ratios, rates and percent",
+            2 => "Expressions and equations",
+            3 => "Proportional reasoning",
+            4 => "Linear relationships",
+            5 => "Powers and roots",
+            6 => "Quadratics and beyond",
+            _ => $"Unit {unit}"
+        },
         "algebra1" => unit switch
         {
             1 => "Foundations",

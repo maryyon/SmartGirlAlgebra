@@ -1,0 +1,290 @@
+{
+  "_note": "Sixth grade, accelerated 6-10. Football stats, cooking, hosting, reunions, road trips, theme parks. Course is generated - see Curriculum track 'accel'.",
+  "id": "jdm",
+  "name": "Smart Playbook Math",
+  "tagline": "Football, food and family — all of it is numbers. 🏈",
+  "howToPlay": "Solve it <strong>one line at a time</strong> and tap <strong>Check!</strong> after each. For the real work, tap <strong>The course</strong> — it starts at sixth grade and finishes well past it. Fair warning: it argues back.",
+  "codePrefix": "JDM",
+  "mode": "Steps",
+  "crest": "images/sport-crest.png",
+  "levelPickerTitle": "Call your play",
+  "levelPickerSubtitle": "Level 1 = first down. Level 5 = fourth and long. 🏆",
+  "footerNote": "No sign-up, no passwords — just you, the numbers, and the work.",
+  "semester": true,
+  "track": "accel",
+  "coach": {
+    "style": "challenger",
+    "streaks": true,
+    "probes": true,
+    "timed": true,
+    "probeGiveUpAfter": 3,
+    "slowSeconds": 20
+  },
+  "_themeNote": "Mangrove Prep colours, sampled from mangroveprep.org.",
+  "theme": {
+    "primary": "#324c50",
+    "primaryHi": "#3f6266",
+    "primaryFg": "#fdf9e9",
+    "accent": "#189395",
+    "accentFg": "#ffffff",
+    "background": "#fdf9e9",
+    "foreground": "#1c2b2d",
+    "card": "#ffffff",
+    "secondary": "#b7cece",
+    "secondaryFg": "#23393c",
+    "muted": "#efe9d6",
+    "mutedFg": "#6d7f7c",
+    "border": "#cdd9d6",
+    "palette": [
+      "#324c50",
+      "#189395",
+      "#4a6b6e",
+      "#778784",
+      "#2a3f42",
+      "#5d8a86"
+    ],
+    "googleFonts": [
+      "Archivo:wght@600;700;800;900",
+      "Nunito:wght@400;600;700;800"
+    ],
+    "fontDisplay": "\"Archivo\", ui-sans-serif, system-ui, sans-serif",
+    "fontSans": "\"Nunito\", ui-sans-serif, system-ui, -apple-system, sans-serif"
+  },
+  "icons": [
+    "ball",
+    "trophy",
+    "star",
+    "sparkle",
+    "whistle"
+  ],
+  "encouragement": {
+    "correct": [
+      "Correct. I'll allow it.",
+      "Fine. That was clean.",
+      "Good read.",
+      "Yep. Next."
+    ],
+    "wrong": [
+      "No. Look again.",
+      "Not it. Try the other way.",
+      "Incomplete pass.",
+      "Run it back."
+    ],
+    "solved": [
+      "THAT'S THE DRIVE.",
+      "YOU BEAT ME. THIS TIME.",
+      "GAME."
+    ]
+  },
+  "verses": [
+    {
+      "text": "Whatever you do, work at it with all your heart.",
+      "ref": "Colossians 3:23"
+    },
+    {
+      "text": "Plans succeed when there is good advice.",
+      "ref": "Proverbs 15:22"
+    },
+    {
+      "text": "Iron sharpens iron, and one person sharpens another.",
+      "ref": "Proverbs 27:17"
+    },
+    {
+      "text": "Let us not get tired of doing good.",
+      "ref": "Galatians 6:9"
+    }
+  ],
+  "tickle": {
+    "lines": [
+      "Okay, okay, that tickled.",
+      "You're pressing my buttons today.",
+      "Easy! I felt that one.",
+      "Ooh. Right on the funny spot.",
+      "You again? Fine, I'm smiling.",
+      "That tickled. A little."
+    ]
+  },
+  "levels": [
+    {
+      "id": 1,
+      "name": "First Down",
+      "tagline": "Two moves. Don't overthink it.",
+      "difficulty": "First down",
+      "cheer": "You cook 6 wings per guest and 14 extra for the cousins who always show up. You made 92. 🍗",
+      "question": "How many guests were you cooking for?",
+      "equation": "6x + 14 = 92",
+      "variableMeaning": "x = guests",
+      "answer": "x = 13",
+      "answerValue": 13,
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−",
+        "6"
+      ],
+      "hints": [
+        "Undo the +14 first — it was added last.",
+        "92 − 14 = 78, so 6x = 78.",
+        "78 ÷ 6 = 13."
+      ],
+      "walkthrough": [
+        {
+          "title": "Undo the adding",
+          "body": "Take 14 off both sides.",
+          "math": "6x = 78"
+        },
+        {
+          "title": "Undo the times",
+          "body": "Divide both sides by 6.",
+          "math": "x = 13"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Both Sidelines",
+      "tagline": "x on both sides. Collect them.",
+      "difficulty": "Second and short",
+      "cheer": "Your recipe: 7 servings a tray plus 9 spare. Your uncle's: 4 a tray plus 27 spare. Same total. 🥡",
+      "question": "How many trays before you're level?",
+      "equation": "7x + 9 = 4x + 27",
+      "variableMeaning": "x = trays",
+      "answer": "x = 6",
+      "answerValue": 6,
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−",
+        "7",
+        "4"
+      ],
+      "hints": [
+        "Take 4x off both sides to get the x's together.",
+        "3x + 9 = 27, so 3x = 18.",
+        "18 ÷ 3 = 6."
+      ],
+      "walkthrough": [
+        {
+          "title": "Collect the x's",
+          "body": "Subtract 4x from both sides.",
+          "math": "3x + 9 = 27"
+        },
+        {
+          "title": "Finish it",
+          "body": "Take 9 off, then divide by 3.",
+          "math": "x = 6"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Audible",
+      "tagline": "Brackets. Everything inside gets hit.",
+      "difficulty": "Third down",
+      "cheer": "Five identical coolers, each holding your drinks plus 3 waters. 55 drinks total. 🥤",
+      "question": "How many drinks were in one cooler before the waters?",
+      "equation": "5(x + 3) = 55",
+      "variableMeaning": "x = drinks per cooler",
+      "answer": "x = 8",
+      "answerValue": 8,
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−",
+        "5",
+        "("
+      ],
+      "hints": [
+        "The 5 multiplies BOTH the x and the 3.",
+        "5x + 15 = 55, so 5x = 40.",
+        "40 ÷ 5 = 8."
+      ],
+      "walkthrough": [
+        {
+          "title": "Expand",
+          "body": "5 hits the x and the 3.",
+          "math": "5x + 15 = 55"
+        },
+        {
+          "title": "Two-step it",
+          "body": "Take 15 off, divide by 5.",
+          "math": "x = 8"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Reading Coverage",
+      "tagline": "A rate, from two data points.",
+      "difficulty": "Fourth and manageable",
+      "cheer": "After 3 games he had 24 catches. After 7 games, 56. Steady rate. 📈",
+      "question": "How many catches per game?",
+      "equation": "m = (56 − 24)/(7 − 3)",
+      "variableMeaning": "m = catches per game",
+      "answer": "m = 8",
+      "answerValue": 8,
+      "chips": [
+        "m",
+        "=",
+        "−",
+        "/"
+      ],
+      "hints": [
+        "Rise over run: change in catches over change in games.",
+        "56 − 24 = 32. 7 − 3 = 4.",
+        "32 ÷ 4 = 8."
+      ],
+      "walkthrough": [
+        {
+          "title": "Rise over run",
+          "body": "Change in y over change in x.",
+          "math": "(56 − 24)/(7 − 3)"
+        },
+        {
+          "title": "Divide",
+          "body": "32 over 4.",
+          "math": "m = 8"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Fourth and Long",
+      "tagline": "A quadratic. Two answers.",
+      "difficulty": "Fourth and long",
+      "cheer": "The punt's height above the crossbar after t seconds is t² − 9t + 20. It's level with the bar twice. 🏈",
+      "question": "When is it level with the bar? Give the SMALLER time.",
+      "equation": "t² − 9t + 20 = 0",
+      "variableMeaning": "t = seconds",
+      "answer": "t = 4",
+      "answerValue": 4,
+      "chips": [
+        "t",
+        "=",
+        "−",
+        "+",
+        "("
+      ],
+      "hints": [
+        "Two numbers multiplying to 20 and adding to −9.",
+        "−4 and −5, so (t − 4)(t − 5) = 0.",
+        "t = 4 or t = 5. Smaller is 4."
+      ],
+      "walkthrough": [
+        {
+          "title": "Factorise",
+          "body": "Multiply to 20, add to −9: −4 and −5.",
+          "math": "(t − 4)(t − 5) = 0"
+        },
+        {
+          "title": "Zero product",
+          "body": "One bracket must be zero.",
+          "math": "t = 4 or t = 5"
+        }
+      ]
+    }
+  ]
+}

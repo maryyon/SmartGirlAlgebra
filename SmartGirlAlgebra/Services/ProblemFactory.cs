@@ -18,7 +18,8 @@ public static class ProblemFactory
 {
     public static WorkedProblem Make(int skillId, Random r, Flavor f)
     {
-        // The ninth-grade course lives in its own file; same rules, harder maths.
+        // Each course has its own file; identical rules, different maths.
+        if (skillId >= 2000) return AccelFactory.Make(skillId, r, f);
         if (skillId >= 1000) return AlgebraFactory.Make(skillId, r, f);
 
         return Build(skillId, r, f);

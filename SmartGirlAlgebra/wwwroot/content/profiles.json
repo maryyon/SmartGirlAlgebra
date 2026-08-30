@@ -38,6 +38,10 @@
     {
       "id": "ds",
       "name": "Smart Full-Court Algebra"
+    },
+    {
+      "id": "jdm",
+      "name": "Smart Playbook Math"
     }
   ],
   "hostMap": {
