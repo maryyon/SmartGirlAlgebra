@@ -116,6 +116,20 @@ public class Flavor
 
     public static readonly Flavor Studio = new();
 
+    /// <summary>Japan and soccer: ramen, trains, penalties, stoppage time.</summary>
+    public static readonly Flavor Pitch = new()
+    {
+        Place = "the ramen shop",
+        People = "players",
+        Person = "player",
+        Things = "gyoza",
+        Thing = "gyoza",
+        Boxes = "trays",
+        Box = "tray",
+        Event = "the tournament",
+        Money = "a bowl of ramen"
+    };
+
     /// <summary>Football, cooking, family gatherings, road trips.</summary>
     public static readonly Flavor Gridiron = new()
     {
@@ -264,6 +278,37 @@ public static class Curriculum
         new() { Id = 2602, Track = "accel", Unit = 6, Grade = "9th",  Title = "Solving quadratics",  Subtitle = "Two answers, not one" },
         new() { Id = 2603, Track = "accel", Unit = 6, Grade = "10th", Title = "Sequences",           Subtitle = "The n minus one that catches people" },
         new() { Id = 2604, Track = "accel", Unit = 6, Grade = "10th", Title = "Mean and median",     Subtitle = "Which one a freak result moves" },
+
+        // ====== Methods: tricks, shortcuts, and how to learn ================
+        new() { Id = 3101, Track = "methods", Unit = 1, Grade = "5th", Title = "The magic of 9s",     Subtitle = "The digits always add to nine" },
+        new() { Id = 3102, Track = "methods", Unit = 1, Grade = "5th", Title = "The 11 trick",        Subtitle = "Split, add, drop it in the middle" },
+        new() { Id = 3103, Track = "methods", Unit = 1, Grade = "5th", Title = "Times 5, the easy way",Subtitle = "Halve it, then add a zero" },
+        new() { Id = 3104, Track = "methods", Unit = 1, Grade = "5th", Title = "Double and halve",    Subtitle = "Swap a hard sum for an easy one" },
+
+        new() { Id = 3201, Track = "methods", Unit = 2, Grade = "5th", Title = "2, 5 and 10",         Subtitle = "The last digit tells you" },
+        new() { Id = 3202, Track = "methods", Unit = 2, Grade = "5th", Title = "The digit-add rule",  Subtitle = "Testing 3 and 9 without dividing" },
+        new() { Id = 3203, Track = "methods", Unit = 2, Grade = "6th", Title = "4 and 6",             Subtitle = "Last two digits, and double tests" },
+        new() { Id = 3204, Track = "methods", Unit = 2, Grade = "6th", Title = "Breaking a number up",Subtitle = "Use the rules, don't guess" },
+
+        new() { Id = 3301, Track = "methods", Unit = 3, Grade = "5th", Title = "Make a ten",          Subtitle = "Your brain likes tens" },
+        new() { Id = 3302, Track = "methods", Unit = 3, Grade = "6th", Title = "Round then fix",      Subtitle = "Add a nice number, give the extra back" },
+        new() { Id = 3303, Track = "methods", Unit = 3, Grade = "6th", Title = "Break it apart",      Subtitle = "Two small sums beat one big one" },
+        new() { Id = 3304, Track = "methods", Unit = 3, Grade = "6th", Title = "Estimate first",      Subtitle = "So you know if the answer is nonsense" },
+
+        new() { Id = 3401, Track = "methods", Unit = 4, Grade = "6th", Title = "Is it over a half?",  Subtitle = "Comparing without a calculator" },
+        new() { Id = 3402, Track = "methods", Unit = 4, Grade = "6th", Title = "Three ways to say it",Subtitle = "Fraction, decimal, percent" },
+        new() { Id = 3403, Track = "methods", Unit = 4, Grade = "6th", Title = "The 10% trick",       Subtitle = "Build any percent from it" },
+        new() { Id = 3404, Track = "methods", Unit = 4, Grade = "7th", Title = "Working out a tip",   Subtitle = "Faster than unlocking a phone" },
+
+        new() { Id = 3501, Track = "methods", Unit = 5, Grade = "7th", Title = "Negatives",           Subtitle = "It is just a number line" },
+        new() { Id = 3502, Track = "methods", Unit = 5, Grade = "7th", Title = "Letters for numbers", Subtitle = "Swap it in and work it out" },
+        new() { Id = 3503, Track = "methods", Unit = 5, Grade = "7th", Title = "One-step equations",  Subtitle = "Do the opposite, to both sides" },
+        new() { Id = 3504, Track = "methods", Unit = 5, Grade = "7th", Title = "Two-step equations",  Subtitle = "Shoes before socks" },
+
+        new() { Id = 3601, Track = "methods", Unit = 6, Grade = "how", Title = "Catch it with an estimate", Subtitle = "Spot a wrong answer instantly" },
+        new() { Id = 3602, Track = "methods", Unit = 6, Grade = "how", Title = "Check it backwards",  Subtitle = "Every operation has an undo" },
+        new() { Id = 3603, Track = "methods", Unit = 6, Grade = "how", Title = "Find the mistake",    Subtitle = "Where it went wrong, not just that it did" },
+        new() { Id = 3604, Track = "methods", Unit = 6, Grade = "how", Title = "Explain why",         Subtitle = "If you can say why, it is yours" },
     ];
 
     public static SkillDef? ById(int id) => All.FirstOrDefault(s => s.Id == id);
@@ -281,6 +326,16 @@ public static class Curriculum
     /// <summary>What each unit is called on the way through.</summary>
     public static string UnitName(string track, int unit) => track switch
     {
+        "methods" => unit switch
+        {
+            1 => "Tricks nobody tells you",
+            2 => "Rules that save you dividing",
+            3 => "Doing it in your head",
+            4 => "Fractions and percent, fast",
+            5 => "Seventh grade proper",
+            6 => "How to actually learn",
+            _ => $"Unit {unit}"
+        },
         "accel" => unit switch
         {
             1 => "Ratios, rates and percent",

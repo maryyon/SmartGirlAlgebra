@@ -42,6 +42,10 @@
     {
       "id": "jdm",
       "name": "Smart Playbook Math"
+    },
+    {
+      "id": "nm",
+      "name": "Smart Shortcut Math"
     }
   ],
   "hostMap": {

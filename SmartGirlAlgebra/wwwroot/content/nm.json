@@ -1,0 +1,289 @@
+{
+  "_note": "Seventh grade, deliberately starting at fifth. Teaches METHODS and tricks, not just answers. Japan and soccer. Course is generated - track 'methods'.",
+  "id": "nm",
+  "name": "Smart Shortcut Math",
+  "tagline": "The tricks nobody bothered to tell you. ⚽",
+  "howToPlay": "Solve it <strong>one line at a time</strong>, tap <strong>Check!</strong> after each. But the real thing is <strong>The tricks</strong> — nine-times magic, how to know something divides by 3 without dividing, and how to catch your own mistakes.",
+  "codePrefix": "NM",
+  "mode": "Steps",
+  "crest": "images/sport-crest.png",
+  "levelPickerTitle": "Pick your match",
+  "levelPickerSubtitle": "Level 1 = kickoff. Level 5 = stoppage time. ⚽",
+  "footerNote": "No sign-up, no passwords — just you, the numbers, and the tricks.",
+  "semester": true,
+  "track": "methods",
+  "coach": {
+    "style": "comedian",
+    "streaks": true,
+    "probes": true,
+    "timed": false,
+    "probeGiveUpAfter": 2,
+    "slowSeconds": 30
+  },
+  "_themeNote": "City Soccer PSL colours, sampled from pslcitysoccer.com.",
+  "theme": {
+    "primary": "#039e65",
+    "primaryHi": "#04c980",
+    "primaryFg": "#ffffff",
+    "accent": "#e8c061",
+    "accentFg": "#1d0e03",
+    "background": "#fff6ef",
+    "foreground": "#14231d",
+    "card": "#ffffff",
+    "secondary": "#cdeade",
+    "secondaryFg": "#014b3f",
+    "muted": "#e6f4ec",
+    "mutedFg": "#5d7a6e",
+    "border": "#bcdccb",
+    "palette": [
+      "#039e65",
+      "#04c980",
+      "#014b3f",
+      "#e8c061",
+      "#0b7a52",
+      "#1d0e03"
+    ],
+    "googleFonts": [
+      "Baloo+2:wght@600;700;800",
+      "Nunito:wght@400;600;700;800"
+    ],
+    "fontDisplay": "\"Baloo 2\", ui-rounded, \"Segoe UI\", system-ui, sans-serif",
+    "fontSans": "\"Nunito\", ui-sans-serif, system-ui, -apple-system, sans-serif"
+  },
+  "icons": [
+    "soccer",
+    "star",
+    "trophy",
+    "sparkle",
+    "note"
+  ],
+  "encouragement": {
+    "correct": [
+      "YES. Chef's kiss.",
+      "Clean. Absolutely clean.",
+      "Look at you.",
+      "That's the one."
+    ],
+    "wrong": [
+      "Nope! Try again.",
+      "Off target. Go again.",
+      "Not it — one more go.",
+      "Saved by the keeper."
+    ],
+    "solved": [
+      "GOOOOAL!",
+      "TOP CORNER!",
+      "THAT'S FULL TIME."
+    ]
+  },
+  "verses": [
+    {
+      "text": "Get wisdom. Whatever else you get, get understanding.",
+      "ref": "Proverbs 4:7"
+    },
+    {
+      "text": "Do your best to present yourself as one who does not need to be ashamed.",
+      "ref": "2 Timothy 2:15"
+    },
+    {
+      "text": "A cheerful heart is good medicine.",
+      "ref": "Proverbs 17:22"
+    },
+    {
+      "text": "Let us not get tired of doing good.",
+      "ref": "Galatians 6:9"
+    }
+  ],
+  "tickle": {
+    "lines": [
+      "Okay, okay, that tickled.",
+      "You're pressing my buttons today.",
+      "Easy! I felt that one.",
+      "Ooh. Right on the funny spot.",
+      "You again? Fine, I'm smiling.",
+      "That tickled. A little."
+    ]
+  },
+  "levels": [
+    {
+      "id": 1,
+      "name": "Kickoff",
+      "tagline": "One move. Genuinely one.",
+      "difficulty": "Kickoff",
+      "cheer": "You had some yen. You spent ¥400 on ramen. You've got ¥900 left. 🍜",
+      "question": "How much did you start with?",
+      "equation": "x - 400 = 900",
+      "variableMeaning": "x = yen you started with",
+      "answer": "x = 1300",
+      "answerValue": 1300,
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−"
+      ],
+      "hints": [
+        "The 400 was taken away. Do the opposite.",
+        "Add 400 to BOTH sides.",
+        "900 + 400 = 1300."
+      ],
+      "walkthrough": [
+        {
+          "title": "Do the opposite",
+          "body": "It was subtracted, so add it back — to both sides.",
+          "math": "x = 900 + 400"
+        },
+        {
+          "title": "Add it up",
+          "body": "That's your starting amount.",
+          "math": "x = 1300"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "First Half",
+      "tagline": "Two moves, in the right order.",
+      "difficulty": "First half",
+      "cheer": "Each pack has 6 stickers. You had 5 already. Now you have 41. ⚽",
+      "question": "How many packs did you open?",
+      "equation": "6x + 5 = 41",
+      "variableMeaning": "x = packs",
+      "answer": "x = 6",
+      "answerValue": 6,
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−",
+        "6"
+      ],
+      "hints": [
+        "Take the 5 off first — it was added last.",
+        "41 - 5 = 36, so 6x = 36.",
+        "36 ÷ 6 = 6."
+      ],
+      "walkthrough": [
+        {
+          "title": "Shoes before socks",
+          "body": "The +5 went on last, so it comes off first.",
+          "math": "6x = 36"
+        },
+        {
+          "title": "Now the times",
+          "body": "Divide both sides by 6.",
+          "math": "x = 6"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Second Half",
+      "tagline": "x turns up on both sides.",
+      "difficulty": "Second half",
+      "cheer": "Your team scores 4 a game plus 6 banked. Theirs: 2 a game plus 18. You end up level. ⚽",
+      "question": "After how many games?",
+      "equation": "4x + 6 = 2x + 18",
+      "variableMeaning": "x = games",
+      "answer": "x = 6",
+      "answerValue": 6,
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−",
+        "4",
+        "2"
+      ],
+      "hints": [
+        "Take 2x off both sides.",
+        "2x + 6 = 18, so 2x = 12.",
+        "12 ÷ 2 = 6."
+      ],
+      "walkthrough": [
+        {
+          "title": "Collect the x's",
+          "body": "Subtract 2x from both sides.",
+          "math": "2x + 6 = 18"
+        },
+        {
+          "title": "Finish",
+          "body": "Take 6 off, divide by 2.",
+          "math": "x = 6"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Extra Time",
+      "tagline": "Brackets. Everything inside.",
+      "difficulty": "Extra time",
+      "cheer": "Three identical bento boxes, each with your rice balls plus 2 gyoza. 21 items total. 🍙",
+      "question": "How many rice balls in one box?",
+      "equation": "3(x + 2) = 21",
+      "variableMeaning": "x = rice balls per box",
+      "answer": "x = 5",
+      "answerValue": 5,
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−",
+        "3",
+        "("
+      ],
+      "hints": [
+        "The 3 multiplies the x AND the 2.",
+        "3x + 6 = 21, so 3x = 15.",
+        "15 ÷ 3 = 5."
+      ],
+      "walkthrough": [
+        {
+          "title": "Expand",
+          "body": "3 hits both things inside.",
+          "math": "3x + 6 = 21"
+        },
+        {
+          "title": "Two-step it",
+          "body": "Take 6 off, divide by 3.",
+          "math": "x = 5"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Stoppage Time",
+      "tagline": "Negatives. Stay calm.",
+      "difficulty": "Stoppage time",
+      "cheer": "The temperature on the bullet train platform dropped 7 degrees to −2. 🚆",
+      "question": "What was it before?",
+      "equation": "x - 7 = -2",
+      "variableMeaning": "x = starting temperature",
+      "answer": "x = 5",
+      "answerValue": 5,
+      "chips": [
+        "x",
+        "=",
+        "+",
+        "−"
+      ],
+      "hints": [
+        "It dropped, so add the 7 back to both sides.",
+        "-2 + 7. Start at -2 and move 7 to the RIGHT.",
+        "You pass zero and land on 5."
+      ],
+      "walkthrough": [
+        {
+          "title": "Undo the drop",
+          "body": "Add 7 to both sides.",
+          "math": "x = -2 + 7"
+        },
+        {
+          "title": "Walk the line",
+          "body": "From -2, seven steps right.",
+          "math": "x = 5"
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-08-30 — /jdm and /nm
+
+- **/jdm — "Smart Playbook Math"**, sixth grade in, tenth grade out. Football
+  stats, cooking, hosting, reunions, road trips. Mangrove Prep colours.
+  The coach *challenges*: times him, counts clean streaks, and asks WHY after
+  the number is already typed. Backs off after three slow or wrong replies.
+- **/nm — "Smart Shortcut Math"**, seventh grade, deliberately starting at
+  fifth. Teaches METHODS: the magic of 9s, the 11 trick, halve-and-double,
+  divisibility rules, mental shortcuts — and a closing unit on how to check your
+  own work and find your own mistake. Japan and soccer. City Soccer PSL colours.
+  Funniest voice of the set; stops probing after **two** slow or wrong replies.
+- Four courses now: core (4th→pre-algebra), algebra1 (9th), accel (6th→10th),
+  methods (5th→7th + how to learn). 96 skills, all generated.
+- Audit: 24,000 problems, 74,500 steps, 12,250 carrying a "why". Clean.
+
 ## 2026-08-30 — /ds: ninth grade, basketball, Algebra 1
 
 - New version at **/ds** — "Smart Full-Court Algebra", ninth grade, basketball.
