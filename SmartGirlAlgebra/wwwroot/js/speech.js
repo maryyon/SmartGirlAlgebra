@@ -43,11 +43,19 @@ window.sgaSpeech = (function () {
 
     if (!matching.length) return null;
 
-    var nice = matching.filter(function (v) {
-      return /samantha|karen|moira|aria|jenny|zira|paulina|monica|helena|female|natural/i.test(v.name || '');
+    // Skip anything breathy or novelty: at volume 1 a whispery voice still
+    // sounds quiet, and that is what "turn it up" usually actually means.
+    var clear = matching.filter(function (v) {
+      return !/whisper|breath|soft|novelty|eloquence|compact/i.test(v.name || '');
     });
 
-    return nice.length ? nice[0] : matching[0];
+    var pool = clear.length ? clear : matching;
+
+    var nice = pool.filter(function (v) {
+      return /zira|aria|jenny|samantha|karen|moira|paulina|monica|helena|natural|premium|enhanced/i.test(v.name || '');
+    });
+
+    return nice.length ? nice[0] : pool[0];
   }
 
   // Whether this device can say anything in that language at all. A Spanish
@@ -70,6 +78,7 @@ window.sgaSpeech = (function () {
     var u = new SpeechSynthesisUtterance(text);
     u.rate = rate;
     u.pitch = 1.05;
+    u.volume = 1;                 // the API maximum; it will not go louder
 
     var v = pickVoice();
     if (v) { u.voice = v; u.lang = v.lang; }
@@ -148,6 +157,7 @@ window.sgaSpeech = (function () {
     var u = new SpeechSynthesisUtterance(word);
     u.rate = rate;
     u.pitch = 1.02;
+    u.volume = 1;
 
     var v = pickVoice();
     if (v) { u.voice = v; u.lang = v.lang; }

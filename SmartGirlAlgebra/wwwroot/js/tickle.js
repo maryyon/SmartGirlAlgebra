@@ -18,10 +18,11 @@ window.sgaTickle = (function () {
   // How often the signature is breathed rather than said.
   var WHISPER_IN = 3;
 
-  // A quarter softer than full. Volume only - the recordings are untouched, so
-  // her voice keeps its own tone; it just sits under the reading rather than
-  // over it. Reading always plays at full.
-  var VOLUME = 0.75;
+  // Well under full. Volume only - the recordings are untouched, so her voice
+  // keeps its own tone; it just sits under the reading rather than over it.
+  // Reading is capped at 1 by the browser, so the only way to make reading
+  // relatively louder is to bring everything else down.
+  var VOLUME = 0.6;
 
   var ONE_IN = 25;
   var COOLDOWN_MS = 60000;

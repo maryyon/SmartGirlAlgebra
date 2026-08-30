@@ -61,7 +61,7 @@
     [Parameter, EditorRequired] public IReadOnlyList<Line> Lines { get; set; } = [];
 
     /// <summary>Slow. The point is to hear the word, not to keep up with it.</summary>
-    [Parameter] public double Rate { get; set; } = 0.5;
+    [Parameter] public double Rate { get; set; } = 0.7;
 
     private sealed record Tok(int Line, int Key, string Text, string Sep, bool Hard, string Say);
 

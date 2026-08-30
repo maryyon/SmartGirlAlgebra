@@ -344,7 +344,7 @@
 
         _tapped = tok.Spoken;
 
-        try { await Invoke("sgaSpeech.say", tok.Say, 0.5, _self); }
+        try { await Invoke("sgaSpeech.say", tok.Say, 0.7, _self); }
         catch { _tapped = -1; }
     }
 
