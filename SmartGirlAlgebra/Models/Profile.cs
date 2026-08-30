@@ -103,6 +103,9 @@ public class Profile
     /// <summary>Which course the semester follows: "core", "algebra1".</summary>
     public string Track { get; set; } = "core";
 
+    /// <summary>How this version talks, pushes, and keeps score.</summary>
+    public Coach Coach { get; set; } = new();
+
     public List<Level> Levels { get; set; } = [];
 
     public Level? LevelById(int id) => Levels.FirstOrDefault(l => l.Id == id);

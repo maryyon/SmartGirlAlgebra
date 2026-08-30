@@ -40,13 +40,19 @@ else
                 </div>
             }
 
-            @if (_profile.Lessons.Count > 0)
+            @* A version whose course is generated has no stored lessons, so this
+               button has to look for either. Without it there is no way in. *@
+            @if (_profile.Lessons.Count > 0 || _profile.Semester)
             {
                 <button type="button" class="sga-learnbtn" @onclick="@(() => Nav.NavigateTo($"{_profile.Id}/learn"))">
                     <span class="sga-learnbtn__icon" aria-hidden="true">💡</span>
                     <span class="sga-learnbtn__body">
-                        <span class="sga-learnbtn__title">Learn it first</span>
-                        <span class="sga-learnbtn__sub">Short lessons, then try it yourself</span>
+                        <span class="sga-learnbtn__title">@(_profile.Semester ? "The course" : "Learn it first")</span>
+                        <span class="sga-learnbtn__sub">
+                            @(_profile.Semester
+                                ? "Every step worked out, nothing to guess"
+                                : "Short lessons, then try it yourself")
+                        </span>
                     </span>
                     <span class="sga-levelbtn__chev" aria-hidden="true">›</span>
                 </button>

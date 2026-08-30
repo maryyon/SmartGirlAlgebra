@@ -28,6 +28,47 @@ public class TypedStep
 
     /// <summary>Greyed text in the box, e.g. "a number" or "a fraction like 3/4".</summary>
     public string Placeholder { get; set; } = "answer";
+
+    /// <summary>
+    /// Why the answer works. Asked AFTER the number is already typed, so picking
+    /// the reason can never be a way round doing the maths — the maths is done.
+    /// Empty means this step does not get probed.
+    /// </summary>
+    public string Why { get; set; } = "";
+
+    /// <summary>Wrong reasons, shuffled in with the right one.</summary>
+    public string[] WhyWrong { get; set; } = [];
+}
+
+/// <summary>
+/// How a version talks to its child, and how hard it pushes.
+///
+/// The same maths lands very differently on a nine-year-old and a quick
+/// twelve-year-old who wants to be beaten at something. This is the difference.
+/// </summary>
+public class Coach
+{
+    /// <summary>"plain", "challenger" or "comedian".</summary>
+    public string Style { get; set; } = "plain";
+
+    /// <summary>Count consecutive clean answers and make something of it.</summary>
+    public bool Streaks { get; set; }
+
+    /// <summary>Ask "are you sure?" and "why?" after a correct answer.</summary>
+    public bool Probes { get; set; }
+
+    /// <summary>Time the answers and say something about it.</summary>
+    public bool Timed { get; set; }
+
+    /// <summary>
+    /// Stop probing after this many slow or wrong replies. Being questioned is
+    /// motivating right up until it is not, and past that point it is just
+    /// another thing to get wrong.
+    /// </summary>
+    public int ProbeGiveUpAfter { get; set; } = 2;
+
+    /// <summary>Longer than this and the answer counts as slow.</summary>
+    public int SlowSeconds { get; set; } = 25;
 }
 
 /// <summary>One problem, generated fresh, worked all the way through.</summary>

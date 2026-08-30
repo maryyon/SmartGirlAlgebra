@@ -1705,3 +1705,74 @@ html, body {
 @media (prefers-reduced-motion: reduce) {
   .sga-work__box--wrong { animation: none; }
 }
+
+/* ---------- streaks and probing ---------- */
+
+.sga-streak {
+  display: inline-flex;
+  align-items: center;
+  gap: .2rem;
+  padding: .25rem .55rem;
+  border-radius: 999px;
+  background: var(--sga-muted);
+  color: var(--sga-primary);
+  font-size: .8125rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.sga-streak--hot {
+  background: var(--sga-accent);
+  color: var(--sga-accent-fg, #fff);
+  animation: sga-pulse 1.2s ease-in-out infinite;
+}
+
+.sga-probe {
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+  border: 2px dashed var(--sga-primary);
+  border-radius: 1rem;
+  padding: .85rem 1rem;
+  background: var(--sga-card);
+}
+
+.sga-probe__ask { margin: 0; font-size: 1rem; font-weight: 800; color: var(--sga-primary); }
+
+.sga-probe__row { display: flex; flex-wrap: wrap; gap: .5rem; }
+
+.sga-probe__btn {
+  border: 2px solid var(--sga-primary);
+  border-radius: 999px;
+  background: var(--sga-primary);
+  color: var(--sga-primary-fg, #fff);
+  padding: .5rem 1rem;
+  font-family: inherit;
+  font-size: .9375rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.sga-probe__btn--soft {
+  background: var(--sga-card);
+  color: var(--sga-primary);
+}
+
+.sga-probe__reason {
+  text-align: left;
+  border: 2px solid var(--sga-border);
+  border-radius: .8rem;
+  background: var(--sga-card);
+  color: var(--sga-foreground);
+  padding: .65rem .85rem;
+  font-family: inherit;
+  font-size: .9375rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sga-probe__reason:hover { border-color: var(--sga-primary); }
+
+@media (prefers-reduced-motion: reduce) {
+  .sga-streak--hot { animation: none; }
+}

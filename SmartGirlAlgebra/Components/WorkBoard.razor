@@ -34,6 +34,13 @@
             </div>
         </div>
         <div class="sga-header__right">
+            @if (Profile.Coach.Streaks && _streak > 0)
+            {
+                <span class="sga-streak @(_streak >= 5 ? "sga-streak--hot" : "")"
+                      title="@_streak in a row, clean" aria-label="@_streak in a row">
+                    <span aria-hidden="true">@(_streak >= 5 ? "🔥" : "⚡")</span>@_streak
+                </span>
+            }
             <SillyToggle />
             <span class="sga-wiggle" style="font-size:1.4rem;" aria-hidden="true">✏️</span>
         </div>
@@ -95,8 +102,45 @@
                     {
                         <div class="sga-step__msg sga-step__msg--ok sga-pop">
                             <span aria-hidden="true">👏</span>
-                            <span>@(string.IsNullOrWhiteSpace(_step.Yes) ? "That's right." : _step.Yes)</span>
+                            <span>@_praise</span>
                         </div>
+
+                        @if (_probe == ProbeState.Sure)
+                        {
+                            @* Asked whether he is right, before being told. Being
+                               sure and being right are different skills. *@
+                            <div class="sga-probe sga-pop">
+                                <p class="sga-probe__ask">🤔 Are you sure?</p>
+                                <div class="sga-probe__row">
+                                    <button type="button" class="sga-probe__btn" @onclick="@(() => AnswerSure(true))">
+                                        Certain
+                                    </button>
+                                    <button type="button" class="sga-probe__btn sga-probe__btn--soft"
+                                            @onclick="@(() => AnswerSure(false))">
+                                        Let me check again
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                        else if (_probe == ProbeState.Why)
+                        {
+                            <div class="sga-probe sga-pop">
+                                <p class="sga-probe__ask">🧠 Right. Now WHY does that work?</p>
+                                @foreach (var reason in _reasons)
+                                {
+                                    var pick = reason;
+                                    <button type="button" class="sga-probe__reason" @onclick="@(() => AnswerWhy(pick))">
+                                        @pick
+                                    </button>
+                                }
+                            </div>
+                        }
+                        else if (_probe == ProbeState.WhyWrong)
+                        {
+                            <div class="sga-guide__nudge sga-pop">
+                                <p>@_whyMiss</p>
+                            </div>
+                        }
                     }
                     else if (_wrong)
                     {
@@ -144,7 +188,7 @@
         {
             @* Disabled until the step is right. There is no way past. *@
             <button type="button" class="sga-bigbtn" style="margin-top:0;"
-                    disabled="@(!_gotIt)" @onclick="NextStep">
+                    disabled="@(!_gotIt || _probe is ProbeState.Sure or ProbeState.Why)" @onclick="NextStep">
                 @(_stepIndex < (_problem?.Steps.Count ?? 0) - 1 ? "Next step" : "Done")
             </button>
         }
@@ -159,6 +203,7 @@
     private WorkedProblem? _problem;
     private int _stepIndex;
     private int _hintsShown;
+    private bool _rejectedOnce;
     private bool _gotIt;
     private bool _wrong;
     private bool _done;
@@ -175,6 +220,25 @@
     private string _target = "";
 
     private readonly Random _rng = new();
+
+    // ---- how it talks, how it keeps score, how hard it pushes --------------
+
+    private enum ProbeState { None, Sure, Why, WhyWrong }
+
+    private ProbeState _probe = ProbeState.None;
+    private List<string> _reasons = [];
+    private string _whyMiss = "";
+    private string _praise = "That's right.";
+
+    /// <summary>Consecutive steps answered first time, with no hint.</summary>
+    private int _streak;
+
+    /// <summary>Slow or wrong replies to a probe. Past the limit, probing stops.</summary>
+    private int _probeMisses;
+
+    private DateTime _stepStarted = DateTime.UtcNow;
+    private double _tookSeconds;
+    private bool _wasClean;
 
     private TypedStep? _step =>
         _problem is not null && _stepIndex >= 0 && _stepIndex < _problem.Steps.Count
@@ -200,10 +264,13 @@
     private void NewProblem()
     {
         _problem = ProblemFactory.Make(Skill.Id, _rng, _flavor);
+        _probe = ProbeState.None;
+        _stepStarted = DateTime.UtcNow;
         _stepIndex = 0;
         _hintsShown = 0;
         _gotIt = false;
         _wrong = false;
+        _rejectedOnce = false;
         _done = false;
         _entry = "";
 
@@ -271,6 +338,8 @@
         if (!Answers.Matches(_entry, _step))
         {
             _wrong = true;
+            _rejectedOnce = true;
+            _streak = 0;
             _ = Player.RecordAttemptAsync(correct: false, pointsEarned: 0);
             await Task.CompletedTask;
             return;
@@ -278,10 +347,106 @@
 
         _gotIt = true;
         _wrong = false;
+        _tookSeconds = (DateTime.UtcNow - _stepStarted).TotalSeconds;
 
-        // Full marks only for a step she got without being walked to it.
+        // "Clean" means first go, no hint. That is the only thing a streak counts.
+        _wasClean = _hintsShown == 0 && !_rejectedOnce;
+
+        if (Profile.Coach.Streaks)
+        {
+            if (_wasClean) _streak++;
+            else _streak = 0;
+        }
+
+        _praise = Praise();
+
+        // Full marks only for a step got without being walked to it.
         _ = Player.RecordAttemptAsync(correct: true, pointsEarned: _hintsShown == 0 ? 10 : 4);
+
+        StartProbe();
         await Task.CompletedTask;
+    }
+
+    /// <summary>What it says when he gets one right. The voice is the version's.</summary>
+    private string Praise()
+    {
+        var fast = Profile.Coach.Timed && _tookSeconds <= 8 && _wasClean;
+
+        if (Profile.Coach.Style == "challenger")
+        {
+            if (fast) return "Fast AND right. Annoying.";
+            if (_streak >= 5) return $"{_streak} clean in a row. You're showing off now.";
+            if (_hintsShown > 0) return "Right — with help. Next one, no help.";
+            return "Correct. I'll allow it.";
+        }
+
+        if (Profile.Coach.Style == "comedian")
+        {
+            if (fast) return "WHAT. That was too fast. Are you a calculator?";
+            if (_streak >= 5) return $"{_streak} in a row! Someone stop him!";
+            if (_hintsShown > 0) return "Got there! The hint helped, and that's allowed.";
+            return "Yesss. Nice one.";
+        }
+
+        return string.IsNullOrWhiteSpace(_step?.Yes) ? "That's right." : _step!.Yes;
+    }
+
+    // ---- the probe ---------------------------------------------------------
+
+    private void StartProbe()
+    {
+        _probe = ProbeState.None;
+
+        if (!Profile.Coach.Probes) return;
+
+        // He has been questioned enough. Leave him alone and let him work.
+        if (_probeMisses >= Profile.Coach.ProbeGiveUpAfter) return;
+
+        // Only probe a clean answer. Questioning someone who just struggled
+        // through with three hints is piling on.
+        if (!_wasClean) return;
+
+        if (_step is not null && !string.IsNullOrWhiteSpace(_step.Why) && _rng.Next(2) == 0)
+        {
+            _reasons = _step.WhyWrong.Append(_step.Why)
+                                     .OrderBy(_ => _rng.Next())
+                                     .ToList();
+            _probe = ProbeState.Why;
+            return;
+        }
+
+        // Otherwise, now and then, just ask whether he believes himself.
+        if (_rng.Next(3) == 0) _probe = ProbeState.Sure;
+    }
+
+    private void AnswerSure(bool sure)
+    {
+        // He IS right, so saying "let me check" is not an error - it is honest,
+        // and second-guessing a correct answer is worth noticing, not punishing.
+        _praise = sure
+            ? (Profile.Coach.Style == "comedian" ? "And you were! Confidence: earned." : "Sure and correct. That's the pair.")
+            : "You were already right — but checking is never the wrong instinct.";
+
+        if (!sure) _probeMisses++;
+        _probe = ProbeState.None;
+    }
+
+    private void AnswerWhy(string picked)
+    {
+        if (_step is null) return;
+
+        if (picked == _step.Why)
+        {
+            _praise = Profile.Coach.Style == "challenger"
+                ? "Right answer AND the right reason. That's the whole job."
+                : "Exactly — that's WHY it works, not just that it does.";
+            _probe = ProbeState.None;
+            return;
+        }
+
+        _probeMisses++;
+        _whyMiss = $"Not quite the reason. It works because: {_step.Why}";
+        _probe = ProbeState.WhyWrong;
     }
 
     private void ShowHint()
@@ -298,9 +463,12 @@
         {
             _stepIndex++;
             _hintsShown = 0;
+            _rejectedOnce = false;
             _gotIt = false;
             _wrong = false;
+            _probe = ProbeState.None;
             _entry = "";
+            _stepStarted = DateTime.UtcNow;
             StartTyping(_step?.Say ?? "");
             await ToTop();
             return;
