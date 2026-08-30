@@ -18,11 +18,10 @@ window.sgaTickle = (function () {
   // How often the signature is breathed rather than said.
   var WHISPER_IN = 3;
 
-  // Well under full. Volume only - the recordings are untouched, so her voice
-  // keeps its own tone; it just sits under the reading rather than over it.
-  // Reading is capped at 1 by the browser, so the only way to make reading
-  // relatively louder is to bring everything else down.
-  var VOLUME = 0.6;
+  // The clips are normalised to -14 LUFS and pushed through a gain node, so
+  // this sits them just under the reading rather than compensating for a quiet
+  // recording. Tone is untouched - level only.
+  var VOLUME = 0.85;
 
   var ONE_IN = 25;
   var COOLDOWN_MS = 60000;
@@ -35,6 +34,39 @@ window.sgaTickle = (function () {
   // than a silence.
   var clips = {};
   var playing = null;
+
+  // Synthetic speech is capped at volume 1 by the browser. A recorded clip is
+  // not: routing it through a gain node lets it go genuinely louder, which is
+  // the only real headroom this app has.
+  var audioCtx = null;
+  var boosted = new WeakSet();
+
+  function boost(el, gain) {
+    try {
+      var Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) return;
+
+      if (!audioCtx) audioCtx = new Ctx();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+
+      // An element can only be connected to the graph once, ever.
+      if (boosted.has(el)) return;
+      boosted.add(el);
+
+      var src = audioCtx.createMediaElementSource(el);
+      var g = audioCtx.createGain();
+      g.gain.value = gain;
+
+      // Stop the boost clipping into distortion on a loud clip.
+      var comp = audioCtx.createDynamicsCompressor();
+      comp.threshold.value = -8;
+      comp.ratio.value = 6;
+
+      src.connect(g);
+      g.connect(comp);
+      comp.connect(audioCtx.destination);
+    } catch (e) { /* no Web Audio here; the element still plays normally */ }
+  }
 
   function loadClips() {
     try {
@@ -167,6 +199,9 @@ window.sgaTickle = (function () {
 
     var a = new Audio('/audio/tickle/' + file);
     a.volume = (it.volume === undefined) ? 1 : it.volume;
+
+    // Push it through the gain node so her voice actually carries.
+    boost(a, 2.6);
 
     var moved = false;
     function go() {
