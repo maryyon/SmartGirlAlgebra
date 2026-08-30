@@ -40,12 +40,12 @@
       "name": "Smart Full-Court Algebra"
     },
     {
-      "id": "jdm",
-      "name": "Smart Playbook Math"
-    },
-    {
       "id": "nm",
       "name": "Smart Shortcut Math"
+    },
+    {
+      "id": "jjm",
+      "name": "Smart Playbook Math"
     }
   ],
   "hostMap": {

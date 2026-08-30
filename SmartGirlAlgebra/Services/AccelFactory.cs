@@ -119,41 +119,41 @@ public static class AccelFactory
 
         return new WorkedProblem
         {
-            Setup = $"On the road trip you covered {total} miles on {n} gallons.",
+            Setup = $"The reunion needed {total} servings, and you made them on {n} trays.",
             Steps =
             [
                 S("A unit rate is per ONE. Divide by however many you had.",
                   $"What is {total} ÷ {n}?", per.ToString(),
                   [
-                      $"{total} shared over {n} gallons.",
+                      $"{total} shared over {n} trays.",
                       $"{n} × ? = {total}.",
-                      $"{per} miles per gallon."
+                      $"{per} servings per tray."
                   ],
-                  $"{per} miles a gallon.",
+                  $"{per} a tray.",
                   "a number",
                   "Dividing by the number of units gives the amount for exactly one.",
                   ["Multiplying gives the rate; dividing gives the total.",
                    "The unit rate is always the larger of the two numbers."]),
 
                 S("Rates predict. That is the whole point of them.",
-                  $"How far on {far} gallons?", (per * far).ToString(),
+                  $"How many servings from {far} trays?", (per * far).ToString(),
                   [
-                      $"{per} miles each, {far} gallons.",
+                      $"{per} each, {far} trays.",
                       $"{per} × {far}.",
-                      $"{per * far} miles."
+                      $"{per * far} servings."
                   ],
                   "Rate times amount."),
 
                 S("And backwards, which is the direction people get wrong.",
-                  $"How many gallons for {per * 30} miles?", "30",
+                  $"How many trays for {per * 30} servings?", "30",
                   [
                       $"Divide by the rate: {per * 30} ÷ {per}.",
                       "Total ÷ rate = how many.",
-                      "30 gallons."
+                      "30 trays."
                   ],
                   "Both directions — that's fluency.")
             ],
-            Recap = $"{total} ÷ {n} = {per} mpg.\nrate × gallons = miles, and miles ÷ rate = gallons."
+            Recap = $"{total} ÷ {n} = {per} per tray.\nrate × trays = servings, and servings ÷ rate = trays."
         };
     }
 
@@ -526,13 +526,13 @@ public static class AccelFactory
 
         return new WorkedProblem
         {
-            Setup = $"On the theme-park map, 1 inch = {scale} feet.\nThe walk to the coaster measures {onMap} inches.",
+            Setup = $"On the field diagram, 1 inch = {scale} feet.\nThe route he runs measures {onMap} inches.",
             Steps =
             [
                 S("A scale is just a rate in disguise.",
-                  $"How many real feet is the walk?", real.ToString(),
+                  $"How many real feet does he run?", real.ToString(),
                   [
-                      $"{onMap} inches, {scale} feet each.",
+                      $"{onMap} inches on the diagram, {scale} feet each.",
                       $"{onMap} × {scale}.",
                       $"{real} feet."
                   ],
@@ -542,10 +542,10 @@ public static class AccelFactory
                    "Scale only works for areas, not lengths."]),
 
                 S("Now backwards.",
-                  $"A ride is {scale * 7} feet away. How many inches on the map?", "7",
+                  $"A route is {scale * 7} feet long. How many inches on the diagram?", "7",
                   [
                       $"Divide by the scale: {scale * 7} ÷ {scale}.",
-                      "Real ÷ scale = map.",
+                      "Real ÷ scale = diagram.",
                       "7 inches."
                   ],
                   "Both directions."),
@@ -554,7 +554,7 @@ public static class AccelFactory
                   $"If 1 inch = {scale} feet, does 2 inches = {scale * 2} feet? (yes or no)", "yes",
                   [
                       "Scales are proportional.",
-                      "Double the map distance, double the real one.",
+                      "Double the diagram distance, double the real one.",
                       "Yes."
                   ],
                   "Lengths scale directly. Areas do not — that's the next trap.", "yes or no")

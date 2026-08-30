@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-08-30 — /jdm renamed to /jjm, and two themes corrected
+
+- **`/jdm` is now `/jjm`.** Theme narrowed to **football, cooking and family
+  reunions** — the road-trip and theme-park problems in the accelerated course
+  are now reunion trays and a field diagram.
+- **`/jjm` shows a family group** in its background icons.
+- **`/nm` now actually looks like City Soccer PSL.** It had their hex codes but
+  a light background, which read as a generic green app; their identity is
+  near-black with electric green and gold, and it now is too.
+- **`/nm` now actually looks Japanese.** New drawn icons — torii, blossom,
+  ramen, Fuji, lantern — and Japan pushed through the level stories rather than
+  one yen sign: J-League stickers, an Osaka side, bento and onigiri, Shinkansen.
+
 ## 2026-08-30 — Copy that works for the boys too
 
 - The semester footnote said *"she has to actually work it out"* — shown on the

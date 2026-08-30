@@ -1,14 +1,14 @@
 {
-  "_note": "Sixth grade, MALE, accelerated 6-10. Football stats, cooking, hosting, reunions, road trips, theme parks. Course is generated - see Curriculum track 'accel'.",
-  "id": "jdm",
+  "_note": "Sixth grade, MALE, accelerated 6-10. Football, cooking and family reunions. Course is generated - see Curriculum track 'accel'.",
+  "id": "jjm",
   "name": "Smart Playbook Math",
   "tagline": "Football, food and family — all of it is numbers. 🏈",
   "howToPlay": "Solve it <strong>one line at a time</strong> and tap <strong>Check!</strong> after each. For the real work, tap <strong>The course</strong> — it starts at sixth grade and finishes well past it. Fair warning: it argues back.",
-  "codePrefix": "JDM",
+  "codePrefix": "JJM",
   "mode": "Steps",
   "crest": "images/sport-crest.png",
   "levelPickerTitle": "Call your play",
-  "levelPickerSubtitle": "Level 1 = first down. Level 5 = fourth and long. 🏆",
+  "levelPickerSubtitle": "Level 1 = first down. Level 5 = fourth and long. 🏈",
   "footerNote": "No sign-up, no passwords — just you, the numbers, and the work.",
   "semester": true,
   "track": "accel",
@@ -51,10 +51,10 @@
     "fontSans": "\"Nunito\", ui-sans-serif, system-ui, -apple-system, sans-serif"
   },
   "icons": [
+    "family",
     "ball",
     "trophy",
     "star",
-    "sparkle",
     "whistle"
   ],
   "encouragement": {
